@@ -11,5 +11,60 @@ tags:
 - IoT
 created: '2025'
 modified: '2025'
-apis: []
-common: []
+apis:
+- name: NATS Monitoring API
+  tags:
+  - Monitoring
+  - Health
+  - Metrics
+  properties:
+  - url: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+    type: Documentation
+  - url: properties/nats-monitoring-api-openapi.yml
+    type: OpenAPI
+  description: HTTP monitoring API providing real-time server status, connection
+    information, route details, subscription statistics, JetStream metrics, and
+    health check endpoints for observability and operations.
+- name: NATS Messaging API
+  tags:
+  - Messaging
+  - Pub Sub
+  - JetStream
+  - Streaming
+  properties:
+  - url: https://docs.nats.io/nats-concepts/core-nats
+    type: Documentation
+  - url: properties/nats-messaging-asyncapi.yml
+    type: AsyncAPI
+  description: Asynchronous messaging API supporting core pub-sub, request-reply,
+    queue groups, and JetStream persistent messaging with streams, consumers,
+    key-value stores, and object stores.
+common:
+- url: https://nats.io
+  type: Website
+- url: https://docs.nats.io
+  type: Documentation
+- url: https://docs.nats.io/running-a-nats-service/introduction/installation
+  type: Getting Started
+- url: https://github.com/nats-io/nats-server
+  type: GitHub Repository
+- url: https://nats.io/blog/
+  type: Blog
+- url: https://slack.nats.io
+  type: Slack
+- url: https://github.com/nats-io/nats-server/issues
+  type: Issues
+- url: https://github.com/nats-io/nats-server/releases
+  type: Changelog
+- url: https://natsbyexample.com
+  type: Examples
+- url: https://docs.nats.io/using-nats/nats-tools/nats_cli
+  type: CLI
+- url: https://github.com/nats-io
+  type: GitHub Organization
+- url: properties/nats-server-config-json-schema.json
+  type: JSON Schema
+- url: properties/nats-jetstream-config-json-schema.json
+  type: JSON Schema
+- url: properties/nats-context-jsonld.json
+  type: JSON-LD Context

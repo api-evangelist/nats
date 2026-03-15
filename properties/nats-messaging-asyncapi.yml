@@ -1,0 +1,372 @@
+asyncapi: 3.0.0
+info:
+  title: NATS Messaging API
+  version: 2.10.0
+  description: >-
+    AsyncAPI specification for NATS messaging patterns including
+    core pub/sub, request-reply, queue groups, and JetStream
+    persistent messaging. NATS provides a simple, high-performance
+    messaging system for cloud-native applications, microservices,
+    IoT, and edge computing.
+  contact:
+    name: NATS.io
+    url: https://nats.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  externalDocs:
+    description: NATS Documentation
+    url: https://docs.nats.io
+servers:
+  default:
+    host: localhost:4222
+    protocol: nats
+    description: Default NATS server connection
+  cluster:
+    host: localhost:6222
+    protocol: nats
+    description: NATS cluster route connection
+  websocket:
+    host: localhost:443
+    protocol: ws
+    description: NATS WebSocket connection
+defaultContentType: application/json
+channels:
+  corePublish:
+    address: '{subject}'
+    title: Core NATS Publish
+    description: >-
+      Core NATS publish/subscribe channel. Messages are delivered
+      at-most-once with no persistence. Supports subject-based
+      routing with wildcards (* for single token, > for multiple tokens).
+    parameters:
+      subject:
+        description: >-
+          NATS subject for message routing. Supports dot-separated
+          hierarchical subjects and wildcards. Examples: orders.new,
+          events.*, logs.>
+    messages:
+      coreMessage:
+        $ref: '#/components/messages/CoreNATSMessage'
+  requestReply:
+    address: '{subject}'
+    title: Request-Reply
+    description: >-
+      NATS request-reply pattern. A client sends a request on a
+      subject and receives a reply on an auto-generated inbox subject.
+      Supports scatter-gather patterns when multiple responders exist.
+    parameters:
+      subject:
+        description: NATS subject for the request
+    messages:
+      request:
+        $ref: '#/components/messages/RequestMessage'
+      reply:
+        $ref: '#/components/messages/ReplyMessage'
+  queueGroup:
+    address: '{subject}'
+    title: Queue Group Subscription
+    description: >-
+      Queue group subscriptions distribute messages among members
+      of a named group. Only one member of the group receives
+      each message, enabling load-balanced message processing.
+    parameters:
+      subject:
+        description: NATS subject for queue group subscription
+    messages:
+      queueMessage:
+        $ref: '#/components/messages/CoreNATSMessage'
+  jetStreamPublish:
+    address: '{stream_subject}'
+    title: JetStream Publish
+    description: >-
+      JetStream publish channel for persistent messaging. Messages
+      are stored in streams with configurable retention policies,
+      storage backends, and replication factors. Publishers receive
+      acknowledgments confirming message storage.
+    parameters:
+      stream_subject:
+        description: >-
+          JetStream stream subject. Must match a configured stream
+          subject filter. Example: orders.>, events.processed
+    messages:
+      jetStreamMessage:
+        $ref: '#/components/messages/JetStreamMessage'
+      publishAck:
+        $ref: '#/components/messages/JetStreamPublishAck'
+  jetStreamConsume:
+    address: '$JS.API.CONSUMER.MSG.NEXT.{stream}.{consumer}'
+    title: JetStream Consumer
+    description: >-
+      JetStream consumer channel for pulling messages from streams.
+      Consumers track delivery state and support multiple delivery
+      policies including all, last, new, by-start-sequence, and
+      by-start-time. Messages require explicit acknowledgment.
+    parameters:
+      stream:
+        description: JetStream stream name
+      consumer:
+        description: JetStream consumer name
+    messages:
+      consumeMessage:
+        $ref: '#/components/messages/JetStreamMessage'
+  jetStreamKeyValue:
+    address: '$KV.{bucket}.{key}'
+    title: JetStream Key-Value Store
+    description: >-
+      JetStream Key-Value store built on top of streams. Provides
+      a familiar key-value interface with watch capabilities for
+      real-time change notification. Supports TTL, history, and
+      cross-cluster replication.
+    parameters:
+      bucket:
+        description: Key-Value bucket name
+      key:
+        description: Key within the bucket
+    messages:
+      kvEntry:
+        $ref: '#/components/messages/KeyValueEntry'
+  jetStreamObjectStore:
+    address: '$OBJ.{bucket}'
+    title: JetStream Object Store
+    description: >-
+      JetStream Object Store for storing large objects that exceed
+      the maximum message size. Objects are chunked and stored in
+      a stream with metadata tracking.
+    parameters:
+      bucket:
+        description: Object Store bucket name
+    messages:
+      objectMeta:
+        $ref: '#/components/messages/ObjectStoreMeta'
+operations:
+  publishMessage:
+    action: send
+    channel:
+      $ref: '#/channels/corePublish'
+    summary: Publish a message to a NATS subject
+    description: >-
+      Publishes a message to the specified subject. All subscribers
+      matching the subject receive the message. Fire-and-forget
+      with at-most-once delivery semantics.
+    messages:
+      - $ref: '#/channels/corePublish/messages/coreMessage'
+  subscribeMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/corePublish'
+    summary: Subscribe to messages on a NATS subject
+    description: >-
+      Subscribes to messages matching the specified subject pattern.
+      Supports wildcard subjects for flexible routing.
+    messages:
+      - $ref: '#/channels/corePublish/messages/coreMessage'
+  sendRequest:
+    action: send
+    channel:
+      $ref: '#/channels/requestReply'
+    summary: Send a request and await a reply
+    description: >-
+      Sends a request message and waits for a reply on an
+      auto-generated inbox subject. Supports timeouts.
+    messages:
+      - $ref: '#/channels/requestReply/messages/request'
+  receiveReply:
+    action: receive
+    channel:
+      $ref: '#/channels/requestReply'
+    summary: Receive a reply to a request
+    messages:
+      - $ref: '#/channels/requestReply/messages/reply'
+  queueSubscribe:
+    action: receive
+    channel:
+      $ref: '#/channels/queueGroup'
+    summary: Subscribe as part of a queue group
+    description: >-
+      Subscribes to messages as a member of a named queue group.
+      Messages are load-balanced across group members.
+    messages:
+      - $ref: '#/channels/queueGroup/messages/queueMessage'
+  jetStreamPublish:
+    action: send
+    channel:
+      $ref: '#/channels/jetStreamPublish'
+    summary: Publish a persistent message to a JetStream stream
+    description: >-
+      Publishes a message to a JetStream stream. The server
+      acknowledges successful storage. Supports deduplication
+      via Nats-Msg-Id header.
+    messages:
+      - $ref: '#/channels/jetStreamPublish/messages/jetStreamMessage'
+  jetStreamConsume:
+    action: receive
+    channel:
+      $ref: '#/channels/jetStreamConsume'
+    summary: Consume messages from a JetStream consumer
+    description: >-
+      Pulls or pushes messages from a JetStream consumer. Requires
+      explicit acknowledgment (ack, nak, in-progress, term).
+    messages:
+      - $ref: '#/channels/jetStreamConsume/messages/consumeMessage'
+  watchKeyValue:
+    action: receive
+    channel:
+      $ref: '#/channels/jetStreamKeyValue'
+    summary: Watch for key-value changes
+    description: >-
+      Watches a key or wildcard pattern in a Key-Value bucket
+      for real-time change notifications.
+    messages:
+      - $ref: '#/channels/jetStreamKeyValue/messages/kvEntry'
+components:
+  messages:
+    CoreNATSMessage:
+      name: CoreNATSMessage
+      title: Core NATS Message
+      summary: A basic NATS message with subject, payload, and optional headers
+      contentType: application/octet-stream
+      headers:
+        type: object
+        properties:
+          Nats-Msg-Id:
+            type: string
+            description: Optional message deduplication ID
+      payload:
+        type: object
+        description: >-
+          Message payload. NATS is payload-agnostic and supports
+          any binary or text content.
+    RequestMessage:
+      name: RequestMessage
+      title: NATS Request Message
+      summary: A request message with an auto-generated reply subject
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          Nats-Msg-Id:
+            type: string
+            description: Optional message deduplication ID
+      payload:
+        type: object
+        description: Request payload
+    ReplyMessage:
+      name: ReplyMessage
+      title: NATS Reply Message
+      summary: A reply message sent in response to a request
+      contentType: application/json
+      payload:
+        type: object
+        description: Reply payload
+    JetStreamMessage:
+      name: JetStreamMessage
+      title: JetStream Message
+      summary: >-
+        A persistent message stored in a JetStream stream with
+        delivery tracking and acknowledgment support
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          Nats-Msg-Id:
+            type: string
+            description: Message deduplication ID
+          Nats-Expected-Stream:
+            type: string
+            description: Expected stream name for publish verification
+          Nats-Expected-Last-Msg-Id:
+            type: string
+            description: Expected last message ID for optimistic concurrency
+          Nats-Expected-Last-Sequence:
+            type: string
+            description: Expected last sequence for optimistic concurrency
+          Nats-Expected-Last-Subject-Sequence:
+            type: string
+            description: Expected last subject sequence
+      payload:
+        type: object
+        description: Message payload stored in the stream
+    JetStreamPublishAck:
+      name: JetStreamPublishAck
+      title: JetStream Publish Acknowledgment
+      summary: Acknowledgment returned after a successful JetStream publish
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          stream:
+            type: string
+            description: Name of the stream the message was stored in
+          seq:
+            type: integer
+            description: Sequence number assigned to the message
+          duplicate:
+            type: boolean
+            description: Whether the message was a duplicate
+          domain:
+            type: string
+            description: JetStream domain
+    KeyValueEntry:
+      name: KeyValueEntry
+      title: Key-Value Entry
+      summary: A key-value entry with revision tracking
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          key:
+            type: string
+            description: Entry key
+          value:
+            type: string
+            description: Entry value (base64 encoded if binary)
+          revision:
+            type: integer
+            description: Entry revision number
+          created:
+            type: string
+            format: date-time
+            description: Entry creation timestamp
+          operation:
+            type: string
+            enum:
+              - PUT
+              - DEL
+              - PURGE
+            description: Operation type
+          bucket:
+            type: string
+            description: Bucket name
+    ObjectStoreMeta:
+      name: ObjectStoreMeta
+      title: Object Store Metadata
+      summary: Metadata for an object stored in the Object Store
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          name:
+            type: string
+            description: Object name
+          description:
+            type: string
+            description: Object description
+          size:
+            type: integer
+            description: Object size in bytes
+          chunks:
+            type: integer
+            description: Number of chunks
+          bucket:
+            type: string
+            description: Bucket name
+          nuid:
+            type: string
+            description: Unique object identifier
+          digest:
+            type: string
+            description: Object digest for integrity verification
+          deleted:
+            type: boolean
+            description: Whether the object has been deleted

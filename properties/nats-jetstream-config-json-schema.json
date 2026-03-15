@@ -1,0 +1,434 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nats.io/schemas/jetstream-config.json",
+  "title": "NATS JetStream Stream and Consumer Configuration",
+  "description": "JSON Schema for NATS JetStream stream and consumer configuration objects used in the JetStream management API.",
+  "type": "object",
+  "$defs": {
+    "streamConfig": {
+      "type": "object",
+      "title": "Stream Configuration",
+      "description": "Configuration for a JetStream stream that stores messages.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique name for the stream",
+          "pattern": "^[^.*>]+$"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the stream"
+        },
+        "subjects": {
+          "type": "array",
+          "description": "List of subjects this stream will store messages for",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "retention": {
+          "type": "string",
+          "description": "Message retention policy",
+          "enum": ["limits", "interest", "workqueue"],
+          "default": "limits"
+        },
+        "max_consumers": {
+          "type": "integer",
+          "description": "Maximum number of consumers for this stream",
+          "default": -1
+        },
+        "max_msgs": {
+          "type": "integer",
+          "description": "Maximum number of messages in the stream",
+          "default": -1
+        },
+        "max_bytes": {
+          "type": "integer",
+          "description": "Maximum total bytes in the stream",
+          "default": -1
+        },
+        "max_age": {
+          "type": "integer",
+          "description": "Maximum message age in nanoseconds (0 for unlimited)",
+          "default": 0,
+          "minimum": 0
+        },
+        "max_msgs_per_subject": {
+          "type": "integer",
+          "description": "Maximum messages per subject",
+          "default": -1
+        },
+        "max_msg_size": {
+          "type": "integer",
+          "description": "Maximum individual message size in bytes",
+          "default": -1
+        },
+        "discard": {
+          "type": "string",
+          "description": "Discard policy when limits are reached",
+          "enum": ["old", "new"],
+          "default": "old"
+        },
+        "discard_new_per_subject": {
+          "type": "boolean",
+          "description": "Apply discard new policy per subject",
+          "default": false
+        },
+        "storage": {
+          "type": "string",
+          "description": "Storage backend type",
+          "enum": ["file", "memory"],
+          "default": "file"
+        },
+        "num_replicas": {
+          "type": "integer",
+          "description": "Number of replicas in a clustered JetStream",
+          "default": 1,
+          "minimum": 1,
+          "maximum": 5
+        },
+        "no_ack": {
+          "type": "boolean",
+          "description": "Disable publish acknowledgments",
+          "default": false
+        },
+        "duplicate_window": {
+          "type": "integer",
+          "description": "Window for message deduplication in nanoseconds",
+          "default": 120000000000
+        },
+        "placement": {
+          "type": "object",
+          "description": "Stream placement constraints",
+          "properties": {
+            "cluster": {
+              "type": "string",
+              "description": "Target cluster name"
+            },
+            "tags": {
+              "type": "array",
+              "description": "Required server tags",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "mirror": {
+          "$ref": "#/$defs/streamSource",
+          "description": "Mirror configuration to replicate another stream"
+        },
+        "sources": {
+          "type": "array",
+          "description": "List of source streams to aggregate",
+          "items": {
+            "$ref": "#/$defs/streamSource"
+          }
+        },
+        "sealed": {
+          "type": "boolean",
+          "description": "Seal the stream to prevent further modifications",
+          "default": false
+        },
+        "deny_delete": {
+          "type": "boolean",
+          "description": "Deny message deletion from the stream",
+          "default": false
+        },
+        "deny_purge": {
+          "type": "boolean",
+          "description": "Deny stream purge operations",
+          "default": false
+        },
+        "allow_rollup_hdrs": {
+          "type": "boolean",
+          "description": "Allow rollup headers for subject purging",
+          "default": false
+        },
+        "compression": {
+          "type": "string",
+          "description": "Compression algorithm for stored messages",
+          "enum": ["none", "s2"],
+          "default": "none"
+        },
+        "first_seq": {
+          "type": "integer",
+          "description": "Initial sequence number for the stream",
+          "minimum": 0
+        },
+        "subject_transform": {
+          "type": "object",
+          "description": "Subject transformation configuration",
+          "properties": {
+            "src": {
+              "type": "string",
+              "description": "Source subject pattern"
+            },
+            "dest": {
+              "type": "string",
+              "description": "Destination subject pattern"
+            }
+          },
+          "required": ["src", "dest"]
+        },
+        "republish": {
+          "type": "object",
+          "description": "Re-publish stored messages to another subject",
+          "properties": {
+            "src": {
+              "type": "string",
+              "description": "Source subject filter"
+            },
+            "dest": {
+              "type": "string",
+              "description": "Destination subject"
+            },
+            "headers_only": {
+              "type": "boolean",
+              "description": "Only republish headers",
+              "default": false
+            }
+          },
+          "required": ["src", "dest"]
+        },
+        "allow_direct": {
+          "type": "boolean",
+          "description": "Allow direct message access",
+          "default": false
+        },
+        "mirror_direct": {
+          "type": "boolean",
+          "description": "Allow direct access on mirrors",
+          "default": false
+        },
+        "consumer_limits": {
+          "type": "object",
+          "description": "Default limits applied to consumers",
+          "properties": {
+            "inactive_threshold": {
+              "type": "integer",
+              "description": "Default inactive threshold in nanoseconds"
+            },
+            "max_ack_pending": {
+              "type": "integer",
+              "description": "Default max ack pending"
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "description": "User-defined metadata key-value pairs",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "streamSource": {
+      "type": "object",
+      "title": "Stream Source",
+      "description": "Configuration for sourcing or mirroring from another stream.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Source stream name"
+        },
+        "opt_start_seq": {
+          "type": "integer",
+          "description": "Start sequence for sourcing"
+        },
+        "opt_start_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start time for sourcing"
+        },
+        "filter_subject": {
+          "type": "string",
+          "description": "Filter subject for sourcing"
+        },
+        "subject_transforms": {
+          "type": "array",
+          "description": "Subject transformations",
+          "items": {
+            "type": "object",
+            "properties": {
+              "src": { "type": "string" },
+              "dest": { "type": "string" }
+            },
+            "required": ["src", "dest"]
+          }
+        },
+        "external": {
+          "type": "object",
+          "description": "External stream reference for cross-account or cross-domain",
+          "properties": {
+            "api": {
+              "type": "string",
+              "description": "External API prefix"
+            },
+            "deliver": {
+              "type": "string",
+              "description": "External deliver prefix"
+            }
+          },
+          "required": ["api"]
+        }
+      }
+    },
+    "consumerConfig": {
+      "type": "object",
+      "title": "Consumer Configuration",
+      "description": "Configuration for a JetStream consumer that reads messages from a stream.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique consumer name within the stream",
+          "pattern": "^[^.*>]+$"
+        },
+        "durable_name": {
+          "type": "string",
+          "description": "Durable consumer name for persistent consumers",
+          "pattern": "^[^.*>]+$"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the consumer"
+        },
+        "deliver_policy": {
+          "type": "string",
+          "description": "Policy for initial message delivery",
+          "enum": ["all", "last", "new", "by_start_sequence", "by_start_time", "last_per_subject"],
+          "default": "all"
+        },
+        "opt_start_seq": {
+          "type": "integer",
+          "description": "Start sequence when deliver_policy is by_start_sequence",
+          "minimum": 0
+        },
+        "opt_start_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start time when deliver_policy is by_start_time"
+        },
+        "ack_policy": {
+          "type": "string",
+          "description": "Message acknowledgment policy",
+          "enum": ["none", "all", "explicit"],
+          "default": "explicit"
+        },
+        "ack_wait": {
+          "type": "integer",
+          "description": "Time to wait for acknowledgment in nanoseconds",
+          "default": 30000000000
+        },
+        "max_deliver": {
+          "type": "integer",
+          "description": "Maximum delivery attempts per message",
+          "default": -1
+        },
+        "backoff": {
+          "type": "array",
+          "description": "Redelivery backoff intervals in nanoseconds",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "filter_subject": {
+          "type": "string",
+          "description": "Subject filter for this consumer"
+        },
+        "filter_subjects": {
+          "type": "array",
+          "description": "Multiple subject filters for this consumer",
+          "items": {
+            "type": "string"
+          }
+        },
+        "replay_policy": {
+          "type": "string",
+          "description": "Replay policy for historical messages",
+          "enum": ["instant", "original"],
+          "default": "instant"
+        },
+        "sample_freq": {
+          "type": "string",
+          "description": "Percentage of acknowledgments to sample for observability",
+          "pattern": "^[0-9]{1,3}%?$"
+        },
+        "max_waiting": {
+          "type": "integer",
+          "description": "Maximum pull requests waiting",
+          "default": 512
+        },
+        "max_ack_pending": {
+          "type": "integer",
+          "description": "Maximum messages pending acknowledgment",
+          "default": 1000
+        },
+        "flow_control": {
+          "type": "boolean",
+          "description": "Enable flow control for push consumers",
+          "default": false
+        },
+        "idle_heartbeat": {
+          "type": "integer",
+          "description": "Idle heartbeat interval in nanoseconds for push consumers"
+        },
+        "headers_only": {
+          "type": "boolean",
+          "description": "Deliver only message headers",
+          "default": false
+        },
+        "deliver_subject": {
+          "type": "string",
+          "description": "Delivery subject for push consumers"
+        },
+        "deliver_group": {
+          "type": "string",
+          "description": "Queue group for push consumer delivery"
+        },
+        "max_batch": {
+          "type": "integer",
+          "description": "Maximum messages per pull batch",
+          "default": 0
+        },
+        "max_expires": {
+          "type": "integer",
+          "description": "Maximum expiry for pull requests in nanoseconds"
+        },
+        "max_bytes": {
+          "type": "integer",
+          "description": "Maximum bytes per pull batch",
+          "default": 0
+        },
+        "inactive_threshold": {
+          "type": "integer",
+          "description": "Duration of inactivity before consumer is removed in nanoseconds",
+          "default": 5000000000
+        },
+        "num_replicas": {
+          "type": "integer",
+          "description": "Number of consumer replicas in a cluster",
+          "minimum": 0,
+          "maximum": 5,
+          "default": 0
+        },
+        "mem_storage": {
+          "type": "boolean",
+          "description": "Use memory storage for consumer state",
+          "default": false
+        },
+        "metadata": {
+          "type": "object",
+          "description": "User-defined metadata key-value pairs",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

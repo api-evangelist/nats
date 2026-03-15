@@ -1,0 +1,291 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "nats": "https://nats.io/ontology/",
+    "msg": "https://www.w3.org/ns/activitystreams#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "iot": "https://www.w3.org/2019/wot/td#",
+
+    "NATSServer": {
+      "@id": "nats:Server",
+      "@type": "SoftwareApplication"
+    },
+    "serverName": {
+      "@id": "nats:serverName",
+      "@type": "xsd:string"
+    },
+    "serverId": {
+      "@id": "nats:serverId",
+      "@type": "xsd:string"
+    },
+    "serverVersion": {
+      "@id": "nats:serverVersion",
+      "@type": "xsd:string",
+      "owl:equivalentProperty": { "@id": "softwareVersion" }
+    },
+    "uptime": {
+      "@id": "nats:uptime",
+      "@type": "xsd:duration"
+    },
+
+    "Message": {
+      "@id": "nats:Message",
+      "@type": "msg:Object"
+    },
+    "subject": {
+      "@id": "nats:subject",
+      "@type": "xsd:string",
+      "comment": "NATS subject for message routing, analogous to a topic or channel"
+    },
+    "payload": {
+      "@id": "nats:payload",
+      "@type": "xsd:base64Binary",
+      "owl:equivalentProperty": { "@id": "msg:content" }
+    },
+    "headers": {
+      "@id": "nats:headers",
+      "@type": "@json",
+      "comment": "NATS message headers as key-value pairs"
+    },
+    "replyTo": {
+      "@id": "nats:replyTo",
+      "@type": "xsd:string",
+      "comment": "Reply subject for request-reply pattern"
+    },
+    "messageId": {
+      "@id": "nats:messageId",
+      "@type": "xsd:string",
+      "owl:equivalentProperty": { "@id": "dcterms:identifier" }
+    },
+
+    "publish": {
+      "@id": "nats:publish",
+      "@type": "@id",
+      "owl:equivalentProperty": { "@id": "msg:Create" }
+    },
+    "subscribe": {
+      "@id": "nats:subscribe",
+      "@type": "@id",
+      "owl:equivalentProperty": { "@id": "msg:Follow" }
+    },
+    "unsubscribe": {
+      "@id": "nats:unsubscribe",
+      "@type": "@id",
+      "owl:equivalentProperty": { "@id": "msg:Undo" }
+    },
+    "request": {
+      "@id": "nats:request",
+      "@type": "@id",
+      "owl:equivalentProperty": { "@id": "msg:Question" }
+    },
+    "reply": {
+      "@id": "nats:reply",
+      "@type": "@id",
+      "owl:equivalentProperty": { "@id": "msg:Answer" }
+    },
+
+    "QueueGroup": {
+      "@id": "nats:QueueGroup",
+      "@type": "msg:Group",
+      "comment": "Named group of subscribers for load-balanced message delivery"
+    },
+    "queueName": {
+      "@id": "nats:queueName",
+      "@type": "xsd:string"
+    },
+
+    "Connection": {
+      "@id": "nats:Connection",
+      "@type": "iot:InteractionAffordance",
+      "comment": "A client connection to a NATS server"
+    },
+    "connectionId": {
+      "@id": "nats:connectionId",
+      "@type": "xsd:integer"
+    },
+    "clientName": {
+      "@id": "nats:clientName",
+      "@type": "xsd:string",
+      "owl:equivalentProperty": { "@id": "name" }
+    },
+    "clientLanguage": {
+      "@id": "nats:clientLanguage",
+      "@type": "xsd:string"
+    },
+
+    "Stream": {
+      "@id": "nats:Stream",
+      "@type": "hydra:Collection",
+      "comment": "JetStream stream for persistent message storage"
+    },
+    "streamName": {
+      "@id": "nats:streamName",
+      "@type": "xsd:string",
+      "owl:equivalentProperty": { "@id": "name" }
+    },
+    "subjects": {
+      "@id": "nats:subjects",
+      "@container": "@set",
+      "comment": "Subjects captured by this stream"
+    },
+    "retention": {
+      "@id": "nats:retention",
+      "@type": "xsd:string",
+      "comment": "Message retention policy: limits, interest, or workqueue"
+    },
+    "storage": {
+      "@id": "nats:storage",
+      "@type": "xsd:string",
+      "comment": "Storage backend: file or memory"
+    },
+    "replicas": {
+      "@id": "nats:replicas",
+      "@type": "xsd:integer",
+      "comment": "Number of stream replicas in a cluster"
+    },
+    "maxMessages": {
+      "@id": "nats:maxMessages",
+      "@type": "xsd:integer"
+    },
+    "maxBytes": {
+      "@id": "nats:maxBytes",
+      "@type": "xsd:integer"
+    },
+    "maxAge": {
+      "@id": "nats:maxAge",
+      "@type": "xsd:duration"
+    },
+    "discardPolicy": {
+      "@id": "nats:discardPolicy",
+      "@type": "xsd:string"
+    },
+
+    "Consumer": {
+      "@id": "nats:Consumer",
+      "@type": "hydra:Operation",
+      "comment": "JetStream consumer for reading messages from a stream"
+    },
+    "consumerName": {
+      "@id": "nats:consumerName",
+      "@type": "xsd:string",
+      "owl:equivalentProperty": { "@id": "name" }
+    },
+    "deliverPolicy": {
+      "@id": "nats:deliverPolicy",
+      "@type": "xsd:string"
+    },
+    "ackPolicy": {
+      "@id": "nats:ackPolicy",
+      "@type": "xsd:string"
+    },
+    "ackWait": {
+      "@id": "nats:ackWait",
+      "@type": "xsd:duration"
+    },
+    "maxDeliver": {
+      "@id": "nats:maxDeliver",
+      "@type": "xsd:integer"
+    },
+    "maxAckPending": {
+      "@id": "nats:maxAckPending",
+      "@type": "xsd:integer"
+    },
+    "filterSubject": {
+      "@id": "nats:filterSubject",
+      "@type": "xsd:string"
+    },
+
+    "KeyValueBucket": {
+      "@id": "nats:KeyValueBucket",
+      "@type": "hydra:Collection",
+      "comment": "JetStream Key-Value store bucket"
+    },
+    "bucketName": {
+      "@id": "nats:bucketName",
+      "@type": "xsd:string"
+    },
+    "KeyValueEntry": {
+      "@id": "nats:KeyValueEntry",
+      "@type": "hydra:Resource",
+      "comment": "An entry in a Key-Value bucket"
+    },
+    "key": {
+      "@id": "nats:key",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "nats:value",
+      "@type": "xsd:base64Binary"
+    },
+    "revision": {
+      "@id": "nats:revision",
+      "@type": "xsd:integer",
+      "owl:equivalentProperty": { "@id": "dcterms:hasVersion" }
+    },
+
+    "ObjectStore": {
+      "@id": "nats:ObjectStore",
+      "@type": "hydra:Collection",
+      "comment": "JetStream Object Store for large binary objects"
+    },
+
+    "Cluster": {
+      "@id": "nats:Cluster",
+      "@type": "msg:Group",
+      "comment": "A group of NATS servers forming a cluster"
+    },
+    "clusterName": {
+      "@id": "nats:clusterName",
+      "@type": "xsd:string"
+    },
+    "Route": {
+      "@id": "nats:Route",
+      "@type": "iot:Link",
+      "comment": "A route connection between clustered NATS servers"
+    },
+
+    "Gateway": {
+      "@id": "nats:Gateway",
+      "@type": "iot:Link",
+      "comment": "A gateway connection between NATS super-clusters"
+    },
+    "LeafNode": {
+      "@id": "nats:LeafNode",
+      "@type": "iot:Link",
+      "comment": "A leaf node connection extending the NATS network"
+    },
+
+    "Account": {
+      "@id": "nats:Account",
+      "@type": "Organization",
+      "comment": "NATS multi-tenancy account for isolation"
+    },
+    "accountName": {
+      "@id": "nats:accountName",
+      "@type": "xsd:string"
+    },
+
+    "inMessages": {
+      "@id": "nats:inMessages",
+      "@type": "xsd:integer"
+    },
+    "outMessages": {
+      "@id": "nats:outMessages",
+      "@type": "xsd:integer"
+    },
+    "inBytes": {
+      "@id": "nats:inBytes",
+      "@type": "xsd:integer"
+    },
+    "outBytes": {
+      "@id": "nats:outBytes",
+      "@type": "xsd:integer"
+    },
+    "subscriptions": {
+      "@id": "nats:subscriptions",
+      "@type": "xsd:integer"
+    }
+  }
+}
