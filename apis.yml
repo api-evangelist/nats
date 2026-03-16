@@ -1,70 +1,86 @@
+aid: nats
 name: NATS
 description: A high-performance, cloud-native messaging system for microservices,
   IoT, and edge computing. Provides pub-sub, request-reply, and queue-based messaging
   patterns with at-most-once and at-least-once delivery guarantees.
-url: https://nats.io
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-- Message Broker
-- Pub Sub
-- Microservices
-- Cloud Native
-- IoT
-created: '2025'
-modified: '2025'
-apis:
-- name: NATS Monitoring API
-  tags:
-  - Monitoring
-  - Health
-  - Metrics
-  properties:
-  - url: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
-    type: Documentation
-  - url: properties/nats-monitoring-api-openapi.yml
-    type: OpenAPI
-  description: HTTP monitoring API providing real-time server status, connection
-    information, route details, subscription statistics, JetStream metrics, and
-    health check endpoints for observability and operations.
-- name: NATS Messaging API
-  tags:
-  - Messaging
+  - Message Broker
   - Pub Sub
-  - JetStream
-  - Streaming
-  properties:
-  - url: https://docs.nats.io/nats-concepts/core-nats
-    type: Documentation
-  - url: properties/nats-messaging-asyncapi.yml
-    type: AsyncAPI
-  description: Asynchronous messaging API supporting core pub-sub, request-reply,
-    queue groups, and JetStream persistent messaging with streams, consumers,
-    key-value stores, and object stores.
+  - Microservices
+  - Cloud Native
+  - IoT
+url: https://raw.githubusercontent.com/api-evangelist/nats/refs/heads/main/apis.yml
+created: '2025-01-01'
+modified: '2026-03-16'
+specificationVersion: '0.19'
+apis:
+  - aid: nats:nats-monitoring-api
+    name: NATS Monitoring API
+    description: HTTP monitoring API providing real-time server status, connection
+      information, route details, subscription statistics, JetStream metrics, and
+      health check endpoints for observability and operations.
+    humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+    baseURL: http://localhost:8222
+    tags:
+      - Monitoring
+      - Health
+      - Metrics
+    properties:
+      - url: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+        type: Documentation
+      - url: properties/nats-monitoring-api-openapi.yml
+        type: OpenAPI
+  - aid: nats:nats-messaging-api
+    name: NATS Messaging API
+    description: Asynchronous messaging API supporting core pub-sub, request-reply,
+      queue groups, and JetStream persistent messaging with streams, consumers,
+      key-value stores, and object stores.
+    humanURL: https://docs.nats.io/nats-concepts/core-nats
+    tags:
+      - Messaging
+      - Pub Sub
+      - JetStream
+      - Streaming
+    properties:
+      - url: https://docs.nats.io/nats-concepts/core-nats
+        type: Documentation
+      - url: properties/nats-messaging-asyncapi.yml
+        type: AsyncAPI
 common:
-- url: https://nats.io
-  type: Website
-- url: https://docs.nats.io
-  type: Documentation
-- url: https://docs.nats.io/running-a-nats-service/introduction/installation
-  type: Getting Started
-- url: https://github.com/nats-io/nats-server
-  type: GitHub Repository
-- url: https://nats.io/blog/
-  type: Blog
-- url: https://slack.nats.io
-  type: Slack
-- url: https://github.com/nats-io/nats-server/issues
-  type: Issues
-- url: https://github.com/nats-io/nats-server/releases
-  type: Changelog
-- url: https://natsbyexample.com
-  type: Examples
-- url: https://docs.nats.io/using-nats/nats-tools/nats_cli
-  type: CLI
-- url: https://github.com/nats-io
-  type: GitHub Organization
-- url: properties/nats-server-config-json-schema.json
-  type: JSON Schema
-- url: properties/nats-jetstream-config-json-schema.json
-  type: JSON Schema
-- url: properties/nats-context-jsonld.json
-  type: JSON-LD Context
+  - url: https://nats.io
+    type: Website
+  - url: https://docs.nats.io
+    type: Documentation
+  - url: https://docs.nats.io/running-a-nats-service/introduction/installation
+    type: Getting Started
+  - url: https://github.com/nats-io/nats-server
+    type: GitHub Repository
+  - url: https://nats.io/blog/
+    type: Blog
+  - url: https://slack.nats.io
+    type: Slack
+  - url: https://github.com/nats-io/nats-server/issues
+    type: Issues
+  - url: https://github.com/nats-io/nats-server/releases
+    type: Change Log
+  - url: https://natsbyexample.com
+    type: Examples
+  - url: https://docs.nats.io/using-nats/nats-tools/nats_cli
+    type: CLI
+  - url: https://github.com/nats-io
+    type: GitHub Organization
+  - url: properties/nats-server-config-json-schema.json
+    type: JSON Schema
+  - url: properties/nats-jetstream-config-json-schema.json
+    type: JSON Schema
+  - url: properties/nats-context-jsonld.json
+    type: JSON-LD Context
+  - url: https://nats.io/support/
+    type: Support
+  - url: https://nats.io/privacy/
+    type: Privacy Policy
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
