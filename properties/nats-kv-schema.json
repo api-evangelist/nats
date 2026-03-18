@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nats.io/schemas/kv.json",
+  "title": "NATS Key-Value Store",
+  "description": "Schema for NATS JetStream Key-Value Store bucket configuration and entry objects. The KV Store is a JetStream-backed abstraction providing immediately consistent associative array semantics. Buckets are implemented as JetStream streams with the KV_ name prefix. Each key-value entry is stored as a JetStream message where the NATS subject encodes the key and the payload is the value.",
+  "type": "object",
+  "$defs": {
+    "KeyValueBucketConfig": {
+      "type": "object",
+      "title": "Key-Value Bucket Configuration",
+      "description": "Configuration for creating a NATS KV bucket. Maps to a JetStream stream with KV-specific defaults and the KV_ name prefix.",
+      "required": ["bucket"],
+      "properties": {
+        "bucket": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "description": "Name of the KV bucket. Must consist of alphanumeric characters, underscores, or hyphens. The backing JetStream stream is created with the name KV_{bucket}."
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the bucket's purpose."
+        },
+        "ttl": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Time-to-live for entries in nanoseconds. Entries older than this duration are automatically purged. 0 means entries never expire."
+        },
+        "storage": {
+          "type": "string",
+          "description": "Backend storage type for bucket data.",
+          "enum": ["file", "memory"],
+          "default": "file"
+        },
+        "num_replicas": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5,
+          "description": "Number of replicas for high availability in a JetStream cluster. Must not exceed the number of JetStream-enabled servers.",
+          "default": 1
+        },
+        "history": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64,
+          "description": "Number of historical values to keep per key. A history of 1 means only the latest value is retained. Values up to 64 are supported.",
+          "default": 1
+        },
+        "max_value_size": {
+          "type": "integer",
+          "description": "Maximum size in bytes for an individual value. -1 means no limit.",
+          "default": -1
+        },
+        "max_bytes": {
+          "type": "integer",
+          "description": "Maximum total bytes for the entire bucket across all keys and history. -1 means no limit.",
+          "default": -1
+        },
+        "re_publish": {
+          "$ref": "#/$defs/RePublish"
+        },
+        "mirror": {
+          "$ref": "#/$defs/StreamSource"
+        },
+        "sources": {
+          "type": "array",
+          "description": "List of source streams to aggregate into this bucket. Enables cross-account or cross-cluster KV mirroring.",
+          "items": {
+            "$ref": "#/$defs/StreamSource"
+          }
+        }
+      }
+    },
+    "KeyValueEntry": {
+      "type": "object",
+      "title": "Key-Value Entry",
+      "description": "A single entry in a NATS KV bucket, as returned by get and watch operations. Includes the key, value, metadata, and operation type.",
+      "required": ["bucket", "key", "revision"],
+      "properties": {
+        "bucket": {
+          "type": "string",
+          "description": "Name of the KV bucket this entry belongs to."
+        },
+        "key": {
+          "type": "string",
+          "description": "The key identifying this entry within the bucket. Keys support dot-separated hierarchical namespaces, e.g. 'config.database.host'."
+        },
+        "value": {
+          "type": "string",
+          "contentEncoding": "base64",
+          "description": "The stored value for this key, base64-encoded. May be arbitrary bytes."
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Monotonically increasing revision number for this key. Incremented on every put, delete, or purge operation for the key."
+        },
+        "delta": {
+          "type": "integer",
+          "description": "Number of operations since this revision. Available in watch results to indicate how many updates were missed."
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when this revision was created."
+        },
+        "operation": {
+          "type": "string",
+          "description": "The operation that produced this entry. 'PUT' for new or updated values, 'DEL' for deleted keys, 'PURGE' for purged key history.",
+          "enum": ["PUT", "DEL", "PURGE"]
+        }
+      }
+    },
+    "KeyValueBucketStatus": {
+      "type": "object",
+      "title": "Key-Value Bucket Status",
+      "description": "Runtime status for a KV bucket including current configuration, entry counts, and backing stream details.",
+      "properties": {
+        "bucket": {
+          "type": "string",
+          "description": "Name of the KV bucket."
+        },
+        "values": {
+          "type": "integer",
+          "description": "Current number of unique keys in the bucket."
+        },
+        "history": {
+          "type": "integer",
+          "description": "Configured history depth per key."
+        },
+        "ttl": {
+          "type": "integer",
+          "description": "Configured entry TTL in nanoseconds. 0 means no expiry."
+        },
+        "storage_type": {
+          "type": "string",
+          "description": "Configured storage backend.",
+          "enum": ["file", "memory"]
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Configured replication factor."
+        },
+        "bytes": {
+          "type": "integer",
+          "description": "Total bytes currently stored in the bucket."
+        },
+        "is_mirror": {
+          "type": "boolean",
+          "description": "Whether this bucket mirrors another bucket."
+        }
+      }
+    },
+    "RePublish": {
+      "type": "object",
+      "title": "Re-Publish Configuration",
+      "description": "Configuration for republishing messages to a different subject when they are stored in the stream backing this KV bucket.",
+      "required": ["dest"],
+      "properties": {
+        "src": {
+          "type": "string",
+          "description": "Source subject filter for messages to republish. Supports wildcards."
+        },
+        "dest": {
+          "type": "string",
+          "description": "Destination subject to republish matching messages to."
+        },
+        "headers_only": {
+          "type": "boolean",
+          "description": "If true, only republish headers without the message body. Reduces bandwidth for consumers that only need metadata.",
+          "default": false
+        }
+      }
+    },
+    "StreamSource": {
+      "type": "object",
+      "title": "Stream Source",
+      "description": "Reference to a source stream for mirroring or aggregating data into this KV bucket's backing stream.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the source stream to mirror from."
+        },
+        "opt_start_seq": {
+          "type": "integer",
+          "description": "Sequence number to start mirroring from."
+        },
+        "opt_start_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp to start mirroring from."
+        },
+        "filter_subject": {
+          "type": "string",
+          "description": "Subject filter to apply when sourcing from the named stream."
+        },
+        "external": {
+          "type": "object",
+          "description": "Configuration for sourcing from a stream in another account or cluster.",
+          "properties": {
+            "api": {
+              "type": "string",
+              "description": "JetStream API prefix in the remote account, e.g. '$JS.hub.API'."
+            },
+            "deliver": {
+              "type": "string",
+              "description": "Subject prefix for delivering messages from the remote account."
+            }
+          }
+        }
+      }
+    }
+  }
+}

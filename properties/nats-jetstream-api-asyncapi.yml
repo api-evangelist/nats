@@ -1,0 +1,943 @@
+asyncapi: 3.0.0
+info:
+  title: NATS JetStream Management API
+  version: 2.10.0
+  description: >-
+    AsyncAPI specification for the NATS JetStream wire-level management API.
+    JetStream management operations are performed by publishing JSON requests
+    to well-known $JS.API.* subjects and receiving typed JSON responses. This
+    protocol underlies all official NATS client SDKs, the nats CLI, and any
+    tooling that manages streams, consumers, key-value buckets, and object
+    stores. All requests and responses are UTF-8 encoded JSON objects.
+  contact:
+    name: NATS.io
+    url: https://nats.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  externalDocs:
+    description: NATS JetStream API Reference
+    url: https://docs.nats.io/reference/reference-protocols/nats_api_reference
+servers:
+  default:
+    host: localhost:4222
+    protocol: nats
+    description: Default NATS server with JetStream enabled
+  cluster:
+    host: localhost:4222
+    protocol: nats
+    description: NATS cluster member with JetStream enabled
+defaultContentType: application/json
+channels:
+  streamCreate:
+    address: '$JS.API.STREAM.CREATE.{stream}'
+    title: Create Stream
+    description: >-
+      Create a new JetStream stream by publishing a stream configuration object
+      to this subject. The server responds with the created stream info or an
+      error. Stream names must not contain spaces, tabs, periods, greater-than
+      signs, or asterisks.
+    parameters:
+      stream:
+        description: Name of the stream to create
+    messages:
+      request:
+        $ref: '#/components/messages/StreamCreateRequest'
+      response:
+        $ref: '#/components/messages/StreamInfoResponse'
+
+  streamInfo:
+    address: '$JS.API.STREAM.INFO.{stream}'
+    title: Get Stream Info
+    description: >-
+      Retrieve configuration and state information for an existing stream.
+      Returns stream config, cluster info, and current state including message
+      count, bytes, first and last sequence numbers.
+    parameters:
+      stream:
+        description: Name of the stream to retrieve information for
+    messages:
+      response:
+        $ref: '#/components/messages/StreamInfoResponse'
+
+  streamUpdate:
+    address: '$JS.API.STREAM.UPDATE.{stream}'
+    title: Update Stream
+    description: >-
+      Update the configuration of an existing stream. Not all fields are
+      mutable after stream creation; attempting to change immutable fields
+      returns an error. Publish a complete stream configuration object with
+      the desired changes applied.
+    parameters:
+      stream:
+        description: Name of the stream to update
+    messages:
+      request:
+        $ref: '#/components/messages/StreamCreateRequest'
+      response:
+        $ref: '#/components/messages/StreamInfoResponse'
+
+  streamDelete:
+    address: '$JS.API.STREAM.DELETE.{stream}'
+    title: Delete Stream
+    description: >-
+      Delete an existing stream and all its messages. This operation is
+      irreversible. Publishing to this subject with an empty body initiates
+      deletion. The server responds with a success flag.
+    parameters:
+      stream:
+        description: Name of the stream to delete
+    messages:
+      response:
+        $ref: '#/components/messages/SuccessResponse'
+
+  streamList:
+    address: '$JS.API.STREAM.LIST'
+    title: List Streams
+    description: >-
+      Retrieve a paginated list of all streams in the current JetStream account.
+      An optional offset can be provided in the request body to page through
+      results. Each response includes total count and current page of stream info.
+    messages:
+      request:
+        $ref: '#/components/messages/ListRequest'
+      response:
+        $ref: '#/components/messages/StreamListResponse'
+
+  streamNames:
+    address: '$JS.API.STREAM.NAMES'
+    title: List Stream Names
+    description: >-
+      Retrieve a paginated list of stream names only, without full configuration
+      details. More efficient than STREAM.LIST when only names are needed.
+    messages:
+      request:
+        $ref: '#/components/messages/ListRequest'
+      response:
+        $ref: '#/components/messages/NamesResponse'
+
+  streamPurge:
+    address: '$JS.API.STREAM.PURGE.{stream}'
+    title: Purge Stream
+    description: >-
+      Remove all or a filtered subset of messages from a stream without
+      deleting the stream itself. An optional filter subject and sequence
+      number can be provided to purge only matching messages.
+    parameters:
+      stream:
+        description: Name of the stream to purge
+    messages:
+      request:
+        $ref: '#/components/messages/StreamPurgeRequest'
+      response:
+        $ref: '#/components/messages/PurgeResponse'
+
+  consumerCreate:
+    address: '$JS.API.CONSUMER.CREATE.{stream}'
+    title: Create Consumer
+    description: >-
+      Create a new push or pull consumer on a stream. Push consumers deliver
+      messages to a configured deliver subject; pull consumers require explicit
+      fetch requests. The server responds with consumer info including the
+      assigned name if an ephemeral consumer was requested.
+    parameters:
+      stream:
+        description: Name of the stream to create the consumer on
+    messages:
+      request:
+        $ref: '#/components/messages/ConsumerCreateRequest'
+      response:
+        $ref: '#/components/messages/ConsumerInfoResponse'
+
+  consumerCreateNamed:
+    address: '$JS.API.CONSUMER.CREATE.{stream}.{consumer}'
+    title: Create Named Consumer
+    description: >-
+      Create a durable named consumer on a stream. Using the fully qualified
+      subject with both stream and consumer names is the preferred form for
+      creating durable consumers as it is idempotent for consumers with
+      identical configurations.
+    parameters:
+      stream:
+        description: Name of the stream to create the consumer on
+      consumer:
+        description: Durable name of the consumer to create
+    messages:
+      request:
+        $ref: '#/components/messages/ConsumerCreateRequest'
+      response:
+        $ref: '#/components/messages/ConsumerInfoResponse'
+
+  consumerInfo:
+    address: '$JS.API.CONSUMER.INFO.{stream}.{consumer}'
+    title: Get Consumer Info
+    description: >-
+      Retrieve configuration and state for a specific consumer including
+      delivery count, pending message count, last delivery time, and
+      acknowledgment floor.
+    parameters:
+      stream:
+        description: Stream the consumer is bound to
+      consumer:
+        description: Name of the consumer
+    messages:
+      response:
+        $ref: '#/components/messages/ConsumerInfoResponse'
+
+  consumerDelete:
+    address: '$JS.API.CONSUMER.DELETE.{stream}.{consumer}'
+    title: Delete Consumer
+    description: >-
+      Delete a consumer from a stream. Deleting a consumer stops all deliveries
+      to its push subject (or makes it unavailable for pull operations) and
+      removes its tracking state. This operation is irreversible.
+    parameters:
+      stream:
+        description: Stream the consumer is bound to
+      consumer:
+        description: Name of the consumer to delete
+    messages:
+      response:
+        $ref: '#/components/messages/SuccessResponse'
+
+  consumerList:
+    address: '$JS.API.CONSUMER.LIST.{stream}'
+    title: List Consumers
+    description: >-
+      Retrieve a paginated list of consumers on a stream with their full
+      configuration and state. Supports offset pagination for streams with
+      many consumers.
+    parameters:
+      stream:
+        description: Stream whose consumers to list
+    messages:
+      request:
+        $ref: '#/components/messages/ListRequest'
+      response:
+        $ref: '#/components/messages/ConsumerListResponse'
+
+  consumerMsgNext:
+    address: '$JS.API.CONSUMER.MSG.NEXT.{stream}.{consumer}'
+    title: Fetch Next Messages (Pull Consumer)
+    description: >-
+      Request one or more messages from a pull consumer. The request payload
+      specifies the batch size, maximum bytes, and expiry for the fetch
+      operation. Messages are delivered to the reply subject provided in
+      the NATS request headers.
+    parameters:
+      stream:
+        description: Stream the consumer is bound to
+      consumer:
+        description: Name of the pull consumer to fetch from
+    messages:
+      request:
+        $ref: '#/components/messages/ConsumerFetchRequest'
+
+  streamMsgGet:
+    address: '$JS.API.STREAM.MSG.GET.{stream}'
+    title: Get Stream Message
+    description: >-
+      Retrieve a specific message from a stream by sequence number or by
+      subject and sequence. The response includes the full message including
+      headers, payload, and metadata.
+    parameters:
+      stream:
+        description: Name of the stream to retrieve the message from
+    messages:
+      request:
+        $ref: '#/components/messages/MsgGetRequest'
+      response:
+        $ref: '#/components/messages/MsgGetResponse'
+
+  streamMsgDelete:
+    address: '$JS.API.STREAM.MSG.DELETE.{stream}'
+    title: Delete Stream Message
+    description: >-
+      Delete a specific message from a stream by sequence number. By default
+      the message payload is erased (secure delete); set no_erase to true to
+      retain the sequence slot with an empty payload for ordering purposes.
+    parameters:
+      stream:
+        description: Name of the stream to delete the message from
+    messages:
+      request:
+        $ref: '#/components/messages/MsgDeleteRequest'
+      response:
+        $ref: '#/components/messages/SuccessResponse'
+
+  accountInfo:
+    address: '$JS.API.INFO'
+    title: Get Account JetStream Info
+    description: >-
+      Retrieve JetStream account-level information including memory and storage
+      usage, limits, stream count, consumer count, and API usage statistics.
+      Useful for monitoring quota consumption.
+    messages:
+      response:
+        $ref: '#/components/messages/AccountInfoResponse'
+
+components:
+  messages:
+    StreamCreateRequest:
+      name: StreamCreateRequest
+      title: Stream Create/Update Request
+      summary: JSON configuration object for creating or updating a JetStream stream
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/StreamConfig'
+
+    StreamInfoResponse:
+      name: StreamInfoResponse
+      title: Stream Info Response
+      summary: Stream configuration, state, and cluster information
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/StreamInfo'
+
+    StreamListResponse:
+      name: StreamListResponse
+      title: Stream List Response
+      summary: Paginated list of stream info objects
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          total:
+            type: integer
+            description: Total number of streams in the account
+          offset:
+            type: integer
+            description: Current page offset
+          limit:
+            type: integer
+            description: Maximum streams returned in this page
+          streams:
+            type: array
+            description: Array of stream info objects for this page
+            items:
+              $ref: '#/components/schemas/StreamInfo'
+
+    ConsumerCreateRequest:
+      name: ConsumerCreateRequest
+      title: Consumer Create/Update Request
+      summary: JSON configuration object for creating or updating a JetStream consumer
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ConsumerConfig'
+
+    ConsumerInfoResponse:
+      name: ConsumerInfoResponse
+      title: Consumer Info Response
+      summary: Consumer configuration and delivery state
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ConsumerInfo'
+
+    ConsumerListResponse:
+      name: ConsumerListResponse
+      title: Consumer List Response
+      summary: Paginated list of consumer info objects for a stream
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          total:
+            type: integer
+            description: Total number of consumers on the stream
+          offset:
+            type: integer
+            description: Current page offset
+          limit:
+            type: integer
+            description: Maximum consumers returned in this page
+          consumers:
+            type: array
+            description: Array of consumer info objects for this page
+            items:
+              $ref: '#/components/schemas/ConsumerInfo'
+
+    ConsumerFetchRequest:
+      name: ConsumerFetchRequest
+      title: Pull Consumer Fetch Request
+      summary: Parameters for a pull consumer message fetch operation
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          batch:
+            type: integer
+            minimum: 1
+            description: Maximum number of messages to fetch in this request
+          max_bytes:
+            type: integer
+            description: >-
+              Maximum total bytes to return in this fetch. The server stops
+              delivering messages once this limit is reached.
+          expires:
+            type: integer
+            description: >-
+              Nanosecond duration for which this fetch request is valid.
+              After expiry the server closes the fetch without error.
+          no_wait:
+            type: boolean
+            description: >-
+              If true and no messages are available, the server returns
+              immediately rather than waiting for the expiry duration.
+          idle_heartbeat:
+            type: integer
+            description: >-
+              Nanosecond interval at which the server sends heartbeat messages
+              during a long-polling fetch if no messages arrive.
+
+    ListRequest:
+      name: ListRequest
+      title: Paginated List Request
+      summary: Optional offset for paginating list results
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          offset:
+            type: integer
+            minimum: 0
+            description: >-
+              Number of items to skip before returning results. Use to
+              page through results when the total exceeds the page limit.
+
+    NamesResponse:
+      name: NamesResponse
+      title: Names List Response
+      summary: Paginated list of names (stream or consumer names)
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          total:
+            type: integer
+            description: Total number of items
+          offset:
+            type: integer
+            description: Current page offset
+          limit:
+            type: integer
+            description: Maximum items returned per page
+          names:
+            type: array
+            description: List of names for this page
+            items:
+              type: string
+
+    StreamPurgeRequest:
+      name: StreamPurgeRequest
+      title: Stream Purge Request
+      summary: Optional filter parameters for a stream purge operation
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          filter:
+            type: string
+            description: >-
+              Subject filter limiting the purge to messages on matching
+              subjects. Supports wildcards.
+          seq:
+            type: integer
+            description: >-
+              Purge messages up to but not including this sequence number.
+          keep:
+            type: integer
+            description: >-
+              Number of messages to keep from the end of the stream.
+              Mutually exclusive with seq.
+
+    PurgeResponse:
+      name: PurgeResponse
+      title: Purge Response
+      summary: Result of a stream purge operation
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          success:
+            type: boolean
+            description: Whether the purge completed successfully
+          purged:
+            type: integer
+            description: Number of messages removed by the purge
+
+    MsgGetRequest:
+      name: MsgGetRequest
+      title: Message Get Request
+      summary: Parameters for retrieving a specific message from a stream
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          seq:
+            type: integer
+            description: Sequence number of the message to retrieve
+          last_by_subj:
+            type: string
+            description: >-
+              Retrieve the last message stored on this specific subject.
+              Mutually exclusive with seq.
+          next_by_subj:
+            type: string
+            description: >-
+              Retrieve the next message on this subject at or after the
+              sequence specified in seq.
+
+    MsgGetResponse:
+      name: MsgGetResponse
+      title: Message Get Response
+      summary: A stored JetStream message including headers, payload, and metadata
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          message:
+            type: object
+            description: The stored message
+            properties:
+              subject:
+                type: string
+                description: Subject the message was published to
+              seq:
+                type: integer
+                description: Stream sequence number of the message
+              data:
+                type: string
+                contentEncoding: base64
+                description: Base64-encoded message payload
+              hdrs:
+                type: string
+                contentEncoding: base64
+                description: Base64-encoded NATS message headers
+              time:
+                type: string
+                format: date-time
+                description: Timestamp when the message was stored
+
+    MsgDeleteRequest:
+      name: MsgDeleteRequest
+      title: Message Delete Request
+      summary: Specifies the sequence number of a message to delete from a stream
+      contentType: application/json
+      payload:
+        type: object
+        required:
+          - seq
+        properties:
+          seq:
+            type: integer
+            description: Sequence number of the message to delete
+          no_erase:
+            type: boolean
+            description: >-
+              If false (default), the message payload is securely erased.
+              If true, the sequence slot is kept but marked deleted without
+              overwriting the payload bytes.
+
+    SuccessResponse:
+      name: SuccessResponse
+      title: Success Response
+      summary: Generic success/failure response for destructive operations
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          success:
+            type: boolean
+            description: Whether the operation completed successfully
+
+    AccountInfoResponse:
+      name: AccountInfoResponse
+      title: JetStream Account Info Response
+      summary: Account-level JetStream usage and limits
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AccountInfo'
+
+  schemas:
+    StreamConfig:
+      type: object
+      description: >-
+        Configuration for a JetStream stream. Defines subjects to capture,
+        retention policy, storage type, replication factor, and limits.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          pattern: '^[^.*>\s]+$'
+          description: >-
+            Unique stream name. Cannot contain spaces, tabs, periods,
+            greater-than signs, or asterisks.
+        description:
+          type: string
+          description: Human-readable description of the stream's purpose
+        subjects:
+          type: array
+          description: >-
+            NATS subjects whose messages will be stored in this stream.
+            Supports wildcards. If empty the stream name is used as the
+            subject.
+          items:
+            type: string
+        retention:
+          type: string
+          description: >-
+            Message retention policy. 'limits' retains messages subject to
+            size/age/count limits; 'interest' retains only while consumers
+            exist; 'workqueue' removes messages after all consumers ack.
+          enum:
+            - limits
+            - interest
+            - workqueue
+          default: limits
+        storage:
+          type: string
+          description: >-
+            Backend storage type for stream messages. 'file' persists to
+            disk; 'memory' stores in RAM only.
+          enum:
+            - file
+            - memory
+          default: file
+        num_replicas:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: >-
+            Number of stream replicas for high availability in a JetStream
+            cluster. Must not exceed the number of JetStream-enabled servers.
+          default: 1
+        max_msgs:
+          type: integer
+          description: >-
+            Maximum number of messages in the stream. -1 means unlimited.
+          default: -1
+        max_bytes:
+          type: integer
+          description: >-
+            Maximum total bytes of stream storage. -1 means unlimited.
+          default: -1
+        max_age:
+          type: integer
+          description: >-
+            Maximum age of messages in nanoseconds. Messages older than
+            this are removed. 0 means no age limit.
+          default: 0
+        max_msg_size:
+          type: integer
+          description: >-
+            Maximum size in bytes of an individual message. -1 means
+            unlimited.
+          default: -1
+        max_consumers:
+          type: integer
+          description: >-
+            Maximum number of consumers that can be bound to this stream.
+            -1 means unlimited.
+          default: -1
+        discard:
+          type: string
+          description: >-
+            Policy for discarding messages when limits are reached.
+            'old' removes oldest messages; 'new' rejects new publishes.
+          enum:
+            - old
+            - new
+          default: old
+        duplicate_window:
+          type: integer
+          description: >-
+            Nanosecond window during which duplicate publishes (by Nats-Msg-Id
+            header) are detected and rejected. 0 disables deduplication.
+        sealed:
+          type: boolean
+          description: >-
+            If true the stream is sealed and no new messages can be published.
+          default: false
+
+    StreamInfo:
+      type: object
+      description: >-
+        Stream information including current configuration, runtime state,
+        and cluster membership details.
+      properties:
+        config:
+          $ref: '#/components/schemas/StreamConfig'
+        state:
+          $ref: '#/components/schemas/StreamState'
+        created:
+          type: string
+          format: date-time
+          description: Timestamp when the stream was created
+        cluster:
+          $ref: '#/components/schemas/ClusterInfo'
+
+    StreamState:
+      type: object
+      description: Runtime state of a JetStream stream
+      properties:
+        messages:
+          type: integer
+          description: Current number of messages stored in the stream
+        bytes:
+          type: integer
+          description: Total bytes stored in the stream
+        first_seq:
+          type: integer
+          description: Sequence number of the oldest message in the stream
+        first_ts:
+          type: string
+          format: date-time
+          description: Timestamp of the oldest message
+        last_seq:
+          type: integer
+          description: Sequence number of the most recently stored message
+        last_ts:
+          type: string
+          format: date-time
+          description: Timestamp of the most recently stored message
+        consumer_count:
+          type: integer
+          description: Number of consumers currently bound to the stream
+
+    ConsumerConfig:
+      type: object
+      description: >-
+        Configuration for a JetStream consumer defining delivery policy,
+        acknowledgment behavior, and filter criteria.
+      properties:
+        durable_name:
+          type: string
+          pattern: '^[^.*>\s]+$'
+          description: >-
+            Durable name for the consumer. Durable consumers survive client
+            disconnects and server restarts. Omit for ephemeral consumers.
+        name:
+          type: string
+          description: >-
+            Consumer name. Preferred way to name consumers in server 2.10+.
+            If durable_name is not set this creates a named ephemeral consumer.
+        description:
+          type: string
+          description: Human-readable description of the consumer's purpose
+        deliver_policy:
+          type: string
+          description: >-
+            Starting point for message delivery. 'all' delivers from the
+            first message; 'last' delivers only the most recent; 'new'
+            delivers only future messages.
+          enum:
+            - all
+            - last
+            - new
+            - by_start_sequence
+            - by_start_time
+            - last_per_subject
+          default: all
+        opt_start_seq:
+          type: integer
+          description: >-
+            Sequence number to start delivery from when deliver_policy is
+            by_start_sequence.
+        opt_start_time:
+          type: string
+          format: date-time
+          description: >-
+            Timestamp to start delivery from when deliver_policy is
+            by_start_time.
+        ack_policy:
+          type: string
+          description: >-
+            Acknowledgment policy. 'explicit' requires ack per message;
+            'all' cumulative ack; 'none' no ack required.
+          enum:
+            - explicit
+            - all
+            - none
+          default: explicit
+        ack_wait:
+          type: integer
+          description: >-
+            Nanosecond duration to wait for acknowledgment before redelivering.
+          default: 30000000000
+        max_deliver:
+          type: integer
+          description: >-
+            Maximum number of delivery attempts per message. -1 means
+            unlimited.
+          default: -1
+        filter_subject:
+          type: string
+          description: >-
+            Subject filter restricting this consumer to a subset of the
+            stream's subjects. Supports wildcards.
+        filter_subjects:
+          type: array
+          description: >-
+            Multiple subject filters. Allows a single consumer to select
+            messages from several subjects within the stream.
+          items:
+            type: string
+        deliver_subject:
+          type: string
+          description: >-
+            Push consumer delivery subject. Messages are pushed to this
+            NATS subject. Omit for pull consumers.
+        deliver_group:
+          type: string
+          description: >-
+            Queue group name for push consumer load balancing. Multiple
+            subscribers on the deliver_subject share messages.
+        max_waiting:
+          type: integer
+          description: >-
+            Maximum number of pending pull fetch requests. Excess requests
+            are rejected with a 409 status.
+        max_ack_pending:
+          type: integer
+          description: >-
+            Maximum number of unacknowledged messages before the server
+            pauses delivery.
+        replay_policy:
+          type: string
+          description: >-
+            Message replay policy for re-delivering historical messages.
+            'instant' replays as fast as possible; 'original' replays at
+            the original publication rate.
+          enum:
+            - instant
+            - original
+          default: instant
+
+    ConsumerInfo:
+      type: object
+      description: Consumer configuration and current delivery state
+      properties:
+        stream_name:
+          type: string
+          description: Name of the stream this consumer is bound to
+        name:
+          type: string
+          description: Name of the consumer
+        config:
+          $ref: '#/components/schemas/ConsumerConfig'
+        created:
+          type: string
+          format: date-time
+          description: Timestamp when the consumer was created
+        delivered:
+          type: object
+          description: Last delivered message sequence and timestamp
+          properties:
+            consumer_seq:
+              type: integer
+              description: Consumer-side delivery sequence number
+            stream_seq:
+              type: integer
+              description: Stream-side sequence number of last delivered message
+            last_active:
+              type: string
+              format: date-time
+              description: Timestamp of last message delivery
+        ack_floor:
+          type: object
+          description: Highest contiguous acknowledged sequence
+          properties:
+            consumer_seq:
+              type: integer
+              description: Consumer sequence of the highest contiguous ack
+            stream_seq:
+              type: integer
+              description: Stream sequence of the highest contiguous ack
+        num_pending:
+          type: integer
+          description: Number of messages available but not yet delivered
+        num_redelivered:
+          type: integer
+          description: Number of messages that have been redelivered due to ack timeout
+        num_waiting:
+          type: integer
+          description: Number of pending pull fetch requests waiting for messages
+
+    ClusterInfo:
+      type: object
+      description: JetStream cluster membership and leader information for a stream or consumer
+      properties:
+        name:
+          type: string
+          description: Name of the JetStream cluster
+        leader:
+          type: string
+          description: Name of the current Raft leader for this resource
+        replicas:
+          type: array
+          description: Replica membership and lag information
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Server name of the replica
+              current:
+                type: boolean
+                description: Whether this replica is current (caught up)
+              active:
+                type: string
+                description: Duration since last activity from this replica
+              lag:
+                type: integer
+                description: Number of operations the replica is behind the leader
+
+    AccountInfo:
+      type: object
+      description: Account-level JetStream resource usage and configured limits
+      properties:
+        memory:
+          type: integer
+          description: Bytes of memory currently used by JetStream in this account
+        storage:
+          type: integer
+          description: Bytes of file storage currently used by JetStream in this account
+        reserved_memory:
+          type: integer
+          description: Bytes of memory reserved by stream configurations
+        reserved_storage:
+          type: integer
+          description: Bytes of file storage reserved by stream configurations
+        streams:
+          type: integer
+          description: Number of streams currently in this account
+        consumers:
+          type: integer
+          description: Number of consumers currently in this account
+        limits:
+          type: object
+          description: Configured account-level resource limits
+          properties:
+            max_memory:
+              type: integer
+              description: Maximum memory bytes allowed. -1 means unlimited.
+            max_storage:
+              type: integer
+              description: Maximum file storage bytes allowed. -1 means unlimited.
+            max_streams:
+              type: integer
+              description: Maximum number of streams allowed. -1 means unlimited.
+            max_consumers:
+              type: integer
+              description: Maximum number of consumers allowed. -1 means unlimited.
+        api:
+          type: object
+          description: JetStream API usage statistics for the account
+          properties:
+            total:
+              type: integer
+              description: Total number of JetStream API requests processed
+            errors:
+              type: integer
+              description: Total number of JetStream API requests that returned errors

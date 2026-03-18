@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nats.io/schemas/object-store.json",
+  "title": "NATS Object Store",
+  "description": "Schema for NATS JetStream Object Store bucket configuration and object metadata. The Object Store is a JetStream-backed abstraction for storing arbitrarily large binary objects using a message chunking mechanism. Objects are identified by a bucket name and an object name. The backing JetStream stream uses the OBJ_ name prefix.",
+  "type": "object",
+  "$defs": {
+    "ObjectStoreBucketConfig": {
+      "type": "object",
+      "title": "Object Store Bucket Configuration",
+      "description": "Configuration for creating a NATS Object Store bucket. Maps to a JetStream stream with OBJ-specific defaults. The backing stream is created with the name OBJ_{bucket}.",
+      "required": ["bucket"],
+      "properties": {
+        "bucket": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "description": "Name of the Object Store bucket. Must be alphanumeric with underscores or hyphens. The backing JetStream stream is named OBJ_{bucket}."
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the bucket's purpose."
+        },
+        "ttl": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Time-to-live for objects in nanoseconds. Objects older than this are automatically removed. 0 means objects never expire."
+        },
+        "storage": {
+          "type": "string",
+          "description": "Backend storage type for object data.",
+          "enum": ["file", "memory"],
+          "default": "file"
+        },
+        "num_replicas": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5,
+          "description": "Number of replicas for high availability in a JetStream cluster.",
+          "default": 1
+        },
+        "max_chunk_size": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum size in bytes for individual message chunks used to store object data. Larger objects are split into multiple chunks of this size.",
+          "default": 131072
+        },
+        "max_bytes": {
+          "type": "integer",
+          "description": "Maximum total bytes for all objects and chunks in the bucket. -1 means no limit.",
+          "default": -1
+        },
+        "placement": {
+          "$ref": "#/$defs/Placement"
+        },
+        "mirror": {
+          "$ref": "#/$defs/StreamSource"
+        },
+        "sources": {
+          "type": "array",
+          "description": "Source streams to aggregate into this object store bucket for cross-account or cross-cluster replication.",
+          "items": {
+            "$ref": "#/$defs/StreamSource"
+          }
+        }
+      }
+    },
+    "ObjectInfo": {
+      "type": "object",
+      "title": "Object Info",
+      "description": "Metadata for a stored object in a NATS Object Store bucket. Does not include the object data itself; retrieve the object separately using get operations.",
+      "required": ["name", "bucket"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the object within the bucket. Used as the primary identifier for get, delete, and update operations."
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional human-readable description of the object."
+        },
+        "headers": {
+          "type": "object",
+          "description": "Optional key-value metadata headers associated with the object. Stored as NATS message headers on the info message.",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "bucket": {
+          "type": "string",
+          "description": "Name of the bucket this object belongs to."
+        },
+        "nuid": {
+          "type": "string",
+          "description": "NATS unique identifier assigned to this object at creation. Used as part of the chunk subject pattern."
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total size in bytes of the stored object."
+        },
+        "chunks": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of message chunks the object was split into for storage."
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]+=*$",
+          "description": "Base64-encoded SHA-256 digest of the complete object data. Used to verify integrity after retrieval."
+        },
+        "digest": {
+          "type": "string",
+          "description": "Digest string in the format 'SHA-256={base64}' for verifying object integrity. Available in newer server versions."
+        },
+        "mtime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the object was last modified (created or updated)."
+        },
+        "deleted": {
+          "type": "boolean",
+          "description": "Whether this object has been marked as deleted. Deleted objects appear in watch results with this flag set.",
+          "default": false
+        },
+        "options": {
+          "$ref": "#/$defs/ObjectMetaOptions"
+        }
+      }
+    },
+    "ObjectMetaOptions": {
+      "type": "object",
+      "title": "Object Meta Options",
+      "description": "Additional options embedded in an Object Store object metadata record.",
+      "properties": {
+        "link": {
+          "$ref": "#/$defs/ObjectLink"
+        },
+        "max_chunk_size": {
+          "type": "integer",
+          "description": "Chunk size override for this specific object, in bytes. Overrides the bucket-level max_chunk_size."
+        }
+      }
+    },
+    "ObjectLink": {
+      "type": "object",
+      "title": "Object Link",
+      "description": "A link reference pointing to another object or bucket, enabling symbolic links within and across Object Store buckets.",
+      "properties": {
+        "bucket": {
+          "type": "string",
+          "description": "Name of the target bucket for this link."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the target object within the target bucket. If omitted this is a bucket-level link."
+        }
+      }
+    },
+    "ObjectStoreBucketStatus": {
+      "type": "object",
+      "title": "Object Store Bucket Status",
+      "description": "Runtime status for an Object Store bucket including current configuration and storage usage.",
+      "properties": {
+        "bucket": {
+          "type": "string",
+          "description": "Name of the Object Store bucket."
+        },
+        "description": {
+          "type": "string",
+          "description": "Configured description for the bucket."
+        },
+        "ttl": {
+          "type": "integer",
+          "description": "Configured TTL in nanoseconds. 0 means no expiry."
+        },
+        "storage_type": {
+          "type": "string",
+          "description": "Configured storage backend.",
+          "enum": ["file", "memory"]
+        },
+        "replicas": {
+          "type": "integer",
+          "description": "Configured replication factor."
+        },
+        "size": {
+          "type": "integer",
+          "description": "Total bytes currently stored across all objects and chunks in the bucket."
+        },
+        "is_mirror": {
+          "type": "boolean",
+          "description": "Whether this bucket mirrors another bucket."
+        }
+      }
+    },
+    "Placement": {
+      "type": "object",
+      "title": "Cluster Placement",
+      "description": "Placement constraints for selecting which cluster nodes should hold stream replicas.",
+      "properties": {
+        "cluster": {
+          "type": "string",
+          "description": "Name of the cluster the stream should be placed in."
+        },
+        "tags": {
+          "type": "array",
+          "description": "Server tags required for nodes that should hold stream replicas.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "StreamSource": {
+      "type": "object",
+      "title": "Stream Source",
+      "description": "Reference to a source stream for mirroring or aggregating data into this object store's backing stream.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the source stream to mirror or aggregate from."
+        },
+        "opt_start_seq": {
+          "type": "integer",
+          "description": "Stream sequence number to start replicating from."
+        },
+        "opt_start_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp to start replicating from."
+        },
+        "filter_subject": {
+          "type": "string",
+          "description": "Subject filter to apply when sourcing from the named stream."
+        },
+        "external": {
+          "type": "object",
+          "description": "Configuration for sourcing from a stream in a remote account or cluster.",
+          "properties": {
+            "api": {
+              "type": "string",
+              "description": "JetStream API prefix in the remote account, e.g. '$JS.hub.API'."
+            },
+            "deliver": {
+              "type": "string",
+              "description": "Subject prefix for delivering messages from the remote account."
+            }
+          }
+        }
+      }
+    }
+  }
+}
