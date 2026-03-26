@@ -13,7 +13,7 @@ tags:
   - IoT
 url: https://raw.githubusercontent.com/api-evangelist/nats/refs/heads/main/apis.yml
 created: '2025-01-01'
-modified: '2026-03-18'
+modified: '2026-03-26'
 specificationVersion: '0.19'
 apis:
   - aid: nats:nats-monitoring-api
@@ -32,6 +32,8 @@ apis:
         type: Documentation
       - url: properties/nats-monitoring-api-openapi.yml
         type: OpenAPI
+      - url: openapi/nats-monitoring.yml
+        type: OpenAPI
   - aid: nats:nats-messaging-api
     name: NATS Messaging API
     description: Asynchronous messaging API supporting core pub-sub, request-reply,
@@ -48,6 +50,10 @@ apis:
         type: Documentation
       - url: properties/nats-messaging-asyncapi.yml
         type: AsyncAPI
+      - url: asyncapi/nats-messaging.yml
+        type: AsyncAPI
+      - url: json-schema/nats-stream-config.json
+        type: JSONSchema
   - aid: nats:nats-jetstream-api
     name: NATS JetStream Management API
     description: >-

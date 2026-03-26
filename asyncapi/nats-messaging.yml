@@ -1,0 +1,258 @@
+asyncapi: 2.6.0
+info:
+  title: NATS Core and JetStream Messaging API
+  version: 2.10.0
+  description: >-
+    NATS provides cloud-native messaging with core pub-sub, request-reply, and
+    queue group patterns, plus JetStream for persistent streaming with streams,
+    consumers, key-value stores, and object stores.
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  default:
+    url: localhost:4222
+    protocol: nats
+    description: Default NATS server
+defaultContentType: application/json
+channels:
+  '{subject}':
+    description: >-
+      NATS core pub-sub channel. Messages published to a subject are delivered
+      to all subscribers matching that subject. Supports wildcards (* for single
+      token, > for multiple tokens).
+    parameters:
+      subject:
+        description: >-
+          NATS subject, a dot-separated string. Supports wildcards:
+          * matches a single token, > matches one or more tokens.
+        schema:
+          type: string
+    publish:
+      operationId: publish
+      summary: Publish a message to a NATS subject
+      message:
+        $ref: '#/components/messages/NATSMessage'
+    subscribe:
+      operationId: subscribe
+      summary: Subscribe to a NATS subject
+      message:
+        $ref: '#/components/messages/NATSMessage'
+  '{subject}.request':
+    description: >-
+      NATS request-reply pattern. A requestor publishes a message with a
+      unique reply subject and waits for a response.
+    parameters:
+      subject:
+        schema:
+          type: string
+    publish:
+      operationId: request
+      summary: Send a request and await reply
+      message:
+        $ref: '#/components/messages/NATSMessage'
+    subscribe:
+      operationId: reply
+      summary: Receive request and send reply
+      message:
+        $ref: '#/components/messages/NATSMessage'
+  '$JS.API.STREAM.CREATE.{stream}':
+    description: Create a JetStream stream
+    parameters:
+      stream:
+        schema:
+          type: string
+    publish:
+      operationId: createStream
+      summary: Create a new JetStream stream
+      message:
+        $ref: '#/components/messages/StreamConfig'
+  '$JS.API.STREAM.INFO.{stream}':
+    description: Get JetStream stream info
+    parameters:
+      stream:
+        schema:
+          type: string
+    publish:
+      operationId: getStreamInfo
+      summary: Get stream information
+      message:
+        name: Empty
+        payload:
+          type: object
+    subscribe:
+      operationId: streamInfoResponse
+      summary: Stream info response
+      message:
+        $ref: '#/components/messages/StreamInfo'
+  '$JS.API.STREAM.DELETE.{stream}':
+    description: Delete a JetStream stream
+    parameters:
+      stream:
+        schema:
+          type: string
+    publish:
+      operationId: deleteStream
+      summary: Delete a stream
+      message:
+        name: Empty
+        payload:
+          type: object
+  '$JS.API.CONSUMER.CREATE.{stream}.{consumer}':
+    description: Create a JetStream consumer
+    parameters:
+      stream:
+        schema:
+          type: string
+      consumer:
+        schema:
+          type: string
+    publish:
+      operationId: createConsumer
+      summary: Create a new JetStream consumer
+      message:
+        $ref: '#/components/messages/ConsumerConfig'
+  '$JS.API.STREAM.NAMES':
+    description: List JetStream stream names
+    publish:
+      operationId: listStreamNames
+      summary: Request list of stream names
+      message:
+        name: ListRequest
+        payload:
+          type: object
+          properties:
+            offset:
+              type: integer
+            subject:
+              type: string
+components:
+  messages:
+    NATSMessage:
+      name: NATSMessage
+      title: NATS Message
+      summary: A message in the NATS messaging system
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          Nats-Msg-Id:
+            type: string
+            description: Unique message ID for deduplication
+          Nats-Expected-Stream:
+            type: string
+            description: Expected stream for publish
+          Nats-Expected-Last-Msg-Id:
+            type: string
+            description: Expected last message ID for optimistic concurrency
+          Nats-Expected-Last-Sequence:
+            type: string
+            description: Expected last sequence for optimistic concurrency
+      payload:
+        type: object
+        description: The message payload
+    StreamConfig:
+      name: StreamConfig
+      title: JetStream Stream Configuration
+      payload:
+        type: object
+        properties:
+          name:
+            type: string
+          subjects:
+            type: array
+            items:
+              type: string
+          retention:
+            type: string
+            enum: [limits, interest, workqueue]
+          max_consumers:
+            type: integer
+          max_msgs:
+            type: integer
+          max_bytes:
+            type: integer
+          max_age:
+            type: integer
+            description: Maximum age in nanoseconds
+          max_msg_size:
+            type: integer
+          storage:
+            type: string
+            enum: [file, memory]
+          num_replicas:
+            type: integer
+          discard:
+            type: string
+            enum: [old, new]
+          duplicate_window:
+            type: integer
+          allow_rollup_hdrs:
+            type: boolean
+          deny_delete:
+            type: boolean
+          deny_purge:
+            type: boolean
+    StreamInfo:
+      name: StreamInfo
+      title: JetStream Stream Info
+      payload:
+        type: object
+        properties:
+          config:
+            type: object
+          state:
+            type: object
+            properties:
+              messages:
+                type: integer
+              bytes:
+                type: integer
+              first_seq:
+                type: integer
+              last_seq:
+                type: integer
+              consumer_count:
+                type: integer
+          created:
+            type: string
+            format: date-time
+          cluster:
+            type: object
+    ConsumerConfig:
+      name: ConsumerConfig
+      title: JetStream Consumer Configuration
+      payload:
+        type: object
+        properties:
+          stream_name:
+            type: string
+          config:
+            type: object
+            properties:
+              durable_name:
+                type: string
+              deliver_subject:
+                type: string
+              deliver_group:
+                type: string
+              ack_policy:
+                type: string
+                enum: [none, all, explicit]
+              ack_wait:
+                type: integer
+              max_deliver:
+                type: integer
+              filter_subject:
+                type: string
+              replay_policy:
+                type: string
+                enum: [instant, original]
+              max_ack_pending:
+                type: integer
+              deliver_policy:
+                type: string
+                enum: [all, last, new, by_start_sequence, by_start_time, last_per_subject]

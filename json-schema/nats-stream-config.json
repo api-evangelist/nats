@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/nats/nats-stream-config.json",
+  "title": "NATS JetStream Stream Configuration",
+  "description": "Schema for configuring a NATS JetStream stream.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "A unique name for the stream"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional description for the stream"
+    },
+    "subjects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "A list of subjects to consume, supports wildcards"
+    },
+    "retention": {
+      "type": "string",
+      "enum": ["limits", "interest", "workqueue"],
+      "default": "limits",
+      "description": "How messages are retained in the stream"
+    },
+    "max_consumers": {
+      "type": "integer",
+      "default": -1,
+      "description": "Maximum number of consumers, -1 for unlimited"
+    },
+    "max_msgs": {
+      "type": "integer",
+      "default": -1,
+      "description": "Maximum number of messages, -1 for unlimited"
+    },
+    "max_bytes": {
+      "type": "integer",
+      "default": -1,
+      "description": "Maximum total bytes, -1 for unlimited"
+    },
+    "max_age": {
+      "type": "integer",
+      "default": 0,
+      "description": "Maximum age in nanoseconds, 0 for unlimited"
+    },
+    "max_msg_size": {
+      "type": "integer",
+      "default": -1,
+      "description": "Maximum message size in bytes"
+    },
+    "storage": {
+      "type": "string",
+      "enum": ["file", "memory"],
+      "default": "file",
+      "description": "Storage backend type"
+    },
+    "num_replicas": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "default": 1,
+      "description": "Number of stream replicas"
+    },
+    "discard": {
+      "type": "string",
+      "enum": ["old", "new"],
+      "default": "old",
+      "description": "Discard policy when stream limits are reached"
+    },
+    "duplicate_window": {
+      "type": "integer",
+      "description": "Window within which to track duplicate messages in nanoseconds"
+    },
+    "allow_rollup_hdrs": {
+      "type": "boolean",
+      "default": false,
+      "description": "Allow rollup headers to purge subjects"
+    },
+    "deny_delete": {
+      "type": "boolean",
+      "default": false,
+      "description": "Deny message deletion via API"
+    },
+    "deny_purge": {
+      "type": "boolean",
+      "default": false,
+      "description": "Deny stream purge via API"
+    },
+    "allow_direct": {
+      "type": "boolean",
+      "default": false,
+      "description": "Allow direct message access"
+    },
+    "mirror": {
+      "type": "object",
+      "description": "Mirror configuration for stream mirroring",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "opt_start_seq": {
+          "type": "integer"
+        },
+        "filter_subject": {
+          "type": "string"
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "description": "Sources for stream sourcing",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "opt_start_seq": {
+            "type": "integer"
+          },
+          "filter_subject": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": ["name"]
+}
