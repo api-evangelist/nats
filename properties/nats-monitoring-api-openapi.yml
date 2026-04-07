@@ -24,7 +24,7 @@ paths:
   /varz:
     get:
       operationId: getServerVariables
-      summary: Get server general information
+      summary: NATS Get server general information
       description: >-
         Returns general information about the server including
         version, uptime, CPU and memory usage, connections,
@@ -48,7 +48,7 @@ paths:
   /connz:
     get:
       operationId: getConnections
-      summary: Get connection information
+      summary: NATS Get connection information
       description: >-
         Returns detailed information about current client
         connections to the server including IP, port, subscriptions,
@@ -125,7 +125,7 @@ paths:
   /routez:
     get:
       operationId: getRoutes
-      summary: Get route information
+      summary: NATS Get route information
       description: >-
         Returns information about active routes between servers
         in a NATS cluster including remote server IDs, addresses,
@@ -149,7 +149,7 @@ paths:
   /subsz:
     get:
       operationId: getSubscriptions
-      summary: Get subscription information
+      summary: NATS Get subscription information
       description: >-
         Returns information about the internal subscription
         routing data structure including number of subscriptions,
@@ -178,7 +178,7 @@ paths:
   /jsz:
     get:
       operationId: getJetStreamInfo
-      summary: Get JetStream information
+      summary: NATS Get JetStream information
       description: >-
         Returns information about the JetStream subsystem
         including configuration, resource usage, streams,
@@ -243,7 +243,7 @@ paths:
   /healthz:
     get:
       operationId: getHealth
-      summary: Get server health status
+      summary: NATS Get server health status
       description: >-
         Returns the health status of the server. Returns 200 OK
         when the server is healthy and ready to accept connections.
@@ -280,7 +280,7 @@ paths:
   /gatewayz:
     get:
       operationId: getGateways
-      summary: Get gateway information
+      summary: NATS Get gateway information
       description: >-
         Returns information about configured gateways between
         NATS super-clusters including remote gateway connections
@@ -309,7 +309,7 @@ paths:
   /leafz:
     get:
       operationId: getLeafNodes
-      summary: Get leaf node information
+      summary: NATS Get leaf node information
       description: >-
         Returns information about leaf node connections
         including remote address, account, and message statistics.
@@ -332,7 +332,7 @@ paths:
   /accountz:
     get:
       operationId: getAccounts
-      summary: Get account information
+      summary: NATS Get account information
       description: >-
         Returns information about server accounts including
         connection counts, leaf node counts, and subscription counts.
