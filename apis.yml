@@ -1,16 +1,14 @@
 aid: nats
 name: NATS
-description: A high-performance, cloud-native messaging system for microservices,
-  IoT, and edge computing. Provides pub-sub, request-reply, and queue-based messaging
-  patterns with at-most-once and at-least-once delivery guarantees.
+description: A high-performance, cloud-native messaging system for microservices, IoT, and edge computing. Provides pub-sub, request-reply, and queue-based messaging patterns with at-most-once and at-least-once delivery guarantees.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Message Broker
-  - Pub Sub
-  - Microservices
   - Cloud Native
   - IoT
+  - Message Broker
+  - Microservices
+  - Pub Sub
 url: https://raw.githubusercontent.com/api-evangelist/nats/refs/heads/main/apis.yml
 created: '2025-01-01'
 modified: '2026-03-26'
@@ -18,15 +16,13 @@ specificationVersion: '0.19'
 apis:
   - aid: nats:nats-monitoring-api
     name: NATS Monitoring API
-    description: HTTP monitoring API providing real-time server status, connection
-      information, route details, subscription statistics, JetStream metrics, and
-      health check endpoints for observability and operations.
+    description: HTTP monitoring API providing real-time server status, connection information, route details, subscription statistics, JetStream metrics, and health check endpoints for observability and operations.
     humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
     baseURL: http://localhost:8222
     tags:
-      - Monitoring
       - Health
       - Metrics
+      - Monitoring
     properties:
       - url: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
         type: Documentation
@@ -36,14 +32,12 @@ apis:
         type: OpenAPI
   - aid: nats:nats-messaging-api
     name: NATS Messaging API
-    description: Asynchronous messaging API supporting core pub-sub, request-reply,
-      queue groups, and JetStream persistent messaging with streams, consumers,
-      key-value stores, and object stores.
+    description: Asynchronous messaging API supporting core pub-sub, request-reply, queue groups, and JetStream persistent messaging with streams, consumers, key-value stores, and object stores.
     humanURL: https://docs.nats.io/nats-concepts/core-nats
     tags:
+      - JetStream
       - Messaging
       - Pub Sub
-      - JetStream
       - Streaming
     properties:
       - url: https://docs.nats.io/nats-concepts/core-nats
@@ -86,8 +80,8 @@ apis:
       streams with the KV_ prefix.
     humanURL: https://docs.nats.io/nats-concepts/jetstream/key-value-store
     tags:
-      - Key-Value
       - JetStream
+      - Key-Value
       - Storage
     properties:
       - url: https://docs.nats.io/nats-concepts/jetstream/key-value-store
@@ -105,8 +99,8 @@ apis:
       get, delete, and watch operations for managing stored files and blobs.
     humanURL: https://docs.nats.io/nats-concepts/jetstream/obj_store
     tags:
-      - Object Store
       - JetStream
+      - Object Store
       - Storage
     properties:
       - url: https://docs.nats.io/nats-concepts/jetstream/obj_store

@@ -917,11 +917,11 @@ components:
             subscriptions:
               type: integer
 tags:
-  - name: Monitoring
-    description: Server monitoring and status endpoints
   - name: Clustering
     description: Cluster, gateway, and leaf node endpoints
-  - name: JetStream
-    description: JetStream subsystem monitoring
   - name: Health
     description: Health check endpoints
+  - name: JetStream
+    description: JetStream subsystem monitoring
+  - name: Monitoring
+    description: Server monitoring and status endpoints
