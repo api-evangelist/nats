@@ -4,106 +4,81 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: NATS
 providerId: nats
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
-  - Cloud Native
-  - IoT
-  - Message Broker
-  - Microservices
-  - Pub Sub
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the NATS API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  - Message Broker
+  - Pub Sub
+  - Streaming
+description: NATS open source does not enforce request-per-second rate limits via HTTP — it is a TCP/WebSocket
+  messaging server. Operator-enforced limits are configured per Account via JWT claims (max connections,
+  max subscriptions, max payload, max data, max leaf nodes). The HTTP monitoring endpoints on port 8222
+  are unauthenticated and intended for operations dashboards. Synadia Cloud, the managed offering, enforces
+  per-Team quotas defined by subscription tier (connections, subscriptions, network data, storage, message
+  size) rather than RPS throttling.
+sources:
+  - https://docs.nats.io/running-a-nats-service/configuration/securing_nats/jwt
+  - https://www.synadia.com/cloud
+  - https://docs.synadia.com/cloud/pricing
 responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+  quotaExceeded: -ERR
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
+  - name: Max connections (per account, OSS)
+    scope: account
+    metric: concurrent_connections
+    limit: see account JWT max_connections claim
+    notes: Configured per Account via JWT claims; default unlimited.
+  - name: Max subscriptions (per account, OSS)
+    scope: account
+    metric: concurrent_subscriptions
+    limit: see account JWT max_subscriptions claim
+    notes: Configured per Account via JWT claims; default unlimited.
+  - name: Max payload (per account, OSS)
+    scope: account
+    metric: bytes_per_message
+    limit: see account JWT max_payload claim
+    notes: Defaults to server max_payload (1 MB).
+  - name: Max data (per account, OSS)
+    scope: account
+    metric: bytes
+    limit: see account JWT max_data claim
+    notes: Aggregate JetStream storage cap.
+  - name: Synadia Cloud Personal — connections
+    scope: team
+    metric: concurrent_connections
     limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - NATS Monitoring API
-      - NATS Messaging API
-      - NATS JetStream Management API
-      - NATS Key-Value Store API
-      - NATS Object Store API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - NATS Monitoring API
-      - NATS Messaging API
-      - NATS JetStream Management API
-      - NATS Key-Value Store API
-      - NATS Object Store API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
+    notes: Free tier; 100 subscriptions, 5 GiB storage, 10 GB network data, 1 MiB max message.
+  - name: Synadia Cloud Starter — connections
+    scope: team
+    metric: concurrent_connections
     limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - NATS Monitoring API
-      - NATS Messaging API
-      - NATS JetStream Management API
-      - NATS Key-Value Store API
-      - NATS Object Store API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - NATS Monitoring API
-      - NATS Messaging API
-      - NATS JetStream Management API
-      - NATS Key-Value Store API
-      - NATS Object Store API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
+    notes: $49/mo; 1,000 subscriptions, 10 GiB storage, 100 GB network data.
+  - name: Synadia Cloud Pro — connections
+    scope: team
+    metric: concurrent_connections
     limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - NATS Monitoring API
-      - NATS Messaging API
-      - NATS JetStream Management API
-      - NATS Key-Value Store API
-      - NATS Object Store API
+    notes: $199/mo; 10,000 subscriptions, 50 GiB storage, 1 TiB network data, 2 MiB max message.
+  - name: Synadia Cloud Premium — connections
+    scope: team
+    metric: concurrent_connections
+    limit: 10000
+    notes: $899/mo; 100,000 subscriptions, 1 TiB storage, 2 TiB network data, 8 MiB max message.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Account-scoped quotas (OSS)
+    description: NATS enforces resource limits per Account via signed JWT claims rather than per-request
+      throttling. Use the operator/account/user hierarchy and `nsc` tool to set max_connections, max_subscriptions,
+      max_payload, max_data, and max_leaf_nodes.
+  - name: Slow consumer detection
+    description: NATS server disconnects subscribers that cannot keep up with publish rate; clients receive
+      a slow-consumer error and must reconnect. Publishers receive `-ERR` flow-control messages.
+  - name: JetStream backpressure
+    description: JetStream applies stream-level limits (max bytes, max messages, max age) and pull/push
+      consumer ack windows. Producers are flow-controlled when stream storage thresholds are reached.
+  - name: Synadia Cloud quota enforcement
+    description: Cloud tier limits are enforced as hard caps on connections, subscriptions, storage, and
+      network data. Exceeding network-data or storage caps triggers degraded service until the next billing
+      period or until the team upgrades / adds storage packs.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
