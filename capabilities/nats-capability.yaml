@@ -1,0 +1,545 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: NATS Monitoring HTTP API
+  description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection
+    info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
+  tags:
+  - Nats
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: nats
+    baseUri: http://localhost:8222
+    description: NATS Monitoring HTTP API HTTP API.
+    resources:
+    - name: varz
+      path: /varz
+      operations:
+      - name: getvarz
+        method: GET
+        description: General server information
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: connz
+      path: /connz
+      operations:
+      - name: getconnz
+        method: GET
+        description: Connection information
+        inputParameters:
+        - name: sort
+          in: query
+          type: string
+        - name: auth
+          in: query
+          type: boolean
+        - name: subs
+          in: query
+          type: boolean
+        - name: offset
+          in: query
+          type: integer
+        - name: limit
+          in: query
+          type: integer
+        - name: cid
+          in: query
+          type: integer
+        - name: state
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: routez
+      path: /routez
+      operations:
+      - name: getroutez
+        method: GET
+        description: Route information
+        inputParameters:
+        - name: subs
+          in: query
+          type: boolean
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: gatewayz
+      path: /gatewayz
+      operations:
+      - name: getgatewayz
+        method: GET
+        description: Gateway information
+        inputParameters:
+        - name: accs
+          in: query
+          type: boolean
+        - name: gw_name
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: leafz
+      path: /leafz
+      operations:
+      - name: getleafz
+        method: GET
+        description: Leaf node information
+        inputParameters:
+        - name: subs
+          in: query
+          type: boolean
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subsz
+      path: /subsz
+      operations:
+      - name: getsubsz
+        method: GET
+        description: Subscription information
+        inputParameters:
+        - name: subs
+          in: query
+          type: boolean
+        - name: offset
+          in: query
+          type: integer
+        - name: limit
+          in: query
+          type: integer
+        - name: test
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: jsz
+      path: /jsz
+      operations:
+      - name: getjsz
+        method: GET
+        description: JetStream information
+        inputParameters:
+        - name: acc
+          in: query
+          type: string
+        - name: accounts
+          in: query
+          type: boolean
+        - name: streams
+          in: query
+          type: boolean
+        - name: consumers
+          in: query
+          type: boolean
+        - name: config
+          in: query
+          type: boolean
+        - name: leader-only
+          in: query
+          type: boolean
+        - name: offset
+          in: query
+          type: integer
+        - name: limit
+          in: query
+          type: integer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: accountz
+      path: /accountz
+      operations:
+      - name: getaccountz
+        method: GET
+        description: Account information
+        inputParameters:
+        - name: acc
+          in: query
+          type: string
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: healthz
+      path: /healthz
+      operations:
+      - name: gethealthz
+        method: GET
+        description: Health check
+        inputParameters:
+        - name: js-enabled-only
+          in: query
+          type: boolean
+        - name: js-server-only
+          in: query
+          type: boolean
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: ipqueuesz
+      path: /ipqueuesz
+      operations:
+      - name: getipqueuesz
+        method: GET
+        description: IP queue sizes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: nats-rest
+    description: REST adapter for NATS Monitoring HTTP API.
+    resources:
+    - path: /varz
+      name: getvarz
+      operations:
+      - method: GET
+        name: getvarz
+        description: General server information
+        call: nats.getvarz
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /connz
+      name: getconnz
+      operations:
+      - method: GET
+        name: getconnz
+        description: Connection information
+        call: nats.getconnz
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /routez
+      name: getroutez
+      operations:
+      - method: GET
+        name: getroutez
+        description: Route information
+        call: nats.getroutez
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /gatewayz
+      name: getgatewayz
+      operations:
+      - method: GET
+        name: getgatewayz
+        description: Gateway information
+        call: nats.getgatewayz
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /leafz
+      name: getleafz
+      operations:
+      - method: GET
+        name: getleafz
+        description: Leaf node information
+        call: nats.getleafz
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /subsz
+      name: getsubsz
+      operations:
+      - method: GET
+        name: getsubsz
+        description: Subscription information
+        call: nats.getsubsz
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /jsz
+      name: getjsz
+      operations:
+      - method: GET
+        name: getjsz
+        description: JetStream information
+        call: nats.getjsz
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /accountz
+      name: getaccountz
+      operations:
+      - method: GET
+        name: getaccountz
+        description: Account information
+        call: nats.getaccountz
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /healthz
+      name: gethealthz
+      operations:
+      - method: GET
+        name: gethealthz
+        description: Health check
+        call: nats.gethealthz
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /ipqueuesz
+      name: getipqueuesz
+      operations:
+      - method: GET
+        name: getipqueuesz
+        description: IP queue sizes
+        call: nats.getipqueuesz
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: nats-mcp
+    transport: http
+    description: MCP adapter for NATS Monitoring HTTP API for AI agent use.
+    tools:
+    - name: getvarz
+      description: General server information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: nats.getvarz
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getconnz
+      description: Connection information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: nats.getconnz
+      with:
+        sort: tools.sort
+        auth: tools.auth
+        subs: tools.subs
+        offset: tools.offset
+        limit: tools.limit
+        cid: tools.cid
+        state: tools.state
+      inputParameters:
+      - name: sort
+        type: string
+        description: sort
+      - name: auth
+        type: boolean
+        description: auth
+      - name: subs
+        type: boolean
+        description: subs
+      - name: offset
+        type: integer
+        description: offset
+      - name: limit
+        type: integer
+        description: limit
+      - name: cid
+        type: integer
+        description: cid
+      - name: state
+        type: string
+        description: state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getroutez
+      description: Route information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: nats.getroutez
+      with:
+        subs: tools.subs
+      inputParameters:
+      - name: subs
+        type: boolean
+        description: subs
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getgatewayz
+      description: Gateway information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: nats.getgatewayz
+      with:
+        accs: tools.accs
+        gw_name: tools.gw_name
+      inputParameters:
+      - name: accs
+        type: boolean
+        description: accs
+      - name: gw_name
+        type: string
+        description: gw_name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getleafz
+      description: Leaf node information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: nats.getleafz
+      with:
+        subs: tools.subs
+      inputParameters:
+      - name: subs
+        type: boolean
+        description: subs
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getsubsz
+      description: Subscription information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: nats.getsubsz
+      with:
+        subs: tools.subs
+        offset: tools.offset
+        limit: tools.limit
+        test: tools.test
+      inputParameters:
+      - name: subs
+        type: boolean
+        description: subs
+      - name: offset
+        type: integer
+        description: offset
+      - name: limit
+        type: integer
+        description: limit
+      - name: test
+        type: string
+        description: test
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getjsz
+      description: JetStream information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: nats.getjsz
+      with:
+        acc: tools.acc
+        accounts: tools.accounts
+        streams: tools.streams
+        consumers: tools.consumers
+        config: tools.config
+        leader-only: tools.leader-only
+        offset: tools.offset
+        limit: tools.limit
+      inputParameters:
+      - name: acc
+        type: string
+        description: acc
+      - name: accounts
+        type: boolean
+        description: accounts
+      - name: streams
+        type: boolean
+        description: streams
+      - name: consumers
+        type: boolean
+        description: consumers
+      - name: config
+        type: boolean
+        description: config
+      - name: leader-only
+        type: boolean
+        description: leader-only
+      - name: offset
+        type: integer
+        description: offset
+      - name: limit
+        type: integer
+        description: limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getaccountz
+      description: Account information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: nats.getaccountz
+      with:
+        acc: tools.acc
+      inputParameters:
+      - name: acc
+        type: string
+        description: acc
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gethealthz
+      description: Health check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: nats.gethealthz
+      with:
+        js-enabled-only: tools.js-enabled-only
+        js-server-only: tools.js-server-only
+      inputParameters:
+      - name: js-enabled-only
+        type: boolean
+        description: js-enabled-only
+      - name: js-server-only
+        type: boolean
+        description: js-server-only
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getipqueuesz
+      description: IP queue sizes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: nats.getipqueuesz
+      outputParameters:
+      - type: object
+        mapping: $.
