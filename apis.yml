@@ -115,9 +115,9 @@ common:
   - url: https://docs.nats.io
     type: Documentation
   - url: https://docs.nats.io/running-a-nats-service/introduction/installation
-    type: Getting Started
+    type: GettingStarted
   - url: https://github.com/nats-io/nats-server
-    type: GitHub Repository
+    type: GitHubRepository
   - url: https://nats.io/blog/
     type: Blog
   - url: https://slack.nats.io
@@ -125,13 +125,13 @@ common:
   - url: https://github.com/nats-io/nats-server/issues
     type: Issues
   - url: https://github.com/nats-io/nats-server/releases
-    type: Change Log
+    type: ChangeLog
   - url: https://natsbyexample.com
     type: Examples
   - url: https://docs.nats.io/using-nats/nats-tools/nats_cli
     type: CLI
   - url: https://github.com/nats-io
-    type: GitHub Organization
+    type: GitHubOrganization
   - url: properties/nats-server-config-json-schema.json
     type: JSONSchema
   - url: properties/nats-jetstream-config-json-schema.json
@@ -141,11 +141,11 @@ common:
   - url: properties/nats-object-store-schema.json
     type: JSONSchema
   - url: properties/nats-context-jsonld.json
-    type: JSON-LD
+    type: JSONLD
   - url: https://nats.io/support/
     type: Support
   - url: https://nats.io/privacy/
-    type: Privacy Policy
+    type: PrivacyPolicy
   - url: https://nats.io/community/
     type: Community
   - url: https://docs.nats.io/using-nats/developer
