@@ -1,0 +1,90 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: NATS Monitoring HTTP API — Subscriptions
+  description: 'NATS Monitoring HTTP API — Subscriptions. 1 operations. Lead operation: Subscription information. Self-contained
+    Naftiko capability covering one Nats business surface.'
+  tags:
+  - Nats
+  - Subscriptions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    NATS_API_KEY: NATS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: monitoring-subscriptions
+    baseUri: http://localhost:8222
+    description: NATS Monitoring HTTP API — Subscriptions business capability. Self-contained, no shared references.
+    resources:
+    - name: subsz
+      path: /subsz
+      operations:
+      - name: getsubsz
+        method: GET
+        description: Subscription information
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: subs
+          in: query
+          type: boolean
+        - name: offset
+          in: query
+          type: integer
+        - name: limit
+          in: query
+          type: integer
+        - name: test
+          in: query
+          type: string
+  exposes:
+  - type: rest
+    namespace: monitoring-subscriptions-rest
+    port: 8080
+    description: REST adapter for NATS Monitoring HTTP API — Subscriptions. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/subsz
+      name: subsz
+      description: REST surface for subsz.
+      operations:
+      - method: GET
+        name: getsubsz
+        description: Subscription information
+        call: monitoring-subscriptions.getsubsz
+        with:
+          subs: rest.subs
+          offset: rest.offset
+          limit: rest.limit
+          test: rest.test
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: monitoring-subscriptions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for NATS Monitoring HTTP API — Subscriptions. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: subscription-information
+      description: Subscription information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: monitoring-subscriptions.getsubsz
+      with:
+        subs: tools.subs
+        offset: tools.offset
+        limit: tools.limit
+        test: tools.test
+      outputParameters:
+      - type: object
+        mapping: $.

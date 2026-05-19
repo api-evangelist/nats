@@ -1,0 +1,110 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: NATS Monitoring HTTP API — JetStream
+  description: 'NATS Monitoring HTTP API — JetStream. 1 operations. Lead operation: JetStream information. Self-contained
+    Naftiko capability covering one Nats business surface.'
+  tags:
+  - Nats
+  - JetStream
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    NATS_API_KEY: NATS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: monitoring-jetstream
+    baseUri: http://localhost:8222
+    description: NATS Monitoring HTTP API — JetStream business capability. Self-contained, no shared references.
+    resources:
+    - name: jsz
+      path: /jsz
+      operations:
+      - name: getjsz
+        method: GET
+        description: JetStream information
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: acc
+          in: query
+          type: string
+        - name: accounts
+          in: query
+          type: boolean
+        - name: streams
+          in: query
+          type: boolean
+        - name: consumers
+          in: query
+          type: boolean
+        - name: config
+          in: query
+          type: boolean
+        - name: leader-only
+          in: query
+          type: boolean
+        - name: offset
+          in: query
+          type: integer
+        - name: limit
+          in: query
+          type: integer
+  exposes:
+  - type: rest
+    namespace: monitoring-jetstream-rest
+    port: 8080
+    description: REST adapter for NATS Monitoring HTTP API — JetStream. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/jsz
+      name: jsz
+      description: REST surface for jsz.
+      operations:
+      - method: GET
+        name: getjsz
+        description: JetStream information
+        call: monitoring-jetstream.getjsz
+        with:
+          acc: rest.acc
+          accounts: rest.accounts
+          streams: rest.streams
+          consumers: rest.consumers
+          config: rest.config
+          leader-only: rest.leader-only
+          offset: rest.offset
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: monitoring-jetstream-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for NATS Monitoring HTTP API — JetStream. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: jetstream-information
+      description: JetStream information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: monitoring-jetstream.getjsz
+      with:
+        acc: tools.acc
+        accounts: tools.accounts
+        streams: tools.streams
+        consumers: tools.consumers
+        config: tools.config
+        leader-only: tools.leader-only
+        offset: tools.offset
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
