@@ -165,6 +165,8 @@ common:
   type: SDKs
 - url: https://nats.io/download/
   type: Download
+- type: LLMsTxt
+  url: https://docs.nats.io/llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
