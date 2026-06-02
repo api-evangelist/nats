@@ -2,12 +2,20 @@
   "repo": "nats",
   "feeds": [
     {
+      "source": "https://nats.io/blog/index.xml",
+      "feed_url": "https://nats.io/blog/index.xml",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://nats.io/blog/",
       "feed_url": "https://nats.io/blog/index.xml",
-      "title": "NATS Blog on NATS.io",
-      "saved": 47
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
     }
   ],
-  "post_count": 57,
-  "fetched": "2026-05-17T20:20:35Z"
+  "post_count": 58,
+  "fetched": "2026-06-01T23:35:02Z"
 }
