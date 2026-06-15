@@ -1,0 +1,338 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NATS Monitoring HTTP API",
+    "version": "2.10.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Server",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "General server information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/varz"
+          },
+          "docs": "Returns general information about the server state including memory, connections, message rates, and configuration."
+        },
+        {
+          "info": {
+            "name": "IP queue sizes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/ipqueuesz"
+          },
+          "docs": "Reports sizes of internal IP queues."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Connection information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/connz",
+            "params": [
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "auth",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cid",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports detailed information on current and recently closed connections."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Routes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Route information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/routez",
+            "params": [
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports information on active routes for a cluster."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Gateways",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gateway information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/gatewayz",
+            "params": [
+              {
+                "name": "accs",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "gw_name",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports information about gateway connections for a super-cluster."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Leaf Nodes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Leaf node information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/leafz",
+            "params": [
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports information about leaf node connections."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Subscription information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/subsz",
+            "params": [
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "test",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports detailed information about current subscriptions and the routing data structure."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "JetStream",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "JetStream information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/jsz",
+            "params": [
+              {
+                "name": "acc",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "accounts",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "streams",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "consumers",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "leader-only",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports information about JetStream configuration, usage, and streams."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Account information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/accountz",
+            "params": [
+              {
+                "name": "acc",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports information about accounts."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/healthz",
+            "params": [
+              {
+                "name": "js-enabled-only",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "js-server-only",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns 200 OK if the server is healthy, or an error status otherwise."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

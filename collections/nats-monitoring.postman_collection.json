@@ -1,0 +1,1114 @@
+{
+  "item": [
+    {
+      "id": "6448ff8d-cfda-4712-9382-2a75fda4dc87",
+      "name": "Server",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "85dc4b7c-0f9f-4469-bbe2-be150ffc44ce",
+          "name": "General server information",
+          "request": {
+            "name": "General server information",
+            "description": {
+              "content": "Returns general information about the server state including memory, connections, message rates, and configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "varz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29ef2a50-8ba8-46c2-9802-e27900ab4673",
+              "name": "Server variables and statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "varz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"server_id\": \"string\",\n  \"server_name\": \"string\",\n  \"version\": \"string\",\n  \"proto\": 535,\n  \"go\": \"string\",\n  \"host\": \"string\",\n  \"port\": 5620,\n  \"max_connections\": 5072,\n  \"max_payload\": 398,\n  \"now\": \"1988-11-07T00:27:52.414Z\",\n  \"uptime\": \"string\",\n  \"mem\": 7680,\n  \"cores\": 7308,\n  \"cpu\": 3.821038681065536,\n  \"connections\": 6036,\n  \"total_connections\": 4664,\n  \"routes\": 6957,\n  \"remotes\": 9420,\n  \"leafnodes\": 474,\n  \"in_msgs\": 4126,\n  \"out_msgs\": 2746,\n  \"in_bytes\": 4457,\n  \"out_bytes\": 5784,\n  \"slow_consumers\": 9393,\n  \"subscriptions\": 6328,\n  \"jetstream\": {\n    \"config\": {},\n    \"stats\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a81a3a2-21e0-42c0-be56-6885ff6b0ff1",
+          "name": "IP queue sizes",
+          "request": {
+            "name": "IP queue sizes",
+            "description": {
+              "content": "Reports sizes of internal IP queues.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ipqueuesz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ec48e0fb-447e-4d08-abc0-0c1fc1967ac3",
+              "name": "IP queue sizes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ipqueuesz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "3532abe1-fc30-403f-9bc3-419e71d74872",
+      "name": "Connections",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0b1165db-ea7b-4825-b4fb-88a3c9716644",
+          "name": "Connection information",
+          "request": {
+            "name": "Connection information",
+            "description": {
+              "content": "Reports detailed information on current and recently closed connections.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "auth",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cid",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bbbaad9d-bfb9-41df-b304-47e853b9b818",
+              "name": "Connection details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "subs",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"now\": \"string\",\n  \"num_connections\": 840,\n  \"total\": 6668,\n  \"offset\": 1272,\n  \"limit\": 1320,\n  \"connections\": [\n    {\n      \"cid\": 1805,\n      \"kind\": \"string\",\n      \"type\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 5866,\n      \"start\": \"string\",\n      \"last_activity\": \"string\",\n      \"rtt\": \"string\",\n      \"uptime\": \"string\",\n      \"idle\": \"string\",\n      \"pending_bytes\": 2216,\n      \"in_msgs\": 3757,\n      \"out_msgs\": 7226,\n      \"in_bytes\": 141,\n      \"out_bytes\": 8264,\n      \"subscriptions\": 6973,\n      \"name\": \"string\",\n      \"lang\": \"string\",\n      \"version\": \"string\",\n      \"account\": \"string\"\n    },\n    {\n      \"cid\": 4815,\n      \"kind\": \"string\",\n      \"type\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 3887,\n      \"start\": \"string\",\n      \"last_activity\": \"string\",\n      \"rtt\": \"string\",\n      \"uptime\": \"string\",\n      \"idle\": \"string\",\n      \"pending_bytes\": 65,\n      \"in_msgs\": 1139,\n      \"out_msgs\": 9060,\n      \"in_bytes\": 2422,\n      \"out_bytes\": 5470,\n      \"subscriptions\": 2030,\n      \"name\": \"string\",\n      \"lang\": \"string\",\n      \"version\": \"string\",\n      \"account\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "b678e096-20a8-41ff-a736-7a46fa25f196",
+      "name": "Routes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9d05180f-a202-4467-b565-77279ac6dff1",
+          "name": "Route information",
+          "request": {
+            "name": "Route information",
+            "description": {
+              "content": "Reports information on active routes for a cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "routez"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "10a0b2be-bc7d-4ac4-a81a-523d7a9b53f7",
+              "name": "Route details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routez"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subs",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"now\": \"string\",\n  \"num_routes\": 1921,\n  \"routes\": [\n    {\n      \"rid\": 8412,\n      \"remote_id\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 2600,\n      \"pending_size\": 5906,\n      \"in_msgs\": 1101,\n      \"out_msgs\": 2705,\n      \"in_bytes\": 1548,\n      \"out_bytes\": 1257,\n      \"subscriptions\": 5106\n    },\n    {\n      \"rid\": 5317,\n      \"remote_id\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 7851,\n      \"pending_size\": 5674,\n      \"in_msgs\": 6753,\n      \"out_msgs\": 3068,\n      \"in_bytes\": 9861,\n      \"out_bytes\": 2237,\n      \"subscriptions\": 1143\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "760c2f70-71cc-41b0-9ed4-0e7325a5da69",
+      "name": "Gateways",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ac462684-b223-4381-a794-0eff8b792f9c",
+          "name": "Gateway information",
+          "request": {
+            "name": "Gateway information",
+            "description": {
+              "content": "Reports information about gateway connections for a super-cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gatewayz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accs",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "gw_name",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7b46c06d-f665-4ca4-9993-1945bb7f8aae",
+              "name": "Gateway details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gatewayz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accs",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "gw_name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"host\": \"string\",\n  \"port\": 5077,\n  \"outbound_gateways\": {},\n  \"inbound_gateways\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "08cf29cc-17af-4443-96e0-8693fba6a494",
+      "name": "Leaf Nodes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "56a4c74a-bddd-4f46-872e-a28fa08cda21",
+          "name": "Leaf node information",
+          "request": {
+            "name": "Leaf node information",
+            "description": {
+              "content": "Reports information about leaf node connections.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "leafz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "32eb2fb6-a13a-4ce1-941a-1fa8ac306262",
+              "name": "Leaf node details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "leafz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subs",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"now\": \"string\",\n  \"leafnodes\": 7623,\n  \"leafs\": [\n    {\n      \"name\": \"string\",\n      \"is_spoke\": true,\n      \"account\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 3317,\n      \"rtt\": \"string\",\n      \"in_msgs\": 4226,\n      \"out_msgs\": 2738,\n      \"in_bytes\": 2570,\n      \"out_bytes\": 1369,\n      \"subscriptions\": 3740\n    },\n    {\n      \"name\": \"string\",\n      \"is_spoke\": false,\n      \"account\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 5313,\n      \"rtt\": \"string\",\n      \"in_msgs\": 5454,\n      \"out_msgs\": 9327,\n      \"in_bytes\": 5439,\n      \"out_bytes\": 9470,\n      \"subscriptions\": 650\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a7e9a265-4da7-4bf7-ae1d-2140a3dded16",
+      "name": "Subscriptions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2f0044ea-1723-4a72-aa87-08eee566f715",
+          "name": "Subscription information",
+          "request": {
+            "name": "Subscription information",
+            "description": {
+              "content": "Reports detailed information about current subscriptions and the routing data structure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subsz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "test",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b03c9290-3286-4be0-bf5a-7ff7ea6d7e24",
+              "name": "Subscription details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subsz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subs",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "test",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"num_subscriptions\": 9260,\n  \"num_cache\": 2570,\n  \"num_inserts\": 7103,\n  \"num_removes\": 5035,\n  \"num_matches\": 506,\n  \"cache_hit_rate\": 2476.4535342732743,\n  \"max_fanout\": 9314,\n  \"avg_fanout\": 1208.0212618975615\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "0afa0331-6a7f-4bf0-a709-5802efe950d2",
+      "name": "JetStream",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1d76e39d-a2d9-418b-95c4-e33a5f710dce",
+          "name": "JetStream information",
+          "request": {
+            "name": "JetStream information",
+            "description": {
+              "content": "Reports information about JetStream configuration, usage, and streams.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jsz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "acc",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "accounts",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "streams",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "consumers",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "leader-only",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "029d5ded-2a65-46bc-b7fc-2968959dc171",
+              "name": "JetStream details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jsz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "acc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "accounts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "streams",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "consumers",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "config",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "leader-only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"now\": \"string\",\n  \"config\": {\n    \"max_memory\": 6384,\n    \"max_storage\": 273,\n    \"store_dir\": \"string\"\n  },\n  \"memory\": 8594,\n  \"storage\": 4919,\n  \"reserved_memory\": 837,\n  \"reserved_storage\": 2817,\n  \"accounts\": 8727,\n  \"ha_assets\": 8841,\n  \"api\": {\n    \"total\": 8126,\n    \"errors\": 4395\n  },\n  \"streams\": 5499,\n  \"consumers\": 2502,\n  \"messages\": 4968,\n  \"bytes\": 7261\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "7789aee0-2cb3-4b4c-957e-b52711e492cd",
+      "name": "Accounts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9349ef48-888a-43bb-bbda-511f59047d5b",
+          "name": "Account information",
+          "request": {
+            "name": "Account information",
+            "description": {
+              "content": "Reports information about accounts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accountz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "acc",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c483fa29-2f23-4af3-871e-daf002390494",
+              "name": "Account details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accountz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "acc",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"now\": \"string\",\n  \"system_account\": \"string\",\n  \"accounts\": [\n    \"string\",\n    \"string\"\n  ],\n  \"account_detail\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "bcedab4b-0bdd-4dd7-b206-7656ec9be204",
+      "name": "Health",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "de4743ed-e186-4744-849a-1b4309fb4d61",
+          "name": "Health check",
+          "request": {
+            "name": "Health check",
+            "description": {
+              "content": "Returns 200 OK if the server is healthy, or an error status otherwise.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "healthz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "js-enabled-only",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "js-server-only",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fd5160bb-128e-4887-aef4-2550eae547e2",
+              "name": "Server is healthy",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "healthz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "js-enabled-only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "js-server-only",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "913f95cd-f243-4d63-bb08-0e298a259b69",
+              "name": "Server is not healthy",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "healthz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "js-enabled-only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "js-server-only",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8222",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e7cd8826-e1d6-4744-bb5d-49fcb9f9f62f",
+    "name": "NATS Monitoring HTTP API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.\n\nContact Support:\n Name: NATS.io",
+      "type": "text/plain"
+    }
+  }
+}
