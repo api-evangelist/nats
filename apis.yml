@@ -154,7 +154,7 @@ common:
     type: SDKs
   - url: https://nats.io/download/
     type: Download
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.nats.io/llms.txt
 maintainers:
   - FN: Kin Lane
