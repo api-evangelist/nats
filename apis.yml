@@ -112,6 +112,8 @@ apis:
       - url: properties/nats-object-store-schema.json
         type: JSONSchema
 common:
+  - type: DomainSecurity
+    url: security/nats-domain-security.yml
   - url: https://nats.io
     type: Website
   - url: https://docs.nats.io
