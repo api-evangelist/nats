@@ -1,0 +1,163 @@
+openapi: 3.1.0
+info:
+  title: NATS Monitoring HTTP Accounts JetStream API
+  description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
+  version: 2.10.0
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8222
+  description: Default NATS monitoring endpoint
+tags:
+- name: JetStream
+paths:
+  /jsz:
+    get:
+      summary: JetStream information
+      operationId: getJsz
+      tags:
+      - JetStream
+      description: Reports information about JetStream configuration, usage, and streams.
+      parameters:
+      - name: acc
+        in: query
+        schema:
+          type: string
+      - name: accounts
+        in: query
+        schema:
+          type: boolean
+      - name: streams
+        in: query
+        schema:
+          type: boolean
+      - name: consumers
+        in: query
+        schema:
+          type: boolean
+      - name: config
+        in: query
+        schema:
+          type: boolean
+      - name: leader-only
+        in: query
+        schema:
+          type: boolean
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: JetStream details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Jsz'
+components:
+  schemas:
+    Jsz:
+      type: object
+      properties:
+        now:
+          type: string
+        config:
+          type: object
+          properties:
+            max_memory:
+              type: integer
+            max_storage:
+              type: integer
+            store_dir:
+              type: string
+        memory:
+          type: integer
+        storage:
+          type: integer
+        reserved_memory:
+          type: integer
+        reserved_storage:
+          type: integer
+        accounts:
+          type: integer
+        ha_assets:
+          type: integer
+        api:
+          type: object
+          properties:
+            total:
+              type: integer
+            errors:
+              type: integer
+        streams:
+          type: integer
+        consumers:
+          type: integer
+        messages:
+          type: integer
+        bytes:
+          type: integer
+    Jsz_2:
+      type: object
+      properties:
+        server_id:
+          type: string
+        now:
+          type: string
+          format: date-time
+        config:
+          type: object
+          properties:
+            max_memory:
+              type: integer
+            max_storage:
+              type: integer
+            store_dir:
+              type: string
+            sync_interval:
+              type: integer
+        memory:
+          type: integer
+          description: Current memory usage
+        storage:
+          type: integer
+          description: Current storage usage
+        reserved_memory:
+          type: integer
+        reserved_storage:
+          type: integer
+        accounts:
+          type: integer
+          description: Number of JetStream accounts
+        ha_assets:
+          type: integer
+          description: Number of HA assets
+        api:
+          type: object
+          properties:
+            total:
+              type: integer
+              description: Total API requests
+            errors:
+              type: integer
+              description: Total API errors
+        streams:
+          type: integer
+          description: Total number of streams
+        consumers:
+          type: integer
+          description: Total number of consumers
+        messages:
+          type: integer
+          description: Total number of stored messages
+        bytes:
+          type: integer
+          description: Total stored bytes

@@ -1,0 +1,138 @@
+openapi: 3.1.0
+info:
+  title: NATS Monitoring HTTP Accounts Connections API
+  description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
+  version: 2.10.0
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8222
+  description: Default NATS monitoring endpoint
+tags:
+- name: Connections
+paths:
+  /connz:
+    get:
+      summary: Connection information
+      operationId: getConnz
+      tags:
+      - Connections
+      description: Reports detailed information on current and recently closed connections.
+      parameters:
+      - name: sort
+        in: query
+        schema:
+          type: string
+          enum:
+          - cid
+          - start
+          - subs
+          - pending
+          - msgs_to
+          - msgs_from
+          - bytes_to
+          - bytes_from
+          - last
+          - idle
+          - uptime
+          - stop
+          - reason
+      - name: auth
+        in: query
+        schema:
+          type: boolean
+      - name: subs
+        in: query
+        schema:
+          type: boolean
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: cid
+        in: query
+        schema:
+          type: integer
+      - name: state
+        in: query
+        schema:
+          type: string
+          enum:
+          - open
+          - closed
+          - any
+      responses:
+        '200':
+          description: Connection details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connz'
+components:
+  schemas:
+    Connz:
+      type: object
+      properties:
+        now:
+          type: string
+        num_connections:
+          type: integer
+        total:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+        connections:
+          type: array
+          items:
+            type: object
+            properties:
+              cid:
+                type: integer
+              kind:
+                type: string
+              type:
+                type: string
+              ip:
+                type: string
+              port:
+                type: integer
+              start:
+                type: string
+              last_activity:
+                type: string
+              rtt:
+                type: string
+              uptime:
+                type: string
+              idle:
+                type: string
+              pending_bytes:
+                type: integer
+              in_msgs:
+                type: integer
+              out_msgs:
+                type: integer
+              in_bytes:
+                type: integer
+              out_bytes:
+                type: integer
+              subscriptions:
+                type: integer
+              name:
+                type: string
+              lang:
+                type: string
+              version:
+                type: string
+              account:
+                type: string

@@ -1,0 +1,71 @@
+openapi: 3.1.0
+info:
+  title: NATS Monitoring HTTP Accounts Health API
+  description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
+  version: 2.10.0
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8222
+  description: Default NATS monitoring endpoint
+tags:
+- name: Health
+paths:
+  /healthz:
+    get:
+      summary: Health check
+      operationId: getHealthz
+      tags:
+      - Health
+      description: Returns 200 OK if the server is healthy, or an error status otherwise.
+      parameters:
+      - name: js-enabled-only
+        in: query
+        schema:
+          type: boolean
+      - name: js-server-only
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - ok
+        '503':
+          description: Server is not healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+components:
+  schemas:
+    Healthz:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ok
+          - error
+          - unavailable
+          description: Server health status
+        error:
+          type: string
+          description: Error message if unhealthy

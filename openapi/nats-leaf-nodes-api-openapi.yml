@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: NATS Monitoring HTTP Accounts Leaf Nodes API
+  description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
+  version: 2.10.0
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8222
+  description: Default NATS monitoring endpoint
+tags:
+- name: Leaf Nodes
+paths:
+  /leafz:
+    get:
+      summary: Leaf node information
+      operationId: getLeafz
+      tags:
+      - Leaf Nodes
+      description: Reports information about leaf node connections.
+      parameters:
+      - name: subs
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Leaf node details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  now:
+                    type: string
+                  leafnodes:
+                    type: integer
+                  leafs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        is_spoke:
+                          type: boolean
+                        account:
+                          type: string
+                        ip:
+                          type: string
+                        port:
+                          type: integer
+                        rtt:
+                          type: string
+                        in_msgs:
+                          type: integer
+                        out_msgs:
+                          type: integer
+                        in_bytes:
+                          type: integer
+                        out_bytes:
+                          type: integer
+                        subscriptions:
+                          type: integer

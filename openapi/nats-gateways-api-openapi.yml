@@ -1,0 +1,51 @@
+openapi: 3.1.0
+info:
+  title: NATS Monitoring HTTP Accounts Gateways API
+  description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
+  version: 2.10.0
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8222
+  description: Default NATS monitoring endpoint
+tags:
+- name: Gateways
+paths:
+  /gatewayz:
+    get:
+      summary: Gateway information
+      operationId: getGatewayz
+      tags:
+      - Gateways
+      description: Reports information about gateway connections for a super-cluster.
+      parameters:
+      - name: accs
+        in: query
+        schema:
+          type: boolean
+      - name: gw_name
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Gateway details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  host:
+                    type: string
+                  port:
+                    type: integer
+                  outbound_gateways:
+                    type: object
+                  inbound_gateways:
+                    type: object

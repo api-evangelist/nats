@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: NATS Monitoring HTTP Accounts Subscriptions API
+  description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
+  version: 2.10.0
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8222
+  description: Default NATS monitoring endpoint
+tags:
+- name: Subscriptions
+paths:
+  /subsz:
+    get:
+      summary: Subscription information
+      operationId: getSubsz
+      tags:
+      - Subscriptions
+      description: Reports detailed information about current subscriptions and the routing data structure.
+      parameters:
+      - name: subs
+        in: query
+        schema:
+          type: boolean
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: test
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Subscription details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subsz'
+components:
+  schemas:
+    Subsz:
+      type: object
+      properties:
+        num_subscriptions:
+          type: integer
+        num_cache:
+          type: integer
+        num_inserts:
+          type: integer
+        num_removes:
+          type: integer
+        num_matches:
+          type: integer
+        cache_hit_rate:
+          type: number
+        max_fanout:
+          type: integer
+        avg_fanout:
+          type: number

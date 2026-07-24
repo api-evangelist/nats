@@ -1,0 +1,108 @@
+openapi: 3.1.0
+info:
+  title: NATS Monitoring HTTP Accounts Server API
+  description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
+  version: 2.10.0
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8222
+  description: Default NATS monitoring endpoint
+tags:
+- name: Server
+paths:
+  /varz:
+    get:
+      summary: General server information
+      operationId: getVarz
+      tags:
+      - Server
+      description: Returns general information about the server state including memory, connections, message rates, and configuration.
+      responses:
+        '200':
+          description: Server variables and statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Varz'
+  /ipqueuesz:
+    get:
+      summary: IP queue sizes
+      operationId: getIpqueuesz
+      tags:
+      - Server
+      description: Reports sizes of internal IP queues.
+      responses:
+        '200':
+          description: IP queue sizes
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  schemas:
+    Varz:
+      type: object
+      properties:
+        server_id:
+          type: string
+        server_name:
+          type: string
+        version:
+          type: string
+        proto:
+          type: integer
+        go:
+          type: string
+        host:
+          type: string
+        port:
+          type: integer
+        max_connections:
+          type: integer
+        max_payload:
+          type: integer
+        now:
+          type: string
+          format: date-time
+        uptime:
+          type: string
+        mem:
+          type: integer
+        cores:
+          type: integer
+        cpu:
+          type: number
+        connections:
+          type: integer
+        total_connections:
+          type: integer
+        routes:
+          type: integer
+        remotes:
+          type: integer
+        leafnodes:
+          type: integer
+        in_msgs:
+          type: integer
+        out_msgs:
+          type: integer
+        in_bytes:
+          type: integer
+        out_bytes:
+          type: integer
+        slow_consumers:
+          type: integer
+        subscriptions:
+          type: integer
+        jetstream:
+          type: object
+          properties:
+            config:
+              type: object
+            stats:
+              type: object

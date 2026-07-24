@@ -1,0 +1,70 @@
+openapi: 3.1.0
+info:
+  title: NATS Monitoring HTTP Accounts Routes API
+  description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
+  version: 2.10.0
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8222
+  description: Default NATS monitoring endpoint
+tags:
+- name: Routes
+paths:
+  /routez:
+    get:
+      summary: Route information
+      operationId: getRoutez
+      tags:
+      - Routes
+      description: Reports information on active routes for a cluster.
+      parameters:
+      - name: subs
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Route details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Routez'
+components:
+  schemas:
+    Routez:
+      type: object
+      properties:
+        now:
+          type: string
+        num_routes:
+          type: integer
+        routes:
+          type: array
+          items:
+            type: object
+            properties:
+              rid:
+                type: integer
+              remote_id:
+                type: string
+              ip:
+                type: string
+              port:
+                type: integer
+              pending_size:
+                type: integer
+              in_msgs:
+                type: integer
+              out_msgs:
+                type: integer
+              in_bytes:
+                type: integer
+              out_bytes:
+                type: integer
+              subscriptions:
+                type: integer

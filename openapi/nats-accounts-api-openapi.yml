@@ -1,0 +1,47 @@
+openapi: 3.1.0
+info:
+  title: NATS Monitoring HTTP Accounts API
+  description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
+  version: 2.10.0
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8222
+  description: Default NATS monitoring endpoint
+tags:
+- name: Accounts
+paths:
+  /accountz:
+    get:
+      summary: Account information
+      operationId: getAccountz
+      tags:
+      - Accounts
+      description: Reports information about accounts.
+      parameters:
+      - name: acc
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  now:
+                    type: string
+                  system_account:
+                    type: string
+                  accounts:
+                    type: array
+                    items:
+                      type: string
+                  account_detail:
+                    type: object
