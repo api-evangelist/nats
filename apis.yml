@@ -4,7 +4,19 @@ description: >-
   A high-performance, cloud-native messaging system for microservices, IoT, and edge computing. Provides pub-sub,
   request-reply, and queue-based messaging patterns with at-most-once and at-least-once delivery guarantees.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nats.png
 tags:
   - Cloud Native
   - IoT
@@ -16,101 +28,202 @@ created: '2025-01-01'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: nats:nats-monitoring-api
-    name: NATS Monitoring API
-    description: >-
-      HTTP monitoring API providing real-time server status, connection information, route details, subscription
-      statistics, JetStream metrics, and health check endpoints for observability and operations.
-    humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
-    baseURL: http://localhost:8222
-    tags:
-      - Health
-      - Metrics
-      - Monitoring
-    properties:
-      - url: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
-        type: Documentation
-      - url: properties/nats-monitoring-api-openapi.yml
-        type: OpenAPI
-      - url: openapi/nats-monitoring.yml
-        type: OpenAPI
-  - aid: nats:nats-messaging-api
-    name: NATS Messaging API
-    description: >-
-      Asynchronous messaging API supporting core pub-sub, request-reply, queue groups, and JetStream persistent
-      messaging with streams, consumers, key-value stores, and object stores.
-    humanURL: https://docs.nats.io/nats-concepts/core-nats
-    tags:
-      - JetStream
-      - Messaging
-      - Pub Sub
-      - Streaming
-    properties:
-      - url: https://docs.nats.io/nats-concepts/core-nats
-        type: Documentation
-      - url: properties/nats-messaging-asyncapi.yml
-        type: AsyncAPI
-      - url: asyncapi/nats-messaging.yml
-        type: AsyncAPI
-      - url: json-schema/nats-stream-config.json
-        type: JSONSchema
-  - aid: nats:nats-jetstream-api
-    name: NATS JetStream Management API
-    description: >-
-      The JetStream wire API provides a protocol-level management interface for configuring and operating JetStream
-      streams, consumers, key-value buckets, and object stores. Requests are made by publishing to well-known $JS.API.*
-      subjects and responses are returned as typed JSON payloads. This API underlies all official NATS client SDKs and
-      the nats CLI.
-    humanURL: https://docs.nats.io/reference/reference-protocols/nats_api_reference
-    tags:
-      - JetStream
-      - Management
-      - Streaming
-    properties:
-      - url: https://docs.nats.io/reference/reference-protocols/nats_api_reference
-        type: Documentation
-      - url: https://docs.nats.io/nats-concepts/jetstream
-        type: Reference
-      - url: properties/nats-jetstream-api-asyncapi.yml
-        type: AsyncAPI
-      - url: properties/nats-jetstream-config-json-schema.json
-        type: JSONSchema
-  - aid: nats:nats-kv-api
-    name: NATS Key-Value Store API
-    description: >-
-      The NATS Key-Value Store API is a JetStream-backed abstraction that provides immediately consistent, persistent
-      associative array semantics. Clients can create buckets, get, put, delete, and watch keys, and receive real-time
-      change notifications. Buckets are implemented as JetStream streams with the KV_ prefix.
-    humanURL: https://docs.nats.io/nats-concepts/jetstream/key-value-store
-    tags:
-      - JetStream
-      - Key-Value
-      - Storage
-    properties:
-      - url: https://docs.nats.io/nats-concepts/jetstream/key-value-store
-        type: Documentation
-      - url: https://docs.nats.io/using-nats/developer/develop_jetstream/kv
-        type: Reference
-      - url: properties/nats-kv-schema.json
-        type: JSONSchema
-  - aid: nats:nats-object-store-api
-    name: NATS Object Store API
-    description: >-
-      The NATS Object Store API is a JetStream-backed abstraction for storing and retrieving arbitrarily large binary
-      objects using a chunking mechanism. Objects are identified by a bucket and a name, and the API supports put, get,
-      delete, and watch operations for managing stored files and blobs.
-    humanURL: https://docs.nats.io/nats-concepts/jetstream/obj_store
-    tags:
-      - JetStream
-      - Object Store
-      - Storage
-    properties:
-      - url: https://docs.nats.io/nats-concepts/jetstream/obj_store
-        type: Documentation
-      - url: https://docs.nats.io/using-nats/developer/develop_jetstream/object
-        type: Reference
-      - url: properties/nats-object-store-schema.json
-        type: JSONSchema
+- aid: nats:nats-monitoring-api
+  name: NATS Monitoring API
+  description: >-
+    HTTP monitoring API providing real-time server status, connection information, route details, subscription
+    statistics, JetStream metrics, and health check endpoints for observability and operations.
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Health
+  - Metrics
+  - Monitoring
+  properties:
+  - url: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+    type: Documentation
+  - url: properties/nats-monitoring-api-openapi.yml
+    type: OpenAPI
+  - url: openapi/nats-monitoring.yml
+    type: OpenAPI
+- aid: nats:nats-messaging-api
+  name: NATS Messaging API
+  description: >-
+    Asynchronous messaging API supporting core pub-sub, request-reply, queue groups, and JetStream persistent
+    messaging with streams, consumers, key-value stores, and object stores.
+  humanURL: https://docs.nats.io/nats-concepts/core-nats
+  tags:
+  - JetStream
+  - Messaging
+  - Pub Sub
+  - Streaming
+  properties:
+  - url: https://docs.nats.io/nats-concepts/core-nats
+    type: Documentation
+  - url: properties/nats-messaging-asyncapi.yml
+    type: AsyncAPI
+  - url: asyncapi/nats-messaging.yml
+    type: AsyncAPI
+  - url: json-schema/nats-stream-config.json
+    type: JSONSchema
+- aid: nats:nats-jetstream-api
+  name: NATS JetStream Management API
+  description: >-
+    The JetStream wire API provides a protocol-level management interface for configuring and operating
+    JetStream streams, consumers, key-value buckets, and object stores. Requests are made by publishing
+    to well-known $JS.API.* subjects and responses are returned as typed JSON payloads. This API underlies
+    all official NATS client SDKs and the nats CLI.
+  humanURL: https://docs.nats.io/reference/reference-protocols/nats_api_reference
+  tags:
+  - JetStream
+  - Management
+  - Streaming
+  properties:
+  - url: https://docs.nats.io/reference/reference-protocols/nats_api_reference
+    type: Documentation
+  - url: https://docs.nats.io/nats-concepts/jetstream
+    type: Reference
+  - url: properties/nats-jetstream-api-asyncapi.yml
+    type: AsyncAPI
+  - url: properties/nats-jetstream-config-json-schema.json
+    type: JSONSchema
+- aid: nats:nats-kv-api
+  name: NATS Key-Value Store API
+  description: >-
+    The NATS Key-Value Store API is a JetStream-backed abstraction that provides immediately consistent,
+    persistent associative array semantics. Clients can create buckets, get, put, delete, and watch keys,
+    and receive real-time change notifications. Buckets are implemented as JetStream streams with the
+    KV_ prefix.
+  humanURL: https://docs.nats.io/nats-concepts/jetstream/key-value-store
+  tags:
+  - JetStream
+  - Key-Value
+  - Storage
+  properties:
+  - url: https://docs.nats.io/nats-concepts/jetstream/key-value-store
+    type: Documentation
+  - url: https://docs.nats.io/using-nats/developer/develop_jetstream/kv
+    type: Reference
+  - url: properties/nats-kv-schema.json
+    type: JSONSchema
+- aid: nats:nats-object-store-api
+  name: NATS Object Store API
+  description: >-
+    The NATS Object Store API is a JetStream-backed abstraction for storing and retrieving arbitrarily
+    large binary objects using a chunking mechanism. Objects are identified by a bucket and a name, and
+    the API supports put, get, delete, and watch operations for managing stored files and blobs.
+  humanURL: https://docs.nats.io/nats-concepts/jetstream/obj_store
+  tags:
+  - JetStream
+  - Object Store
+  - Storage
+  properties:
+  - url: https://docs.nats.io/nats-concepts/jetstream/obj_store
+    type: Documentation
+  - url: https://docs.nats.io/using-nats/developer/develop_jetstream/object
+    type: Reference
+  - url: properties/nats-object-store-schema.json
+    type: JSONSchema
+- aid: nats:nats-accounts-api
+  name: NATS Accounts API
+  description: The Accounts API from NATS — 1 operation(s) for accounts.
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-accounts-api-openapi.yml
+- aid: nats:nats-clustering-api
+  name: NATS Clustering API
+  description: Cluster, gateway, and leaf node endpoints
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Clustering
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-clustering-api-openapi.yml
+- aid: nats:nats-connections-api
+  name: NATS Connections API
+  description: The Connections API from NATS — 1 operation(s) for connections.
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Connections
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-connections-api-openapi.yml
+- aid: nats:nats-gateways-api
+  name: NATS Gateways API
+  description: The Gateways API from NATS — 1 operation(s) for gateways.
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Gateways
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-gateways-api-openapi.yml
+- aid: nats:nats-health-api
+  name: NATS Health API
+  description: The Health API from NATS — 1 operation(s) for health.
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-health-api-openapi.yml
+- aid: nats:nats-jetstream-api
+  name: NATS JetStream API
+  description: The JetStream API from NATS — 1 operation(s) for jetstream.
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - JetStream
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-jetstream-api-openapi.yml
+- aid: nats:nats-leaf-nodes-api
+  name: NATS Leaf Nodes API
+  description: The Leaf Nodes API from NATS — 1 operation(s) for leaf nodes.
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Leaf Nodes
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-leaf-nodes-api-openapi.yml
+- aid: nats:nats-routes-api
+  name: NATS Routes API
+  description: The Routes API from NATS — 1 operation(s) for routes.
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Routes
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-routes-api-openapi.yml
+- aid: nats:nats-server-api
+  name: NATS Server API
+  description: The Server API from NATS — 2 operation(s) for server.
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Server
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-server-api-openapi.yml
+- aid: nats:nats-subscriptions-api
+  name: NATS Subscriptions API
+  description: The Subscriptions API from NATS — 1 operation(s) for subscriptions.
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-subscriptions-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/nats-agentic-access.yml
