@@ -1,0 +1,556 @@
+openapi: 3.1.0
+info:
+  title: NATS Monitoring HTTP API
+  description: >-
+    The NATS server exposes a monitoring HTTP endpoint that provides real-time
+    server statistics including connection info, route details, subscription data,
+    JetStream metrics, and health checks for observability and operations.
+  version: 2.10.0
+  contact:
+    name: NATS.io
+    url: https://nats.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  - url: http://localhost:8222
+    description: Default NATS monitoring endpoint
+paths:
+  /varz:
+    get:
+      summary: General server information
+      operationId: getVarz
+      tags:
+        - Server
+      description: >-
+        Returns general information about the server state including memory,
+        connections, message rates, and configuration.
+      responses:
+        '200':
+          description: Server variables and statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Varz'
+  /connz:
+    get:
+      summary: Connection information
+      operationId: getConnz
+      tags:
+        - Connections
+      description: Reports detailed information on current and recently closed connections.
+      parameters:
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [cid, start, subs, pending, msgs_to, msgs_from, bytes_to, bytes_from, last, idle, uptime, stop, reason]
+        - name: auth
+          in: query
+          schema:
+            type: boolean
+        - name: subs
+          in: query
+          schema:
+            type: boolean
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: cid
+          in: query
+          schema:
+            type: integer
+        - name: state
+          in: query
+          schema:
+            type: string
+            enum: [open, closed, any]
+      responses:
+        '200':
+          description: Connection details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connz'
+  /routez:
+    get:
+      summary: Route information
+      operationId: getRoutez
+      tags:
+        - Routes
+      description: Reports information on active routes for a cluster.
+      parameters:
+        - name: subs
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Route details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Routez'
+  /gatewayz:
+    get:
+      summary: Gateway information
+      operationId: getGatewayz
+      tags:
+        - Gateways
+      description: Reports information about gateway connections for a super-cluster.
+      parameters:
+        - name: accs
+          in: query
+          schema:
+            type: boolean
+        - name: gw_name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Gateway details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  host:
+                    type: string
+                  port:
+                    type: integer
+                  outbound_gateways:
+                    type: object
+                  inbound_gateways:
+                    type: object
+  /leafz:
+    get:
+      summary: Leaf node information
+      operationId: getLeafz
+      tags:
+        - Leaf Nodes
+      description: Reports information about leaf node connections.
+      parameters:
+        - name: subs
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Leaf node details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  now:
+                    type: string
+                  leafnodes:
+                    type: integer
+                  leafs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        is_spoke:
+                          type: boolean
+                        account:
+                          type: string
+                        ip:
+                          type: string
+                        port:
+                          type: integer
+                        rtt:
+                          type: string
+                        in_msgs:
+                          type: integer
+                        out_msgs:
+                          type: integer
+                        in_bytes:
+                          type: integer
+                        out_bytes:
+                          type: integer
+                        subscriptions:
+                          type: integer
+  /subsz:
+    get:
+      summary: Subscription information
+      operationId: getSubsz
+      tags:
+        - Subscriptions
+      description: Reports detailed information about current subscriptions and the routing data structure.
+      parameters:
+        - name: subs
+          in: query
+          schema:
+            type: boolean
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: test
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Subscription details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subsz'
+  /jsz:
+    get:
+      summary: JetStream information
+      operationId: getJsz
+      tags:
+        - JetStream
+      description: Reports information about JetStream configuration, usage, and streams.
+      parameters:
+        - name: acc
+          in: query
+          schema:
+            type: string
+        - name: accounts
+          in: query
+          schema:
+            type: boolean
+        - name: streams
+          in: query
+          schema:
+            type: boolean
+        - name: consumers
+          in: query
+          schema:
+            type: boolean
+        - name: config
+          in: query
+          schema:
+            type: boolean
+        - name: leader-only
+          in: query
+          schema:
+            type: boolean
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: JetStream details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Jsz'
+  /accountz:
+    get:
+      summary: Account information
+      operationId: getAccountz
+      tags:
+        - Accounts
+      description: Reports information about accounts.
+      parameters:
+        - name: acc
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  now:
+                    type: string
+                  system_account:
+                    type: string
+                  accounts:
+                    type: array
+                    items:
+                      type: string
+                  account_detail:
+                    type: object
+  /healthz:
+    get:
+      summary: Health check
+      operationId: getHealthz
+      tags:
+        - Health
+      description: Returns 200 OK if the server is healthy, or an error status otherwise.
+      parameters:
+        - name: js-enabled-only
+          in: query
+          schema:
+            type: boolean
+        - name: js-server-only
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [ok]
+        '503':
+          description: Server is not healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  error:
+                    type: string
+  /ipqueuesz:
+    get:
+      summary: IP queue sizes
+      operationId: getIpqueuesz
+      tags:
+        - Server
+      description: Reports sizes of internal IP queues.
+      responses:
+        '200':
+          description: IP queue sizes
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  schemas:
+    Varz:
+      type: object
+      properties:
+        server_id:
+          type: string
+        server_name:
+          type: string
+        version:
+          type: string
+        proto:
+          type: integer
+        go:
+          type: string
+        host:
+          type: string
+        port:
+          type: integer
+        max_connections:
+          type: integer
+        max_payload:
+          type: integer
+        now:
+          type: string
+          format: date-time
+        uptime:
+          type: string
+        mem:
+          type: integer
+        cores:
+          type: integer
+        cpu:
+          type: number
+        connections:
+          type: integer
+        total_connections:
+          type: integer
+        routes:
+          type: integer
+        remotes:
+          type: integer
+        leafnodes:
+          type: integer
+        in_msgs:
+          type: integer
+        out_msgs:
+          type: integer
+        in_bytes:
+          type: integer
+        out_bytes:
+          type: integer
+        slow_consumers:
+          type: integer
+        subscriptions:
+          type: integer
+        jetstream:
+          type: object
+          properties:
+            config:
+              type: object
+            stats:
+              type: object
+    Connz:
+      type: object
+      properties:
+        now:
+          type: string
+        num_connections:
+          type: integer
+        total:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+        connections:
+          type: array
+          items:
+            type: object
+            properties:
+              cid:
+                type: integer
+              kind:
+                type: string
+              type:
+                type: string
+              ip:
+                type: string
+              port:
+                type: integer
+              start:
+                type: string
+              last_activity:
+                type: string
+              rtt:
+                type: string
+              uptime:
+                type: string
+              idle:
+                type: string
+              pending_bytes:
+                type: integer
+              in_msgs:
+                type: integer
+              out_msgs:
+                type: integer
+              in_bytes:
+                type: integer
+              out_bytes:
+                type: integer
+              subscriptions:
+                type: integer
+              name:
+                type: string
+              lang:
+                type: string
+              version:
+                type: string
+              account:
+                type: string
+    Routez:
+      type: object
+      properties:
+        now:
+          type: string
+        num_routes:
+          type: integer
+        routes:
+          type: array
+          items:
+            type: object
+            properties:
+              rid:
+                type: integer
+              remote_id:
+                type: string
+              ip:
+                type: string
+              port:
+                type: integer
+              pending_size:
+                type: integer
+              in_msgs:
+                type: integer
+              out_msgs:
+                type: integer
+              in_bytes:
+                type: integer
+              out_bytes:
+                type: integer
+              subscriptions:
+                type: integer
+    Subsz:
+      type: object
+      properties:
+        num_subscriptions:
+          type: integer
+        num_cache:
+          type: integer
+        num_inserts:
+          type: integer
+        num_removes:
+          type: integer
+        num_matches:
+          type: integer
+        cache_hit_rate:
+          type: number
+        max_fanout:
+          type: integer
+        avg_fanout:
+          type: number
+    Jsz:
+      type: object
+      properties:
+        now:
+          type: string
+        config:
+          type: object
+          properties:
+            max_memory:
+              type: integer
+            max_storage:
+              type: integer
+            store_dir:
+              type: string
+        memory:
+          type: integer
+        storage:
+          type: integer
+        reserved_memory:
+          type: integer
+        reserved_storage:
+          type: integer
+        accounts:
+          type: integer
+        ha_assets:
+          type: integer
+        api:
+          type: object
+          properties:
+            total:
+              type: integer
+            errors:
+              type: integer
+        streams:
+          type: integer
+        consumers:
+          type: integer
+        messages:
+          type: integer
+        bytes:
+          type: integer

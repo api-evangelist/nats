@@ -1,0 +1,37 @@
+{
+  "provider": "nats",
+  "sources": [
+    "nats-accounts-api-openapi.yml",
+    "nats-connections-api-openapi.yml",
+    "nats-gateways-api-openapi.yml",
+    "nats-health-api-openapi.yml",
+    "nats-jetstream-api-openapi.yml",
+    "nats-leaf-nodes-api-openapi.yml",
+    "nats-routes-api-openapi.yml",
+    "nats-server-api-openapi.yml",
+    "nats-subscriptions-api-openapi.yml",
+    "properties/nats-monitoring-api-openapi.yml"
+  ],
+  "outputs": [
+    "nats-accounts-api-openapi.yml",
+    "nats-connections-api-openapi.yml",
+    "nats-gateways-api-openapi.yml",
+    "nats-health-api-openapi.yml",
+    "nats-jetstream-api-openapi.yml",
+    "nats-leaf-nodes-api-openapi.yml",
+    "nats-routes-api-openapi.yml",
+    "nats-server-api-openapi.yml",
+    "nats-subscriptions-api-openapi.yml",
+    "nats-clustering-api-openapi.yml",
+    "nats-monitoring-api-openapi.yml"
+  ],
+  "archived": [
+    "archived properties/nats-monitoring-api-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "discovered stray spec: properties/nats-monitoring-api-openapi.yml"
+  ],
+  "skipped": []
+}
