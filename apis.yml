@@ -44,7 +44,7 @@ apis:
     type: Documentation
   - url: properties/nats-monitoring-api-openapi.yml
     type: OpenAPI
-  - url: openapi/nats-monitoring.yml
+  - url: openapi/_original/nats-monitoring.yml
     type: OpenAPI
 - aid: nats:nats-messaging-api
   name: NATS Messaging API
