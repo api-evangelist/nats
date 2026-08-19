@@ -1,0 +1,122 @@
+{
+  "item": [
+    {
+      "id": "203ba2ad-14e6-49e3-bd0a-aca6d00cc4eb",
+      "name": "Gateways",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "38ea1f52-e783-4d65-bcc7-a595eb40ecf4",
+          "name": "Gateway information",
+          "request": {
+            "name": "Gateway information",
+            "description": {
+              "content": "Reports information about gateway connections for a super-cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gatewayz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accs",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "gw_name",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1f02e548-645a-4a93-aa40-1930a16bd6a0",
+              "name": "Gateway details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gatewayz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accs",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "gw_name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"host\": \"string\",\n  \"port\": 3953,\n  \"outbound_gateways\": {},\n  \"inbound_gateways\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8222",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8f14b3b5-2c7e-479c-af94-9e3bc4a0be04",
+    "name": "NATS Monitoring HTTP Accounts Gateways API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.\n\nContact Support:\n Name: NATS.io",
+      "type": "text/plain"
+    }
+  }
+}

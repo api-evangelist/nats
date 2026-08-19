@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NATS Monitoring HTTP Accounts Gateways API",
+    "version": "2.10.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Gateways",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Gateway information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/gatewayz",
+            "params": [
+              {
+                "name": "accs",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "gw_name",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports information about gateway connections for a super-cluster."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

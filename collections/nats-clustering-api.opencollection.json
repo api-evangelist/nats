@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NATS Monitoring HTTP Accounts Clustering API",
+    "version": "2.10.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Clustering",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "NATS Get route information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/routez",
+            "params": [
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query",
+                "description": "Include subscription detail"
+              }
+            ]
+          },
+          "docs": "Returns information about active routes between servers in a NATS cluster including remote server IDs, addresses, and message statistics per route."
+        },
+        {
+          "info": {
+            "name": "NATS Get gateway information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/gatewayz",
+            "params": [
+              {
+                "name": "accs",
+                "value": "",
+                "type": "query",
+                "description": "Include account information"
+              },
+              {
+                "name": "gw_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by gateway name"
+              }
+            ]
+          },
+          "docs": "Returns information about configured gateways between NATS super-clusters including remote gateway connections and message statistics."
+        },
+        {
+          "info": {
+            "name": "NATS Get leaf node information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/leafz",
+            "params": [
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query",
+                "description": "Include subscription detail"
+              }
+            ]
+          },
+          "docs": "Returns information about leaf node connections including remote address, account, and message statistics."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

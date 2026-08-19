@@ -1,0 +1,140 @@
+{
+  "item": [
+    {
+      "id": "a66ed8cd-9465-4a0f-9401-c2d3c2cffe75",
+      "name": "Subscriptions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "63a2b66f-eaa1-4bc6-a926-7cafea01e339",
+          "name": "Subscription information",
+          "request": {
+            "name": "Subscription information",
+            "description": {
+              "content": "Reports detailed information about current subscriptions and the routing data structure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subsz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "test",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "11336499-46a5-44e3-9596-cf98ce2b7be0",
+              "name": "Subscription details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subsz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subs",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "test",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"num_subscriptions\": 5119,\n  \"num_cache\": 7488,\n  \"num_inserts\": 310,\n  \"num_removes\": 9729,\n  \"num_matches\": 827,\n  \"cache_hit_rate\": 1581.0084305029238,\n  \"max_fanout\": 9712,\n  \"avg_fanout\": 5806.3566580047245\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8222",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e87688e2-92f7-4db6-b5be-f6f37af760f5",
+    "name": "NATS Monitoring HTTP Accounts Subscriptions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.\n\nContact Support:\n Name: NATS.io",
+      "type": "text/plain"
+    }
+  }
+}

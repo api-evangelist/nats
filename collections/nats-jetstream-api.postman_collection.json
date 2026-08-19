@@ -1,0 +1,176 @@
+{
+  "item": [
+    {
+      "id": "668546ad-cfe5-413a-b376-3daa45a7a09e",
+      "name": "JetStream",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "39126b78-580c-4738-8c3d-68d3a56ce65c",
+          "name": "JetStream information",
+          "request": {
+            "name": "JetStream information",
+            "description": {
+              "content": "Reports information about JetStream configuration, usage, and streams.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jsz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "acc",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "accounts",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "streams",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "consumers",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "leader-only",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "64a16d9f-cff7-46fc-a95f-6b61885d06c9",
+              "name": "JetStream details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jsz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "acc",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "accounts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "streams",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "consumers",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "config",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "leader-only",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"now\": \"string\",\n  \"config\": {\n    \"max_memory\": 1801,\n    \"max_storage\": 9473,\n    \"store_dir\": \"string\"\n  },\n  \"memory\": 3031,\n  \"storage\": 8161,\n  \"reserved_memory\": 2244,\n  \"reserved_storage\": 7320,\n  \"accounts\": 8324,\n  \"ha_assets\": 3658,\n  \"api\": {\n    \"total\": 7775,\n    \"errors\": 1090\n  },\n  \"streams\": 7498,\n  \"consumers\": 3042,\n  \"messages\": 2813,\n  \"bytes\": 5587\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8222",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3b7e3d26-acd3-4a66-8a8e-43f2030ac838",
+    "name": "NATS Monitoring HTTP Accounts JetStream API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.\n\nContact Support:\n Name: NATS.io",
+      "type": "text/plain"
+    }
+  }
+}

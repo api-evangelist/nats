@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NATS Monitoring HTTP Accounts API",
+    "version": "2.10.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Account information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/accountz",
+            "params": [
+              {
+                "name": "acc",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports information about accounts."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,167 @@
+{
+  "item": [
+    {
+      "id": "b504793f-0358-4b6a-ac92-4b1ccd445320",
+      "name": "Connections",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0a753c49-3616-4082-8eb3-1759e20ab64b",
+          "name": "Connection information",
+          "request": {
+            "name": "Connection information",
+            "description": {
+              "content": "Reports detailed information on current and recently closed connections.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "auth",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cid",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f1826b86-a726-407b-b37a-8e9271743748",
+              "name": "Connection details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "auth",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "subs",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"now\": \"string\",\n  \"num_connections\": 3407,\n  \"total\": 1709,\n  \"offset\": 6860,\n  \"limit\": 7124,\n  \"connections\": [\n    {\n      \"cid\": 1190,\n      \"kind\": \"string\",\n      \"type\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 4697,\n      \"start\": \"string\",\n      \"last_activity\": \"string\",\n      \"rtt\": \"string\",\n      \"uptime\": \"string\",\n      \"idle\": \"string\",\n      \"pending_bytes\": 1496,\n      \"in_msgs\": 9024,\n      \"out_msgs\": 5104,\n      \"in_bytes\": 7833,\n      \"out_bytes\": 7144,\n      \"subscriptions\": 7604,\n      \"name\": \"string\",\n      \"lang\": \"string\",\n      \"version\": \"string\",\n      \"account\": \"string\"\n    },\n    {\n      \"cid\": 7184,\n      \"kind\": \"string\",\n      \"type\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 8817,\n      \"start\": \"string\",\n      \"last_activity\": \"string\",\n      \"rtt\": \"string\",\n      \"uptime\": \"string\",\n      \"idle\": \"string\",\n      \"pending_bytes\": 8106,\n      \"in_msgs\": 2378,\n      \"out_msgs\": 8415,\n      \"in_bytes\": 9963,\n      \"out_bytes\": 4465,\n      \"subscriptions\": 3402,\n      \"name\": \"string\",\n      \"lang\": \"string\",\n      \"version\": \"string\",\n      \"account\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8222",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "486bb073-2245-46f6-99d9-33fa99f4c06a",
+    "name": "NATS Monitoring HTTP Accounts Connections API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.\n\nContact Support:\n Name: NATS.io",
+      "type": "text/plain"
+    }
+  }
+}

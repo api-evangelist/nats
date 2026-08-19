@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NATS Monitoring HTTP Accounts Subscriptions API",
+    "version": "2.10.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Subscription information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/subsz",
+            "params": [
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "test",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports detailed information about current subscriptions and the routing data structure."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

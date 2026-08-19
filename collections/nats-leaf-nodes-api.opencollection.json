@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NATS Monitoring HTTP Accounts Leaf Nodes API",
+    "version": "2.10.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Leaf Nodes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Leaf node information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/leafz",
+            "params": [
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports information about leaf node connections."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

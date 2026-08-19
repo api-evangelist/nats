@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NATS HTTP Accounts Monitoring API",
+    "version": "2.10.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Monitoring",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "NATS Get server general information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/varz",
+            "params": [
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query",
+                "description": "Include subscription information"
+              }
+            ]
+          },
+          "docs": "Returns general information about the server including version, uptime, CPU and memory usage, connections, message counts, and configuration details."
+        },
+        {
+          "info": {
+            "name": "NATS Get connection information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/connz",
+            "params": [
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort connections by field"
+              },
+              {
+                "name": "auth",
+                "value": "",
+                "type": "query",
+                "description": "Include username"
+              },
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query",
+                "description": "Include subscriptions"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of connections to return"
+              },
+              {
+                "name": "cid",
+                "value": "",
+                "type": "query",
+                "description": "Filter by connection ID"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by connection state"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about current client connections to the server including IP, port, subscriptions, pending bytes, and message statistics."
+        },
+        {
+          "info": {
+            "name": "NATS Get subscription information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/subsz",
+            "params": [
+              {
+                "name": "subs",
+                "value": "",
+                "type": "query",
+                "description": "Include subscription detail"
+              },
+              {
+                "name": "test",
+                "value": "",
+                "type": "query",
+                "description": "Test a subscription subject against the subscription routing data structure"
+              }
+            ]
+          },
+          "docs": "Returns information about the internal subscription routing data structure including number of subscriptions, cache size, inserts, removes, and matches."
+        },
+        {
+          "info": {
+            "name": "NATS Get account information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/accountz",
+            "params": [
+              {
+                "name": "acc",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account name"
+              }
+            ]
+          },
+          "docs": "Returns information about server accounts including connection counts, leaf node counts, and subscription counts."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

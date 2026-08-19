@@ -1,0 +1,172 @@
+{
+  "item": [
+    {
+      "id": "2625361b-9385-4dad-ab8d-f4f34c5a957b",
+      "name": "Server",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "30ccac08-b3bc-493d-a50e-c5935f7e8d4f",
+          "name": "General server information",
+          "request": {
+            "name": "General server information",
+            "description": {
+              "content": "Returns general information about the server state including memory, connections, message rates, and configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "varz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "235d4fe2-a8ce-41da-b6b3-5939d1a1b619",
+              "name": "Server variables and statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "varz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"server_id\": \"string\",\n  \"server_name\": \"string\",\n  \"version\": \"string\",\n  \"proto\": 4557,\n  \"go\": \"string\",\n  \"host\": \"string\",\n  \"port\": 9411,\n  \"max_connections\": 1936,\n  \"max_payload\": 2463,\n  \"now\": \"2007-03-02T17:03:07.054Z\",\n  \"uptime\": \"string\",\n  \"mem\": 7108,\n  \"cores\": 9325,\n  \"cpu\": 4996.715073439915,\n  \"connections\": 6850,\n  \"total_connections\": 1123,\n  \"routes\": 7837,\n  \"remotes\": 1295,\n  \"leafnodes\": 4806,\n  \"in_msgs\": 6976,\n  \"out_msgs\": 1252,\n  \"in_bytes\": 8183,\n  \"out_bytes\": 9595,\n  \"slow_consumers\": 7874,\n  \"subscriptions\": 4513,\n  \"jetstream\": {\n    \"config\": {},\n    \"stats\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d73c02c-e3f6-4ee8-bca8-660191b1c758",
+          "name": "IP queue sizes",
+          "request": {
+            "name": "IP queue sizes",
+            "description": {
+              "content": "Reports sizes of internal IP queues.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ipqueuesz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "274930ea-c145-41ce-ab98-6dd54d049474",
+              "name": "IP queue sizes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ipqueuesz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8222",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "dc4b1854-1649-4cee-adb4-af4f85fd8a5e",
+    "name": "NATS Monitoring HTTP Accounts Server API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.\n\nContact Support:\n Name: NATS.io",
+      "type": "text/plain"
+    }
+  }
+}

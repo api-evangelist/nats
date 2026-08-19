@@ -1,0 +1,113 @@
+{
+  "item": [
+    {
+      "id": "b9f57af6-ec13-4321-b778-66bc329747fd",
+      "name": "Leaf Nodes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "aced2cd0-a79d-4be8-a16a-a576da2c397b",
+          "name": "Leaf node information",
+          "request": {
+            "name": "Leaf node information",
+            "description": {
+              "content": "Reports information about leaf node connections.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "leafz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5014a9d4-2f9a-454c-adc9-16992cd755ab",
+              "name": "Leaf node details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "leafz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subs",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"now\": \"string\",\n  \"leafnodes\": 730,\n  \"leafs\": [\n    {\n      \"name\": \"string\",\n      \"is_spoke\": false,\n      \"account\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 8697,\n      \"rtt\": \"string\",\n      \"in_msgs\": 3507,\n      \"out_msgs\": 8513,\n      \"in_bytes\": 7413,\n      \"out_bytes\": 6708,\n      \"subscriptions\": 7503\n    },\n    {\n      \"name\": \"string\",\n      \"is_spoke\": false,\n      \"account\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 5797,\n      \"rtt\": \"string\",\n      \"in_msgs\": 7338,\n      \"out_msgs\": 2848,\n      \"in_bytes\": 536,\n      \"out_bytes\": 4805,\n      \"subscriptions\": 7203\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8222",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "df9f748e-3a01-439a-bf04-990f6804ada8",
+    "name": "NATS Monitoring HTTP Accounts Leaf Nodes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.\n\nContact Support:\n Name: NATS.io",
+      "type": "text/plain"
+    }
+  }
+}

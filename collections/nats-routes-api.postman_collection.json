@@ -1,0 +1,113 @@
+{
+  "item": [
+    {
+      "id": "b7d415fd-9468-4922-a974-1a95b81c1d4e",
+      "name": "Routes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6b58476f-184b-4231-a95d-6d70120d07ed",
+          "name": "Route information",
+          "request": {
+            "name": "Route information",
+            "description": {
+              "content": "Reports information on active routes for a cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "routez"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4e08cef1-fc03-4bc8-a5d7-22deccfc566d",
+              "name": "Route details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routez"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subs",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"now\": \"string\",\n  \"num_routes\": 8524,\n  \"routes\": [\n    {\n      \"rid\": 1354,\n      \"remote_id\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 4818,\n      \"pending_size\": 5018,\n      \"in_msgs\": 9711,\n      \"out_msgs\": 5016,\n      \"in_bytes\": 3275,\n      \"out_bytes\": 221,\n      \"subscriptions\": 7329\n    },\n    {\n      \"rid\": 5147,\n      \"remote_id\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 5879,\n      \"pending_size\": 9493,\n      \"in_msgs\": 5422,\n      \"out_msgs\": 1666,\n      \"in_bytes\": 5978,\n      \"out_bytes\": 4310,\n      \"subscriptions\": 2369\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8222",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5fc8da65-0083-4bb5-8902-1847ecacc2ab",
+    "name": "NATS Monitoring HTTP Accounts Routes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.\n\nContact Support:\n Name: NATS.io",
+      "type": "text/plain"
+    }
+  }
+}

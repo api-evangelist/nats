@@ -1,0 +1,288 @@
+{
+  "item": [
+    {
+      "id": "2642b6fb-c5da-4665-8d85-b428e5a0d4c1",
+      "name": "Clustering",
+      "description": {
+        "content": "Cluster, gateway, and leaf node endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d7c8dd3c-d566-4f36-a5f5-f2d5e24f15d0",
+          "name": "NATS Get route information",
+          "request": {
+            "name": "NATS Get route information",
+            "description": {
+              "content": "Returns information about active routes between servers in a NATS cluster including remote server IDs, addresses, and message statistics per route.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "routez"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "false",
+                  "description": "Include subscription detail"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f7fbb95-5d03-4dd0-8059-f512ad7cfcaa",
+              "name": "Route information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routez"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subs",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"server_id\": \"string\",\n  \"now\": \"2015-04-07T13:59:47.388Z\",\n  \"num_routes\": 8133,\n  \"routes\": [\n    {\n      \"rid\": 2671,\n      \"remote_id\": \"string\",\n      \"remote_name\": \"string\",\n      \"did_solicit\": true,\n      \"is_configured\": true,\n      \"ip\": \"string\",\n      \"port\": 316,\n      \"pending_size\": 5952,\n      \"in_msgs\": 1519,\n      \"out_msgs\": 8304,\n      \"in_bytes\": 8162,\n      \"out_bytes\": 1707,\n      \"subscriptions\": 6891\n    },\n    {\n      \"rid\": 1820,\n      \"remote_id\": \"string\",\n      \"remote_name\": \"string\",\n      \"did_solicit\": false,\n      \"is_configured\": false,\n      \"ip\": \"string\",\n      \"port\": 9854,\n      \"pending_size\": 1448,\n      \"in_msgs\": 9496,\n      \"out_msgs\": 4618,\n      \"in_bytes\": 6413,\n      \"out_bytes\": 4400,\n      \"subscriptions\": 3490\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a929b8f8-0f16-49a5-aed1-cc618436ebc3",
+          "name": "NATS Get gateway information",
+          "request": {
+            "name": "NATS Get gateway information",
+            "description": {
+              "content": "Returns information about configured gateways between NATS super-clusters including remote gateway connections and message statistics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gatewayz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accs",
+                  "value": "false",
+                  "description": "Include account information"
+                },
+                {
+                  "disabled": false,
+                  "key": "gw_name",
+                  "value": "<string>",
+                  "description": "Filter by gateway name"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fdf03a4d-bbbe-410c-a2b9-695ffe3d5000",
+              "name": "Gateway information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gatewayz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accs",
+                      "value": "false"
+                    },
+                    {
+                      "key": "gw_name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"server_id\": \"string\",\n  \"now\": \"1952-06-11T19:29:12.307Z\",\n  \"name\": \"string\",\n  \"host\": \"string\",\n  \"port\": 1700,\n  \"outbound_gateways\": {\n    \"key_0\": {\n      \"configured\": false,\n      \"connection\": {\n        \"cid\": 3934,\n        \"ip\": \"string\",\n        \"port\": 2611,\n        \"start\": \"2001-03-03T07:25:51.945Z\",\n        \"uptime\": \"string\",\n        \"in_msgs\": 3167,\n        \"out_msgs\": 306,\n        \"in_bytes\": 1605,\n        \"out_bytes\": 8362\n      }\n    }\n  },\n  \"inbound_gateways\": {\n    \"key_0\": [\n      {\n        \"configured\": false,\n        \"connection\": {\n          \"cid\": 3471,\n          \"ip\": \"string\",\n          \"port\": 9062,\n          \"start\": \"1993-08-13T18:31:21.560Z\",\n          \"uptime\": \"string\",\n          \"in_msgs\": 6551,\n          \"out_msgs\": 7957,\n          \"in_bytes\": 6654,\n          \"out_bytes\": 9455\n        }\n      },\n      {\n        \"configured\": true,\n        \"connection\": {\n          \"cid\": 8716,\n          \"ip\": \"string\",\n          \"port\": 8184,\n          \"start\": \"2008-02-15T13:11:25.864Z\",\n          \"uptime\": \"string\",\n          \"in_msgs\": 1638,\n          \"out_msgs\": 9740,\n          \"in_bytes\": 1731,\n          \"out_bytes\": 2122\n        }\n      }\n    ],\n    \"key_1\": [\n      {\n        \"configured\": true,\n        \"connection\": {\n          \"cid\": 1330,\n          \"ip\": \"string\",\n          \"port\": 7810,\n          \"start\": \"1990-01-02T20:21:24.424Z\",\n          \"uptime\": \"string\",\n          \"in_msgs\": 4655,\n          \"out_msgs\": 9555,\n          \"in_bytes\": 4065,\n          \"out_bytes\": 7092\n        }\n      },\n      {\n        \"configured\": true,\n        \"connection\": {\n          \"cid\": 3607,\n          \"ip\": \"string\",\n          \"port\": 3521,\n          \"start\": \"1993-01-06T15:22:51.261Z\",\n          \"uptime\": \"string\",\n          \"in_msgs\": 9746,\n          \"out_msgs\": 5201,\n          \"in_bytes\": 3258,\n          \"out_bytes\": 7107\n        }\n      }\n    ],\n    \"key_2\": [\n      {\n        \"configured\": false,\n        \"connection\": {\n          \"cid\": 736,\n          \"ip\": \"string\",\n          \"port\": 5666,\n          \"start\": \"1948-11-07T06:18:02.204Z\",\n          \"uptime\": \"string\",\n          \"in_msgs\": 1942,\n          \"out_msgs\": 3519,\n          \"in_bytes\": 3480,\n          \"out_bytes\": 1255\n        }\n      },\n      {\n        \"configured\": false,\n        \"connection\": {\n          \"cid\": 6592,\n          \"ip\": \"string\",\n          \"port\": 1446,\n          \"start\": \"2024-09-24T08:15:00.405Z\",\n          \"uptime\": \"string\",\n          \"in_msgs\": 2836,\n          \"out_msgs\": 3279,\n          \"in_bytes\": 1991,\n          \"out_bytes\": 5840\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ee7a667-7fb1-4e11-bb4c-357d2ffbb291",
+          "name": "NATS Get leaf node information",
+          "request": {
+            "name": "NATS Get leaf node information",
+            "description": {
+              "content": "Returns information about leaf node connections including remote address, account, and message statistics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "leafz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "false",
+                  "description": "Include subscription detail"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6de288d4-48f2-4715-ad20-0a4f9393e10c",
+              "name": "Leaf node information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "leafz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subs",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"server_id\": \"string\",\n  \"now\": \"2019-07-07T16:06:09.952Z\",\n  \"leafnodes\": 1948,\n  \"leafs\": [\n    {\n      \"name\": \"string\",\n      \"is_spoke\": false,\n      \"account\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 4218,\n      \"rtt\": \"string\",\n      \"in_msgs\": 6575,\n      \"out_msgs\": 7887,\n      \"in_bytes\": 7130,\n      \"out_bytes\": 9893,\n      \"subscriptions\": 9283\n    },\n    {\n      \"name\": \"string\",\n      \"is_spoke\": false,\n      \"account\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 1907,\n      \"rtt\": \"string\",\n      \"in_msgs\": 4173,\n      \"out_msgs\": 1540,\n      \"in_bytes\": 1848,\n      \"out_bytes\": 3661,\n      \"subscriptions\": 4492\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8222",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7691d944-e428-4533-9d35-2bd87d9e94a1",
+    "name": "NATS Monitoring HTTP Accounts Clustering API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.\n\nContact Support:\n Name: NATS.io",
+      "type": "text/plain"
+    }
+  }
+}

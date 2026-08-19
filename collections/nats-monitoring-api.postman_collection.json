@@ -1,0 +1,430 @@
+{
+  "item": [
+    {
+      "id": "7db80cf9-af6d-4933-bf51-304db8629a3b",
+      "name": "Monitoring",
+      "description": {
+        "content": "Server monitoring and status endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "51deb872-5cb8-479f-979c-4d269294974f",
+          "name": "NATS Get server general information",
+          "request": {
+            "name": "NATS Get server general information",
+            "description": {
+              "content": "Returns general information about the server including version, uptime, CPU and memory usage, connections, message counts, and configuration details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "varz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "false",
+                  "description": "Include subscription information"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a205b1fa-9b15-4b1c-b4e1-ab83e7d13b7f",
+              "name": "Server general information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "varz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subs",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"server_id\": \"string\",\n  \"server_name\": \"string\",\n  \"version\": \"string\",\n  \"proto\": 1218,\n  \"go\": \"string\",\n  \"host\": \"string\",\n  \"port\": 5882,\n  \"max_connections\": 4188,\n  \"ping_interval\": 8712,\n  \"ping_max\": 99,\n  \"http_host\": \"string\",\n  \"http_port\": 3510,\n  \"http_base_path\": \"string\",\n  \"max_control_line\": 6662,\n  \"max_payload\": 113,\n  \"max_pending\": 5578,\n  \"cluster\": {\n    \"name\": \"string\",\n    \"addr\": \"string\",\n    \"cluster_port\": 187,\n    \"auth_timeout\": 4756\n  },\n  \"gateway\": {\n    \"name\": \"string\",\n    \"host\": \"string\",\n    \"port\": 7141\n  },\n  \"leaf\": {\n    \"host\": \"string\",\n    \"port\": 7609,\n    \"auth_timeout\": 6303\n  },\n  \"jetstream\": {\n    \"config\": {\n      \"max_memory\": 9555,\n      \"max_storage\": 7900,\n      \"store_dir\": \"string\"\n    },\n    \"stats\": {\n      \"memory\": 5510,\n      \"storage\": 1690,\n      \"reserved_memory\": 6230,\n      \"reserved_storage\": 517,\n      \"accounts\": 175,\n      \"ha_assets\": 5425,\n      \"api\": {\n        \"total\": 4026,\n        \"errors\": 7665\n      }\n    }\n  },\n  \"tls_required\": true,\n  \"tls_verify\": false,\n  \"now\": \"2012-02-24T14:12:15.755Z\",\n  \"uptime\": \"string\",\n  \"mem\": 6358,\n  \"cores\": 3011,\n  \"cpu\": 2730.0019843682244,\n  \"connections\": 6359,\n  \"total_connections\": 361,\n  \"routes\": 2401,\n  \"remotes\": 7775,\n  \"leafnodes\": 892,\n  \"in_msgs\": 3560,\n  \"out_msgs\": 9269,\n  \"in_bytes\": 1295,\n  \"out_bytes\": 7918,\n  \"slow_consumers\": 2486,\n  \"subscriptions\": 3852,\n  \"config_load_time\": \"1977-12-17T15:30:02.460Z\",\n  \"system_account\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fbc547f4-00f0-419a-9288-f040fd7e71f3",
+          "name": "NATS Get connection information",
+          "request": {
+            "name": "NATS Get connection information",
+            "description": {
+              "content": "Returns detailed information about current client connections to the server including IP, port, subscriptions, pending bytes, and message statistics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "cid",
+                  "description": "Sort connections by field"
+                },
+                {
+                  "disabled": false,
+                  "key": "auth",
+                  "value": "false",
+                  "description": "Include username"
+                },
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "false",
+                  "description": "Include subscriptions"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Pagination offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1024",
+                  "description": "Number of connections to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "cid",
+                  "value": "<integer>",
+                  "description": "Filter by connection ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "open",
+                  "description": "Filter by connection state"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eb3e94c1-5f64-4455-af11-96f56b4442db",
+              "name": "Connection information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "sort",
+                      "value": "cid"
+                    },
+                    {
+                      "key": "auth",
+                      "value": "false"
+                    },
+                    {
+                      "key": "subs",
+                      "value": "false"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1024"
+                    },
+                    {
+                      "key": "cid",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "open"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"server_id\": \"string\",\n  \"now\": \"2003-06-04T16:19:15.709Z\",\n  \"num_connections\": 4041,\n  \"total\": 2868,\n  \"offset\": 3934,\n  \"limit\": 4677,\n  \"connections\": [\n    {\n      \"cid\": 280,\n      \"kind\": \"string\",\n      \"type\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 7716,\n      \"start\": \"2012-08-01T17:47:37.750Z\",\n      \"last_activity\": \"1951-04-26T21:52:09.986Z\",\n      \"rtt\": \"string\",\n      \"uptime\": \"string\",\n      \"idle\": \"string\",\n      \"pending_bytes\": 3459,\n      \"in_msgs\": 9827,\n      \"out_msgs\": 0,\n      \"in_bytes\": 8615,\n      \"out_bytes\": 4631,\n      \"subscriptions\": 9617,\n      \"name\": \"string\",\n      \"lang\": \"string\",\n      \"version\": \"string\",\n      \"account\": \"string\"\n    },\n    {\n      \"cid\": 9320,\n      \"kind\": \"string\",\n      \"type\": \"string\",\n      \"ip\": \"string\",\n      \"port\": 2595,\n      \"start\": \"1963-04-05T04:58:09.002Z\",\n      \"last_activity\": \"1974-03-07T05:22:32.749Z\",\n      \"rtt\": \"string\",\n      \"uptime\": \"string\",\n      \"idle\": \"string\",\n      \"pending_bytes\": 4387,\n      \"in_msgs\": 761,\n      \"out_msgs\": 456,\n      \"in_bytes\": 5052,\n      \"out_bytes\": 2211,\n      \"subscriptions\": 6640,\n      \"name\": \"string\",\n      \"lang\": \"string\",\n      \"version\": \"string\",\n      \"account\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2e5efc8-2638-40c3-a7a4-cd14dc6913b5",
+          "name": "NATS Get subscription information",
+          "request": {
+            "name": "NATS Get subscription information",
+            "description": {
+              "content": "Returns information about the internal subscription routing data structure including number of subscriptions, cache size, inserts, removes, and matches.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subsz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "subs",
+                  "value": "false",
+                  "description": "Include subscription detail"
+                },
+                {
+                  "disabled": false,
+                  "key": "test",
+                  "value": "<string>",
+                  "description": "Test a subscription subject against the subscription routing data structure"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "150e76bd-b173-45b8-a25a-e06ddb8e543e",
+              "name": "Subscription information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subsz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "subs",
+                      "value": "false"
+                    },
+                    {
+                      "key": "test",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"num_subscriptions\": 9517,\n  \"num_cache\": 8352,\n  \"num_inserts\": 9465,\n  \"num_removes\": 2859,\n  \"num_matches\": 7325,\n  \"cache_hit_rate\": 8474.443637976561,\n  \"max_fanout\": 7575,\n  \"avg_fanout\": 4759.570488392608\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4675f41b-3834-4d87-9df4-f0448a5d0449",
+          "name": "NATS Get account information",
+          "request": {
+            "name": "NATS Get account information",
+            "description": {
+              "content": "Returns information about server accounts including connection counts, leaf node counts, and subscription counts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accountz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "acc",
+                  "value": "<string>",
+                  "description": "Filter by account name"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3f64de5a-62ef-453b-bb36-7cb3e0a6fbc1",
+              "name": "Account information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accountz"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "acc",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"server_id\": \"string\",\n  \"now\": \"1947-08-10T15:01:00.366Z\",\n  \"system_account\": \"string\",\n  \"accounts\": [\n    \"string\",\n    \"string\"\n  ],\n  \"account_detail\": {\n    \"account_name\": \"string\",\n    \"update_time\": \"1993-04-04T18:29:52.873Z\",\n    \"is_system\": true,\n    \"expired\": true,\n    \"complete\": true,\n    \"jetstream_enabled\": false,\n    \"leafnode_connections\": 4228,\n    \"client_connections\": 6871,\n    \"subscriptions\": 8309\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8222",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "11a23b92-f1b5-4d09-bf1b-25d190aa3c95",
+    "name": "NATS HTTP Accounts Monitoring API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.\n\nContact Support:\n Name: NATS.io",
+      "type": "text/plain"
+    }
+  }
+}

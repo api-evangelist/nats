@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NATS Monitoring HTTP Accounts JetStream API",
+    "version": "2.10.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "JetStream",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "JetStream information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8222/jsz",
+            "params": [
+              {
+                "name": "acc",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "accounts",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "streams",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "consumers",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "leader-only",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reports information about JetStream configuration, usage, and streams."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
