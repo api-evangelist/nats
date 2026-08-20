@@ -18,6 +18,12 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nats.png
 tags:
+  - Cloud-Native
+  - IoT
+  - Message Broker
+  - Microservices
+  - Pub-Sub
+tags_raw:
   - Cloud Native
   - IoT
   - Message Broker
@@ -53,6 +59,11 @@ apis:
     messaging with streams, consumers, key-value stores, and object stores.
   humanURL: https://docs.nats.io/nats-concepts/core-nats
   tags:
+  - JetStream
+  - Messaging
+  - Pub-Sub
+  - Streaming
+  tags_raw:
   - JetStream
   - Messaging
   - Pub Sub
@@ -130,6 +141,8 @@ apis:
   humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
   baseURL: http://localhost:8222
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -220,6 +233,8 @@ apis:
   humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
   baseURL: http://localhost:8222
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
