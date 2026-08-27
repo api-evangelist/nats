@@ -34,24 +34,6 @@ created: '2025-01-01'
 modified: '2026-05-19'
 specificationVersion: '0.23'
 apis:
-- aid: nats:nats-monitoring-api
-  name: NATS Monitoring API
-  description: >-
-    HTTP monitoring API providing real-time server status, connection information, route details, subscription
-    statistics, JetStream metrics, and health check endpoints for observability and operations.
-  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
-  baseURL: http://localhost:8222
-  tags:
-  - Health
-  - Metrics
-  - Monitoring
-  properties:
-  - url: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
-    type: Documentation
-  - url: properties/nats-monitoring-api-openapi.yml
-    type: OpenAPI
-  - url: openapi/_original/nats-monitoring.yml
-    type: OpenAPI
 - aid: nats:nats-messaging-api
   name: NATS Messaging API
   description: >-
@@ -239,6 +221,16 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/nats-subscriptions-api-openapi.yml
+- aid: nats:nats-monitoring-api
+  name: NATS Monitoring API
+  description: Server monitoring and status endpoints
+  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
+  baseURL: http://localhost:8222
+  tags:
+  - Monitoring
+  properties:
+  - type: OpenAPI
+    url: openapi/nats-monitoring-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/nats-agentic-access.yml
