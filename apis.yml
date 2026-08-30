@@ -34,7 +34,7 @@ tags:
   - IoT
   - Message Broker
   - Microservices
-  - Pub-Sub
+  - Pub Sub
 tags_raw:
   - Cloud Native
   - IoT
@@ -55,7 +55,7 @@ apis:
   tags:
   - JetStream
   - Messaging
-  - Pub-Sub
+  - Pub Sub
   - Streaming
   tags_raw:
   - JetStream
