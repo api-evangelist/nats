@@ -141,16 +141,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/nats-accounts-api-openapi.yml
-- aid: nats:nats-clustering-api
-  name: NATS Clustering API
-  description: Cluster, gateway, and leaf node endpoints
-  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
-  baseURL: http://localhost:8222
-  tags:
-  - Clustering
-  properties:
-  - type: OpenAPI
-    url: openapi/nats-clustering-api-openapi.yml
 - aid: nats:nats-connections-api
   name: NATS Connections API
   description: The Connections API from NATS — 1 operation(s) for connections.
@@ -233,16 +223,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/nats-subscriptions-api-openapi.yml
-- aid: nats:nats-monitoring-api
-  name: NATS Monitoring API
-  description: Server monitoring and status endpoints
-  humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
-  baseURL: http://localhost:8222
-  tags:
-  - Monitoring
-  properties:
-  - type: OpenAPI
-    url: openapi/nats-monitoring-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/nats-agentic-access.yml
