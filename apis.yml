@@ -30,6 +30,7 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nats.png
 tags:
+  - NATS
   - Cloud-Native
   - IoT
   - Message Broker
