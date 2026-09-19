@@ -35,8 +35,8 @@ tags:
   - Message Broker
   - Microservices
   - Pub-Sub
-  - NATS
 tags_raw:
+  - NATS
   - Cloud Native
   - IoT
   - Message Broker
@@ -208,6 +208,8 @@ apis:
   humanURL: https://docs.nats.io/running-a-nats-service/nats_admin/monitoring
   baseURL: http://localhost:8222
   tags:
+  - Servers
+  tags_raw:
   - Server
   properties:
   - type: OpenAPI
