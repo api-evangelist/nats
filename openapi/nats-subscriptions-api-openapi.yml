@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: NATS Monitoring HTTP Accounts Subscriptions API
+  title: NATS Monitoring HTTP Subscriptions API
   description: The NATS server exposes a monitoring HTTP endpoint that provides real-time server statistics including connection info, route details, subscription data, JetStream metrics, and health checks for observability and operations.
   version: 2.10.0
   contact:

@@ -1,16 +1,7 @@
 {
   "provider": "nats",
   "sources": [
-    "nats-accounts-api-openapi.yml",
-    "nats-connections-api-openapi.yml",
-    "nats-gateways-api-openapi.yml",
-    "nats-health-api-openapi.yml",
-    "nats-jetstream-api-openapi.yml",
-    "nats-leaf-nodes-api-openapi.yml",
-    "nats-routes-api-openapi.yml",
-    "nats-server-api-openapi.yml",
-    "nats-subscriptions-api-openapi.yml",
-    "properties/nats-monitoring-api-openapi.yml"
+    "_original/nats-monitoring.yml"
   ],
   "outputs": [
     "nats-accounts-api-openapi.yml",
@@ -21,17 +12,36 @@
     "nats-leaf-nodes-api-openapi.yml",
     "nats-routes-api-openapi.yml",
     "nats-server-api-openapi.yml",
-    "nats-subscriptions-api-openapi.yml",
-    "nats-clustering-api-openapi.yml",
-    "nats-monitoring-api-openapi.yml"
+    "nats-subscriptions-api-openapi.yml"
   ],
-  "archived": [
-    "archived properties/nats-monitoring-api-openapi.yml"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
-    "discovered stray spec: properties/nats-monitoring-api-openapi.yml"
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "nats-monitoring.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "nats-monitoring.yml: declared missing tag: Accounts",
+    "nats-monitoring.yml: declared missing tag: Connections",
+    "nats-monitoring.yml: declared missing tag: Gateways",
+    "nats-monitoring.yml: declared missing tag: Health",
+    "nats-monitoring.yml: declared missing tag: JetStream",
+    "nats-monitoring.yml: declared missing tag: Leaf Nodes",
+    "nats-monitoring.yml: declared missing tag: Routes",
+    "nats-monitoring.yml: declared missing tag: Server",
+    "nats-monitoring.yml: declared missing tag: Subscriptions",
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "_original/nats-monitoring-api-openapi.yml: archived document superseded by a larger archived document",
+    "nats-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nats-connections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nats-gateways-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nats-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nats-jetstream-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nats-leaf-nodes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nats-routes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nats-server-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nats-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
