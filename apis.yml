@@ -5,16 +5,21 @@ description: >-
   request-reply, and queue-based messaging patterns with at-most-once and at-least-once delivery guarantees.
 type: Index
 deliveryModel:
-  model: unknown
-  open_source: unknown
+  model: self-hosted
+  license: Apache-2.0
+  license_evidence:
+    repo: nats-io/nats-server
+    spdx: Apache-2.0
+    stars: 20769
+  open_source: true
   commercial: false
   callable_host: false
-  label: Delivery model not determined — needs a product licence on record
-  confidence: low
+  label: Self-hosted open source · you run it yourself
+  confidence: medium
   source:
   - openapi
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-license
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -36,6 +41,7 @@ tags:
   - Message Broker
   - Microservices
   - Pub-Sub
+  - Real-Time
 tags_raw:
   - NATS
   - Cloud Native
@@ -43,6 +49,7 @@ tags_raw:
   - Message Broker
   - Microservices
   - Pub Sub
+  - Real-Time
 url: https://raw.githubusercontent.com/api-evangelist/nats/refs/heads/main/apis.yml
 created: '2025-01-01'
 modified: '2026-05-19'
@@ -73,7 +80,7 @@ apis:
     type: AsyncAPI
   - url: json-schema/nats-stream-config.json
     type: JSONSchema
-- aid: nats:nats-jetstream-api
+- aid: nats:nats-jetstream-management-api
   name: NATS JetStream Management API
   description: >-
     The JetStream wire API provides a protocol-level management interface for configuring and operating
@@ -103,6 +110,10 @@ apis:
     KV_ prefix.
   humanURL: https://docs.nats.io/nats-concepts/jetstream/key-value-store
   tags:
+  - JetStream
+  - Key-Value Store
+  - Storage
+  tags_raw:
   - JetStream
   - Key-Value
   - Storage
