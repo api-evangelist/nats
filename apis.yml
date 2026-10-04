@@ -239,6 +239,9 @@ apis:
   - type: OpenAPI
     url: openapi/nats-subscriptions-api-openapi.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/nats-capability-edges.yml
+    name: NATS Business Capability Map
   - type: AgenticAccess
     url: agentic-access/nats-agentic-access.yml
   - type: DomainSecurity
