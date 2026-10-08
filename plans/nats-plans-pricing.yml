@@ -400,3 +400,89 @@ plans:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  - subscription
+  units:
+  - data
+  - object
+  - period
+  plans:
+  - name: NATS Open Source
+    access: freemium
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods:
+    - month
+  - name: Synadia Cloud — Personal
+    access: freemium
+    model: subscription
+    model_how: derived
+    units:
+    - data
+    - object
+    - period
+    periods:
+    - month
+    - per-use
+  - name: Synadia Cloud — Starter
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - data
+    - object
+    - period
+    periods:
+    - month
+  - name: Synadia Cloud — Pro
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - data
+    - object
+    - period
+    periods:
+    - month
+  - name: Synadia Cloud — Premium
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - data
+    - object
+    - period
+    periods:
+    - month
+  - name: Synadia Cloud — Enterprise
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods:
+    - month
+  - name: Synadia Cloud — Bring Your Own NATS
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - period
+    periods:
+    - month
+  - name: Synadia Cloud — Add-ons
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - data
+    - other
+    - period
+    periods:
+    - month
