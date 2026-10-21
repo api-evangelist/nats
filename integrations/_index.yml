@@ -39,3 +39,16 @@
     detected: '2026-10-19'
   status: not-a-workflow
   arazzo: null
+- slug: nats-pulumi-pulumi-registry
+  label: Pulumi (pulumi-registry)
+  partner: pulumi
+  partner_name: Pulumi (pulumi-registry)
+  category: infrastructure-as-code provider registry listing
+  type: marketplace
+  marketplace: pulumi-registry
+  channel: partner-built
+  evidence: https://www.pulumi.com/registry/packages/jetstream/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

@@ -34,6 +34,25 @@ edges:
     detected: '2026-10-19'
   detected_by: sweep-cloud-native.py
   first_seen: '2026-10-15'
+- partner_name: Pulumi (pulumi-registry)
+  partner: pulumi
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: pulumi-registry
+  evidence: https://www.pulumi.com/registry/packages/jetstream/
+  mirror_of: pulumi/integrations/pulumi-integration-edges.yml
+  apps:
+  - jetstream
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: infrastructure-as-code provider registry listing
+  badges:
+  - Verified publisher (GitHub domain-verified organization)
 generated: '2026-10-15'
 method: searched
 source:
@@ -43,3 +62,4 @@ checked:
 - https://focus.finops.org/data-generators/
 - https://github.com/cncf/k8s-conformance
 - https://github.com/cncf/landscape
+- pulumi/integrations/pulumi-integration-edges.yml
