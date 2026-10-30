@@ -1,4 +1,4 @@
-# NATS (nats)
+# NATS
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,157 +66,172 @@
 
 A high-performance, cloud-native messaging system for microservices, IoT, and edge computing. Provides pub-sub, request-reply, and queue-based messaging patterns with at-most-once and at-least-once delivery guarantees.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/nats/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/nats/refs/heads/main/apis.yml)
+**Areas:** NATS · Cloud-Native · IoT · Message Broker · Microservices · Pub/Sub · Real-Time
 
-## Scope
+## NATS on APIs.io
 
-- **Type:** Index
+Everything profiled for NATS is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/nats/](https://apis.io/providers/nats/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (13)
 
-- Cloud Native
-- IoT
-- Message Broker
-- Microservices
-- Pub Sub
+- [NATS Messaging API](https://apis.io/apis/nats/nats-messaging-api/) — Asynchronous messaging API supporting core pub-sub, request-reply, queue groups, and JetStream persistent messaging with streams, consumers, key-value…
+- [NATS JetStream Management API](https://apis.io/apis/nats/nats-jetstream-management-api/) — The JetStream wire API provides a protocol-level management interface for configuring and operating JetStream streams, consumers, key-value buckets, and…
+- [NATS Key-Value Store API](https://apis.io/apis/nats/nats-kv-api/) — The NATS Key-Value Store API is a JetStream-backed abstraction that provides immediately consistent, persistent associative array semantics. Clients can…
+- [NATS Object Store API](https://apis.io/apis/nats/nats-object-store-api/) — The NATS Object Store API is a JetStream-backed abstraction for storing and retrieving arbitrarily large binary objects using a chunking mechanism. Objects…
+- [NATS Accounts API](https://apis.io/apis/nats/nats-accounts-api/) — The Accounts API from NATS — 1 operation(s) for accounts.
+- [NATS Connections API](https://apis.io/apis/nats/nats-connections-api/) — The Connections API from NATS — 1 operation(s) for connections.
+- [NATS Gateways API](https://apis.io/apis/nats/nats-gateways-api/) — The Gateways API from NATS — 1 operation(s) for gateways.
+- [NATS Health API](https://apis.io/apis/nats/nats-health-api/) — The Health API from NATS — 1 operation(s) for health.
+- [NATS JetStream API](https://apis.io/apis/nats/nats-jetstream-api/) — The JetStream API from NATS — 1 operation(s) for jetstream.
+- [NATS Leaf Nodes API](https://apis.io/apis/nats/nats-leaf-nodes-api/) — The Leaf Nodes API from NATS — 1 operation(s) for leaf nodes.
+- [NATS Routes API](https://apis.io/apis/nats/nats-routes-api/) — The Routes API from NATS — 1 operation(s) for routes.
+- [NATS Server API](https://apis.io/apis/nats/nats-server-api/) — The Server API from NATS — 2 operation(s) for server.
+- [NATS Subscriptions API](https://apis.io/apis/nats/nats-subscriptions-api/) — The Subscriptions API from NATS — 1 operation(s) for subscriptions.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-01-01
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### NATS Monitoring API
+Event-driven and webhook contracts.
 
-HTTP monitoring API providing real-time server status, connection information, route details, subscription statistics, JetStream metrics, and health check endpoints for observability and operations.
+- [NATS Core and JetStream Messaging API](https://apis.io/asyncapis/nats/nats-messaging/)
 
-- **Human URL:** [https://docs.nats.io/running-a-nats-service/nats_admin/monitoring](https://docs.nats.io/running-a-nats-service/nats_admin/monitoring)
-- **Base URL:** `http://localhost:8222`
+#### Event channels (7)
 
-#### Tags
+Individual events and webhooks the provider emits.
 
-- Health
-- Metrics
-- Monitoring
+- [$JS.API.CONSUMER.CREATE.{stream}.{consumer}](https://apis.io/channels/nats/js-api-consumer-create-stream-consumer/)
+- [$JS.API.STREAM.CREATE.{stream}](https://apis.io/channels/nats/js-api-stream-create-stream/)
+- [$JS.API.STREAM.DELETE.{stream}](https://apis.io/channels/nats/js-api-stream-delete-stream/)
+- [$JS.API.STREAM.INFO.{stream}](https://apis.io/channels/nats/js-api-stream-info-stream/)
+- [$JS.API.STREAM.NAMES](https://apis.io/channels/nats/js-api-stream-names/)
+- [{subject}](https://apis.io/channels/nats/subject/)
+- [{subject}.request](https://apis.io/channels/nats/subject-request/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://docs.nats.io/running-a-nats-service/nats_admin/monitoring)
-- [OpenAPI](properties/nats-monitoring-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](openapi/nats-monitoring.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/nats-monitoring.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nats-monitoring.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### NATS Messaging API
+- [Nats Agentic Access](https://apis.io/agentic-access/nats/nats-agentic-access/)
 
-Asynchronous messaging API supporting core pub-sub, request-reply, queue groups, and JetStream persistent messaging with streams, consumers, key-value stores, and object stores.
+#### JSON Schema (1)
 
-- **Human URL:** [https://docs.nats.io/nats-concepts/core-nats](https://docs.nats.io/nats-concepts/core-nats)
+The data models the API reads and writes.
 
-#### Tags
+- [NATS JetStream Stream Configuration](https://apis.io/schemas/nats/nats-stream-config/)
 
-- JetStream
-- Messaging
-- Pub Sub
-- Streaming
+#### Collections (12)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://docs.nats.io/nats-concepts/core-nats)
-- [AsyncAPI](properties/nats-messaging-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [AsyncAPI](asyncapi/nats-messaging.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [JSON Schema](json-schema/nats-stream-config.json) — [JSON Schema](https://json-schema.org/specification)
-- [Postman Collection](collections/nats-monitoring.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nats-monitoring.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [NATS Monitoring HTTP Accounts API](https://apis.io/collections/nats/open-nats-accounts-api/)
+- [NATS Monitoring HTTP Accounts Clustering API](https://apis.io/collections/nats/open-nats-clustering-api/)
+- [NATS Monitoring HTTP Accounts Connections API](https://apis.io/collections/nats/open-nats-connections-api/)
+- [NATS Monitoring HTTP Accounts Gateways API](https://apis.io/collections/nats/open-nats-gateways-api/)
+- [NATS Monitoring HTTP Accounts Health API](https://apis.io/collections/nats/open-nats-health-api/)
+- [NATS Monitoring HTTP Accounts JetStream API](https://apis.io/collections/nats/open-nats-jetstream-api/)
+- [NATS Monitoring HTTP Accounts Leaf Nodes API](https://apis.io/collections/nats/open-nats-leaf-nodes-api/)
+- [NATS Monitoring HTTP API](https://apis.io/collections/nats/open-nats-monitoring/)
+- [NATS HTTP Accounts Monitoring API](https://apis.io/collections/nats/open-nats-monitoring-api/)
+- [NATS Monitoring HTTP Accounts Routes API](https://apis.io/collections/nats/open-nats-routes-api/)
+- [NATS Monitoring HTTP Accounts Server API](https://apis.io/collections/nats/open-nats-server-api/)
+- [NATS Monitoring HTTP Accounts Subscriptions API](https://apis.io/collections/nats/open-nats-subscriptions-api/)
 
-### NATS JetStream Management API
+#### Governance rules (2)
 
-The JetStream wire API provides a protocol-level management interface for configuring and operating JetStream streams, consumers, key-value buckets, and object stores. Requests are made by publishing to well-known $JS.API.* subjects and responses are returned as typed JSON payloads. This API underlies all official NATS client SDKs and the nats CLI.
+Spectral rulesets for the provider's contracts.
 
-- **Human URL:** [https://docs.nats.io/reference/reference-protocols/nats_api_reference](https://docs.nats.io/reference/reference-protocols/nats_api_reference)
+- [NATS — asyncapi rules](https://apis.io/rules/nats/nats-asyncapi-spectral-rules/)
+- [NATS — jsonschema rules](https://apis.io/rules/nats/nats-jsonschema-spectral-rules/)
 
-#### Tags
+#### Security (1)
 
-- JetStream
-- Management
-- Streaming
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Nats Domain Security](https://apis.io/security/nats/nats-domain-security/)
 
-- [Documentation](https://docs.nats.io/reference/reference-protocols/nats_api_reference)
-- [Reference](https://docs.nats.io/nats-concepts/jetstream)
-- [AsyncAPI](properties/nats-jetstream-api-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [JSON Schema](properties/nats-jetstream-config-json-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Postman Collection](collections/nats-monitoring.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nats-monitoring.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Plans and pricing (1)
 
-### NATS Key-Value Store API
+Published plans, tiers and prices.
 
-The NATS Key-Value Store API is a JetStream-backed abstraction that provides immediately consistent, persistent associative array semantics. Clients can create buckets, get, put, delete, and watch keys, and receive real-time change notifications. Buckets are implemented as JetStream streams with the KV_ prefix.
+- [Nats Plans Pricing](https://apis.io/plans/nats/nats-plans-pricing/)
 
-- **Human URL:** [https://docs.nats.io/nats-concepts/jetstream/key-value-store](https://docs.nats.io/nats-concepts/jetstream/key-value-store)
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
-- JetStream
-- Key-Value
-- Storage
+- [Nats Rate Limits](https://apis.io/rate-limits/nats/nats-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [Documentation](https://docs.nats.io/nats-concepts/jetstream/key-value-store)
-- [Reference](https://docs.nats.io/using-nats/developer/develop_jetstream/kv)
-- [JSON Schema](properties/nats-kv-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Postman Collection](collections/nats-monitoring.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nats-monitoring.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+What the API costs to run, by operation.
 
-### NATS Object Store API
+- [Nats Finops](https://apis.io/finops/nats/nats-finops/)
 
-The NATS Object Store API is a JetStream-backed abstraction for storing and retrieving arbitrarily large binary objects using a chunking mechanism. Objects are identified by a bucket and a name, and the API supports put, get, delete, and watch operations for managing stored files and blobs.
+## Where to find this API
 
-- **Human URL:** [https://docs.nats.io/nats-concepts/jetstream/obj_store](https://docs.nats.io/nats-concepts/jetstream/obj_store)
-
-#### Tags
-
-- JetStream
-- Object Store
-- Storage
-
-#### Properties
-
-- [Documentation](https://docs.nats.io/nats-concepts/jetstream/obj_store)
-- [Reference](https://docs.nats.io/using-nats/developer/develop_jetstream/object)
-- [JSON Schema](properties/nats-object-store-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Postman Collection](collections/nats-monitoring.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/nats-monitoring.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://nats.io)
 - [Documentation](https://docs.nats.io)
-- [Getting Started](https://docs.nats.io/running-a-nats-service/introduction/installation)
-- [GitHub Repository](https://github.com/nats-io/nats-server)
-- [Blog](https://nats.io/blog/)
-- [Slack](https://slack.nats.io)
-- [Issues](https://github.com/nats-io/nats-server/issues)
-- [Changelog](https://github.com/nats-io/nats-server/releases)
-- [Examples](https://natsbyexample.com)
-- [C L I](https://docs.nats.io/using-nats/nats-tools/nats_cli)
-- [GitHub Organization](https://github.com/nats-io)
-- [JSON Schema](properties/nats-server-config-json-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](properties/nats-jetstream-config-json-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](properties/nats-kv-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](properties/nats-object-store-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](properties/nats-context-jsonld.json) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [Getting started](https://docs.nats.io/running-a-nats-service/introduction/installation)
 - [Support](https://nats.io/support/)
-- [Privacy Policy](https://nats.io/privacy/)
-- [Community](https://nats.io/community/)
-- [S D Ks](https://docs.nats.io/using-nats/developer)
-- [Download](https://nats.io/download/)
-- [L L Ms Txt](https://docs.nats.io/llms.txt)
+- [Changelog](https://github.com/nats-io/nats-server/releases)
+- [Blog](https://nats.io/blog/)
+- [Privacy policy](https://nats.io/privacy/)
+- [GitHub](https://github.com/nats-io)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 38.3** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 54.5 |
+| Contract governance | 13.6 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 50.0 |
+| Access clarity | 18.4 |
+
+**Agent readiness 20.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | na |
+| Error Semantics | — |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 9.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/nats/](https://apis.io/providers/nats/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for NATS: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/nats/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
